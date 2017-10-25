@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <Button
+            android:id="@+id/bt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Coordinator方法调用测试"
+            />
+
+        <Button
+            android:id="@+id/bt_1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="底部弹出对话框"
+            />
+
+        <Button
+            android:id="@+id/f01_fab2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="列表的上下滑动来打开和关闭FAB"
+            />
+
+        <Button
+            android:id="@+id/bt_3"
+            android:text="实现两个RecyclerView联动（不能完全的同步，事件中断时有bug）"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <Button
+            android:id="@+id/bt_4"
+            android:text="自定义Behavior仿UC主页滑动效果"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <Button
+            android:id="@+id/bt_5"
+            android:text="实现下拉刷新的RecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+    </LinearLayout>
+
+</LinearLayout>

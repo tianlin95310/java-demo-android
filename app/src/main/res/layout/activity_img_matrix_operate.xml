@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:background="#0000FF"
+                tools:context=".navigation41.Activity401"
+    >
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/f8_scale_in"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="缩小"/>
+
+        <Button
+            android:id="@+id/f8_scale_out"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="放大"/>
+    </LinearLayout>
+
+    <FrameLayout
+        android:layout_centerInParent="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <tl.com.testmaterialdesign.navigation41.MyImageView
+            android:id="@+id/iv_man"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:alpha="0.5"
+            android:scaleType="matrix"
+            android:src="@drawable/no_bg"
+            />
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:id="@+id/iv_man_head"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:alpha="0.5"
+                android:scaleType="matrix"
+                />
+            <ImageView
+                android:id="@+id/iv_bust"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:alpha="0.5"
+                android:scaleType="matrix"
+                />
+            <ImageView
+                android:id="@+id/iv_man_waist_hip"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:alpha="0.5"
+                android:scaleType="matrix"
+                />
+            <ImageView
+                android:id="@+id/iv_man_waist_leg"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:alpha="0.5"
+                android:scaleType="matrix"
+                />
+        </LinearLayout>
+    </FrameLayout>
+
+
+</RelativeLayout>

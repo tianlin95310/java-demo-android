@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="progress_dialog_w">200dp</dimen>
+    <dimen name="progress_dialog_h">50dp</dimen>
+    <dimen name="head_h">300dp</dimen>
+    <dimen name="rv_w">200dp</dimen>
+    <dimen name="ll_refresh_h">96dp</dimen>
+    <dimen name="collapsed_h">300dp</dimen>
+    <dimen name="tl_pull_refresh_layout_h">64dp</dimen>
+</resources>

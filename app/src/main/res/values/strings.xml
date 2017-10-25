@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">TestMaterialDesign</string>
+    <string name="open">open</string>
+    <string name="close">close</string>
+
+    <string name="authorities">tl.com.testmaterialdesign.fileProvider</string>
+
+    <string name="scale_up_show_behavior">tl.com.testmaterialdesign.navigation01.behavior.floataction.MyFloatActionBehavior</string>
+
+    <string name="double_move_behavior">tl.com.testmaterialdesign.navigation01.behavior.doublemove.MyDoubleMoveBehavior</string>
+
+    <string name="like_uc_behavior">tl.com.testmaterialdesign.navigation01.behavior.likeuc.LikeUCBehavior</string>
+
+    <string name="my_behavior">tl.com.testmaterialdesign.navigation01.behavior.test.MyBehavior</string>
+
+    <string name="pull_refresh_behavior">tl.com.testmaterialdesign.navigation01.behavior.pullrefresh.PullRefreshBehavior</string>
+
+    <string name="tl_refresh_behavior">tl.com.testmaterialdesign.navigation71.pullrefresh.TLRefreshBehavior</string>
+
+</resources>

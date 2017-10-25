@@ -1,0 +1,68 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+
+
+        <item name="android:textAllCaps">false</item>
+    </style>
+
+    <!-- 没有系统默认的标题栏actionBar的风格-->
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <!-- appcompat自定义风格对话框-->
+    <style name="AppCompatAlertDialogStyle1" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <!--对话框按钮文字颜色-->
+        <item name="colorAccent">@color/colorAccent</item>
+        <!--对话框内容文字颜色-->
+        <item name="android:textColorPrimary">@color/colorPrimary</item>
+        <!--对话框背景色-->
+        <item name="android:background">@android:color/white</item>
+        <!-- 开始动画，动画貌似不支持-->
+        <item name="android:inAnimation">@anim/anim_scale_in</item>
+        <!-- 结束动画-->
+        <item name="android:outAnimation">@anim/anim_scale_out</item>
+    </style>
+
+
+    <style name="AppCompatAlertDialogStyle2" parent="ThemeOverlay.AppCompat.Dialog.Alert">
+        <!--对话框按钮文字颜色-->
+        <item name="colorAccent">@color/colorAccent</item>
+        <!--对话框内容文字颜色-->
+        <item name="android:textColorPrimary">@color/colorPrimary</item>
+        <!--对话框背景色-->
+        <item name="android:background">@android:color/white</item>
+        <!-- 开始动画，动画貌似不支持-->
+        <item name="android:inAnimation">@anim/anim_scale_in</item>
+        <!-- 结束动画-->
+        <item name="android:outAnimation">@anim/anim_scale_out</item>
+    </style>
+
+    <style name="AppCompatAlertDialogStyle3" parent="Theme.AppCompat.DayNight.Dialog.Alert">
+        <!--对话框按钮文字颜色-->
+        <item name="colorAccent">@color/colorAccent</item>
+        <!--对话框内容文字颜色-->
+        <item name="android:textColorPrimary">@color/colorPrimary</item>
+        <!--对话框背景色-->
+        <item name="android:background">@android:color/white</item>
+        <!-- 开始动画，动画貌似不支持-->
+        <item name="android:inAnimation">@anim/anim_scale_in</item>
+        <!-- 结束动画-->
+        <item name="android:outAnimation">@anim/anim_scale_out</item>
+    </style>
+
+    <!-- 列表视图的item-->
+    <style name="AppTheme.ItemLinearLayout">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:descendantFocusability">blocksDescendants</item>
+    </style>
+
+</resources>

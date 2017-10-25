@@ -1,0 +1,30 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+    <tl.com.testmaterialdesign.navigation01.behavior.test.MyCoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+        <tl.com.testmaterialdesign.navigation01.behavior.test.MyRecyclerView
+            android:id="@+id/rv1"
+            android:layout_gravity="left"
+            android:layout_width="@dimen/rv_w"
+            android:layout_height="match_parent"
+            android:overScrollMode="never"
+            app:layout_behavior="@string/my_behavior"
+            >
+        </tl.com.testmaterialdesign.navigation01.behavior.test.MyRecyclerView>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv2"
+            android:layout_gravity="right"
+            android:layout_width="@dimen/rv_w"
+            android:layout_height="match_parent"
+            android:overScrollMode="never"
+            />
+    </tl.com.testmaterialdesign.navigation01.behavior.test.MyCoordinatorLayout>
+
+</LinearLayout>
