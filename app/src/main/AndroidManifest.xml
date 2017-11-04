@@ -133,6 +133,7 @@
         <activity android:name=".navigation01.behavior.pullrefresh.PullRefreshActivity"/>
         <activity android:name=".navigation71.pullrefresh.TLPullRefActivity"/>
         <activity android:name=".navigation61.marktext.MarkTextActivity"/>
+        <activity android:name=".navigation81.realm.RealmTestActivity"/>
     </application>
 
 </manifest>
