@@ -1,4 +1,4 @@
-package tl.com.testmaterialdesign.navigation41;
+package tl.com.testmaterialdesign.navigation41.imagescale;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -11,6 +11,8 @@ import android.util.AttributeSet;
 import android.util.Log;
 
 import tl.com.testmaterialdesign.R;
+import tl.com.testmaterialdesign.utils.bitmap.DecodeBmp;
+import tl.com.testmaterialdesign.utils.display.DensityUtils;
 
 /**
  * Created by tianlin on 2017/4/19.
@@ -19,64 +21,50 @@ import tl.com.testmaterialdesign.R;
  * Function :
  */
 
-public class MyImageView extends AppCompatImageView
+public class MyInnerImageView extends AppCompatImageView
 {
     // 原始图片
     Bitmap raw_bmp;
     // 改变密度的图片
     Bitmap scaleBmp;
-    // 赋值的图片
-    Bitmap copy;
-    // 灰度图片
-    Bitmap alpha;
-    // drawable
-    Bitmap drawable;
+
+    // 改变采样率的图片
+    Bitmap scaleSampleBmp;
 
     int w;
     int h;
 
     Paint paint;
 
-    public MyImageView(Context context)
+    public MyInnerImageView(Context context)
     {
         super(context);
     }
-    public MyImageView(Context context, @Nullable AttributeSet attrs)
+    public MyInnerImageView(Context context, @Nullable AttributeSet attrs)
     {
         super(context, attrs);
         paint = new Paint();
         paint.setAlpha(66);
 
         // 1，加载原始图片大小
-        raw_bmp = BitmapFactory.decodeResource(context.getResources(), R.drawable.man_under);
+        raw_bmp = BitmapFactory.decodeResource(context.getResources(), R.drawable.man);
 
-//        // 2，加载缩小的图片
+        // 2，通过目标密度来改变图片
         BitmapFactory.Options option = new BitmapFactory.Options();
-//        option.inTargetDensity = DensityUtils.getScreenDensityDPI(context) / 6;
-        option.inTargetDensity = 160;           // 画出的图片的实际密度
+        // 加载的图片的实际密度，只能对应用内部的图片有效，内存卡内的图片无效
+        option.inTargetDensity = DensityUtils.getScreenDensityDPI(context) / 2;
+        scaleBmp = BitmapFactory.decodeResource(context.getResources(), R.drawable.man, option);
 
-//        option.inScaled = true;                   // 允许图片放缩
-        scaleBmp = BitmapFactory.decodeResource(context.getResources(), R.drawable.man_under, option);
-//
-//        // 3, 得到原始的透明图
-//        alpha = raw_bmp.extractAlpha();
-//        Log.d("my", "alpha sameAs bmp = " + raw_bmp.sameAs(alpha));
-//        // 4，用原始图片赋值图片
-//        copy = raw_bmp.copy(Bitmap.Config.ARGB_4444, true);
-//        Log.d("my", "copy sameAs bmp = " + raw_bmp.sameAs(copy));
-//
-//        // 6,获取drawable转化为
-//        drawable = ((BitmapDrawable)getDrawable()).getBitmap();
-//
+        // 缩小只能是2,4,8倍的比率，并不能保存完全是指定的大小
+        scaleSampleBmp = DecodeBmp.decodeInSample(context, raw_bmp.getWidth() / 4, raw_bmp.getHeight() / 4, R.drawable.man);
+
+        // 3，通过改变采样率来改变图片
+        Log.d("my", "------------raw_bmp-----------\n");
         getBmpInfo(raw_bmp);
-        Log.d("my", "-------------------------\n");
+        Log.d("my", "-------------scaleBmp------------\n");
         getBmpInfo(scaleBmp);
-        Log.d("my", "--------------------------\n");
-//        getBmpInfo(alpha);
-//        Log.d("my", "----------------------------\n");
-//        getBmpInfo(copy);
-//        Log.d("my", "---------------------------\n");
-//        getBmpInfo(drawable);
+        Log.d("my", "-------------scaleSampleBmp------------\n");
+        getBmpInfo(scaleSampleBmp);
 
     }
 
@@ -101,7 +89,6 @@ public class MyImageView extends AppCompatImageView
         Log.d("my", "isRecycled = " + bmp.isRecycled());
         // 字节数
         Log.d("my", "getByteCount = " + bmp.getByteCount());
-        Log.d("my", "getAllocationByteCount = " + bmp.getAllocationByteCount());
         // 得到宽字节数，一个像素有4个字节，分别为ARGB
         Log.d("my", "getRowBytes = " + bmp.getRowBytes());
     }
@@ -112,12 +99,8 @@ public class MyImageView extends AppCompatImageView
         super.onDraw(canvas);
         canvas.drawBitmap(raw_bmp, 0, 0, paint);
 
-        canvas.drawBitmap(scaleBmp, 50, 50, paint);
-//
-//        canvas.drawBitmap(copy, 50, 50, paint);
-//
-//        canvas.drawBitmap(alpha, 100, 100, paint);
-//
-//        canvas.drawBitmap(drawable, 150, 150, paint);
+        canvas.drawBitmap(scaleBmp, raw_bmp.getWidth(), 0, paint);
+
+        canvas.drawBitmap(scaleSampleBmp, raw_bmp.getWidth() + scaleBmp.getWidth(), 0, paint);
     }
 }

@@ -1,8 +1,8 @@
 package tl.com.testmaterialdesign.navigation41;
 
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
-import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -24,11 +24,8 @@ import tl.com.testmaterialdesign.utils.display.DensityUtils;
  * Function :
  */
 
-public class Activity401 extends AppCompatActivity
+public class ImageDivideActivity extends AppCompatActivity
 {
-    @BindView(R.id.iv_man)
-    ImageView ivMan;
-
     float rateX = 1.0f;
     float rateY = 1.0f;
 
@@ -38,7 +35,6 @@ public class Activity401 extends AppCompatActivity
     @BindView(R.id.f8_scale_out)
     Button f8ScaleOut;
 
-    float density = 0;
     int man_w;
     int man_h;
 
@@ -46,10 +42,8 @@ public class Activity401 extends AppCompatActivity
     int bust_h;
     @BindView(R.id.iv_man_head)
     ImageView ivManHead;
-    @BindView(R.id.iv_bust)
-    ImageView ivBust;
-    @BindView(R.id.iv_man_waist_hip)
-    ImageView ivManWaistHip;
+    @BindView(R.id.iv_top)
+    ImageView ivTop;
     @BindView(R.id.iv_man_waist_leg)
     ImageView ivManWaistLeg;
 
@@ -59,7 +53,6 @@ public class Activity401 extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_img_matrix_operate);
         ButterKnife.bind(this);
-        matrix = ivMan.getMatrix();
         initView();
 
     }
@@ -68,30 +61,33 @@ public class Activity401 extends AppCompatActivity
     public void onWindowFocusChanged(boolean hasFocus)
     {
         super.onWindowFocusChanged(hasFocus);
-        man_w = ivMan.getWidth();
-        man_h = ivMan.getHeight();
 
-        density = DensityUtils.getScreenDensity(this);
+        // 通过这里得到的图片是600 * 1260的，但图片的实际大小是300 * 630的，所以图片是以
+        // 2倍的密度放大，但手机的密度是3，图片确实2倍的密度放大
+        // 我们用man_h / 630能得到实际的加载密度
+        Bitmap man = BitmapFactory.decodeResource(getResources(), R.drawable.man);
 
-        Bitmap man = ((BitmapDrawable)ivMan.getDrawable()).getBitmap();
+        man_w = man.getWidth();
+        man_h = man.getHeight();
 
-        Log.d("my", "getHeight" + man.getHeight());
+        Log.d("my", "getHeight" + man.getHeight() + ", getWidth = " + man.getWidth());
+        Log.d("my", "density = " + DensityUtils.getScreenDensity(this));
 
+        float density = man_h / 630;
         Bitmap head = Bitmap.createBitmap(man, 0, 0, man_w, (int) (100 * density));
 
-        Bitmap bust = Bitmap.createBitmap(man, 0, (int)(100 * density), man_w, (int)(80 * density));
-        bust_w = bust.getWidth();
-        bust_h = bust.getHeight();
-
-        Bitmap waist_hip = Bitmap.createBitmap(man, 0, (int)(180 * density), man_w, (int)(200 * density));
+        Bitmap top = Bitmap.createBitmap(man, 0, (int)(100 * density), man_w, (int)(280 * density));
 
         Bitmap leg = Bitmap.createBitmap(man, 0, (int)(380 * density), man_w, (int)(250 * density));
 
         ivManHead.setImageBitmap(head);
-        ivBust.setImageBitmap(bust);
-
-        ivManWaistHip.setImageBitmap(waist_hip);
+        ivTop.setImageBitmap(top);
         ivManWaistLeg.setImageBitmap(leg);
+
+        matrix = ivTop.getMatrix();
+        bust_w = top.getWidth();
+        bust_h = top.getHeight();
+
     }
 
     private void initView()
@@ -113,9 +109,6 @@ public class Activity401 extends AppCompatActivity
                 break;
         }
 
-        ivBust.setImageMatrix(matrix);
-
-        Log.d("my", "iv man_w = " + man_w * rateX + ",iv man_h = " + man_h * rateY);
-        Log.d("my", "rateX = " + rateX + ",rateY = " + rateY);
+        ivTop.setImageMatrix(matrix);
     }
 }

@@ -24,24 +24,25 @@
         android:persistent="true"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
+
         <activity
             android:name=".MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
-
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
         <activity
             android:name=".navigation01.liaotian.LiaotianActivity"
-            android:windowSoftInputMode="adjustPan"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="adjustPan"/>
         <activity
             android:name=".navigation01.searchview.nestedview.NestedActivity"
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity
-            android:name=".navigation41.Activity401"
+            android:name=".navigation41.ImageDivideActivity"
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity
             android:name=".navigation01.behavior.floataction.FloatActionActivity"
@@ -91,7 +92,7 @@
             android:name=".service.bindservice.BindStartService"
             android:process=":BindService"/>
 
-        <!-- 一下广播在应用被强制关闭的情况下，应用会被添加一个新的标志位，导致应用退出后无法收到系统修改时间的广播 -->
+        <!-- 以下广播在应用被强制关闭的情况下，应用会被添加一个新的标志位，导致应用退出后无法收到系统修改时间的广播 -->
         <receiver android:name=".broadcastreceiver.SystemTimeChangeReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.TIME_SET"/>
@@ -112,21 +113,16 @@
             </intent-filter>
         </receiver>
 
-        <activity android:name=".navigation31.parandchild.ParentAndChildActivity"
-            android:theme="@style/AppTheme.NoActionBar"
-            >
+        <activity
+            android:name=".navigation31.parandchild.ParentAndChildActivity"
+            android:theme="@style/AppTheme.NoActionBar">
         </activity>
 
         <activity android:name=".navigation31.viewanim.ViewAnimActivity"/>
-
         <activity android:name=".navigation01.selflayout.SelfLayoutActivity"/>
-
         <activity android:name=".navigation01.useapi.UseApiActivity"/>
-
         <activity android:name=".navigation01.behavior.BehaviorActivity"/>
-
         <activity android:name=".navigation01.behavior.bottomsheet.BottomSheetActivity"/>
-
         <activity android:name=".navigation01.behavior.doublemove.BehaviorMoveActivity"/>
         <activity android:name=".navigation01.behavior.likeuc.LikeUCHomeActivity"/>
         <activity android:name=".navigation01.behavior.test.TestFunCallActivity"/>
@@ -134,6 +130,16 @@
         <activity android:name=".navigation71.pullrefresh.TLPullRefActivity"/>
         <activity android:name=".navigation61.marktext.MarkTextActivity"/>
         <activity android:name=".navigation81.realm.RealmTestActivity"/>
+
+        <activity android:name=".navigation61.hideintent.HideIntentActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+                <action android:name="aaa.bbb.ccc"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </activity>
+        <activity android:name=".navigation41.imagescale.ImageScaleActivity"/>
+        <activity android:name=".navigation41.mntimage.MntImageActivity"/>
     </application>
 
 </manifest>

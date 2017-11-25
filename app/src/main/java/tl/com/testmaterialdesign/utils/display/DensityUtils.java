@@ -15,7 +15,7 @@ import android.view.WindowManager;
 public class DensityUtils
 {
     /**
-     * 获取屏幕的每英寸的像素数量,如160， 240等等
+     * 获取屏幕的每英寸的像素数量,如160， 240， 360等等
      *
      * @param context
      * @return
@@ -30,7 +30,7 @@ public class DensityUtils
     }
 
     /**
-     * 获取屏幕的密度，如1.5,2.0
+     * 获取屏幕的密度，如1.5,2.0,2.5
      *
      * @param context
      * @return

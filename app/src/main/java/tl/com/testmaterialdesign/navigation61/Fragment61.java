@@ -15,7 +15,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.TextView;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -40,8 +39,6 @@ import static tl.com.testmaterialdesign.service.TimingService.timstamp;
 
 public class Fragment61 extends Fragment
 {
-    @BindView(R.id.tv_f14_time)
-    TextView tvF14Time;
     Unbinder unbinder;
 
     public SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss:SSS");
@@ -52,8 +49,8 @@ public class Fragment61 extends Fragment
         public void handleMessage(Message msg)
         {
             // 防止fragment被干掉造成空指针
-            if (timstamp != 0 && tvF14Time != null)
-                tvF14Time.setText(sdf.format(new Date(timstamp)));
+            if (timstamp != 0 && btBeginClock != null)
+                btBeginClock.setText(sdf.format(new Date(timstamp)));
         }
     };
 
@@ -135,6 +132,24 @@ public class Fragment61 extends Fragment
     public void bt_mark_text()
     {
         Intent intent = new Intent(getActivity(), MarkTextActivity.class);
+        startActivity(intent);
+    }
+
+    @OnClick(R.id.bt_hide_intent)
+    public void bt_hide_intent()
+    {
+        Intent intent = new Intent();
+        intent.setAction("aaa.bbb.ccc");
+        
+        startActivity(intent);
+    }
+
+    @OnClick(R.id.bt_hide_intent2)
+    public void bt_hide_intent2()
+    {
+        Intent intent = new Intent();
+        intent.setAction(Intent.ACTION_VIEW);
+
         startActivity(intent);
     }
 

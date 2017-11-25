@@ -26,6 +26,7 @@ public class TestApplication extends Application
         Log.d("my", "TestApplication onCreate, myTid = " + Process.myTid());
         Log.d("my", "TestApplication onCreate, myUid = " + Process.myUid());
         initRealm();
+
     }
 
     private void initRealm() {

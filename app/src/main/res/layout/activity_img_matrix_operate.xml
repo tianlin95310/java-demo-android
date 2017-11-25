@@ -5,7 +5,7 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical"
                 android:background="#0000FF"
-                tools:context=".navigation41.Activity401"
+                tools:context=".navigation41.ImageDivideActivity"
     >
 
     <LinearLayout
@@ -31,14 +31,6 @@
         android:layout_centerInParent="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
-        <tl.com.testmaterialdesign.navigation41.MyImageView
-            android:id="@+id/iv_man"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:alpha="0.5"
-            android:scaleType="matrix"
-            android:src="@drawable/no_bg"
-            />
 
         <LinearLayout
             android:orientation="vertical"
@@ -52,14 +44,7 @@
                 android:scaleType="matrix"
                 />
             <ImageView
-                android:id="@+id/iv_bust"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:alpha="0.5"
-                android:scaleType="matrix"
-                />
-            <ImageView
-                android:id="@+id/iv_man_waist_hip"
+                android:id="@+id/iv_top"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:alpha="0.5"
