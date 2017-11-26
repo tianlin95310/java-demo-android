@@ -14,7 +14,9 @@ import butterknife.OnClick;
 import butterknife.Unbinder;
 import tl.com.testmaterialdesign.R;
 import tl.com.testmaterialdesign.navigation41.imagescale.ImageScaleActivity;
+import tl.com.testmaterialdesign.navigation41.imgdivide.ImageDivideActivity;
 import tl.com.testmaterialdesign.navigation41.mntimage.MntImageActivity;
+import tl.com.testmaterialdesign.navigation41.paintshade.PaintShadeActivity;
 
 /**
  * Created by tianlin on 2017/4/17.
@@ -62,6 +64,7 @@ public class Fragment41 extends Fragment implements View.OnClickListener
     public void onDestroyView()
     {
         super.onDestroyView();
+
         unbinder.unbind();
     }
 
@@ -76,6 +79,13 @@ public class Fragment41 extends Fragment implements View.OnClickListener
     public void bt_photo3()
     {
         Intent intent = new Intent(getActivity(), MntImageActivity.class);
+        startActivity(intent);
+    }
+
+    @OnClick(R.id.bt_photo4)
+    public void bt_photo4()
+    {
+        Intent intent = new Intent(getActivity(), PaintShadeActivity.class);
         startActivity(intent);
     }
 }

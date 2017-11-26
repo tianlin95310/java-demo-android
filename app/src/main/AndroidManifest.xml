@@ -42,7 +42,7 @@
             android:name=".navigation01.searchview.nestedview.NestedActivity"
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity
-            android:name=".navigation41.ImageDivideActivity"
+            android:name=".navigation41.imgdivide.ImageDivideActivity"
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity
             android:name=".navigation01.behavior.floataction.FloatActionActivity"
@@ -140,6 +140,7 @@
         </activity>
         <activity android:name=".navigation41.imagescale.ImageScaleActivity"/>
         <activity android:name=".navigation41.mntimage.MntImageActivity"/>
+        <activity android:name=".navigation41.paintshade.PaintShadeActivity"/>
     </application>
 
 </manifest>

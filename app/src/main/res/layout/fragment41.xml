@@ -22,4 +22,10 @@
         android:text="指定比率加载内存卡图片"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
+
+    <Button
+        android:id="@+id/bt_photo4"
+        android:text="Shade的使用"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
 </LinearLayout>

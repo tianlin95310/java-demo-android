@@ -1,4 +1,4 @@
-package tl.com.testmaterialdesign.navigation41;
+package tl.com.testmaterialdesign.navigation41.imgdivide;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
