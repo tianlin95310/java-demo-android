@@ -1,11 +1,33 @@
 <component name="ProjectDictionaryState">
   <dictionary name="litian">
     <words>
+      <w>bindservice</w>
+      <w>bottomsheet</w>
+      <w>doublemove</w>
+      <w>dragable</w>
+      <w>floatintop</w>
+      <w>fullanddialog</w>
+      <w>hideintent</w>
+      <w>imagescale</w>
       <w>inputlimit</w>
       <w>jian</w>
       <w>jobservice</w>
+      <w>likeuc</w>
+      <w>longpressd</w>
+      <w>marktext</w>
+      <w>mntimage</w>
+      <w>paintshade</w>
+      <w>parandchild</w>
+      <w>photoshow</w>
+      <w>pullrefresh</w>
       <w>recyclereuse</w>
       <w>requestpremission</w>
+      <w>searchview</w>
+      <w>selflayout</w>
+      <w>simplelabel</w>
+      <w>slidedelete</w>
+      <w>useapi</w>
+      <w>viewanim</w>
     </words>
   </dictionary>
 </component>

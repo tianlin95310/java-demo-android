@@ -5,16 +5,27 @@
 
     <string name="authorities">tl.com.testmaterialdesign.fileProvider</string>
 
+    <!--上下滑动显示和隐藏Fab-->
     <string name="scale_up_show_behavior">tl.com.testmaterialdesign.navigation01.behavior.floataction.MyFloatActionBehavior</string>
 
+    <!--列表联动-->
     <string name="double_move_behavior">tl.com.testmaterialdesign.navigation01.behavior.doublemove.MyDoubleMoveBehavior</string>
 
+    <!--通过滑动显示影藏另一个视图-->
     <string name="like_uc_behavior">tl.com.testmaterialdesign.navigation01.behavior.likeuc.LikeUCBehavior</string>
 
+    <!--测试-->
     <string name="my_behavior">tl.com.testmaterialdesign.navigation01.behavior.test.MyBehavior</string>
 
+    <!--下拉刷新-->
     <string name="pull_refresh_behavior">tl.com.testmaterialdesign.navigation01.behavior.pullrefresh.PullRefreshBehavior</string>
 
-    <string name="tl_refresh_behavior">tl.com.testmaterialdesign.navigation71.pullrefresh.TLRefreshBehavior</string>
+    <!--下拉刷新，上拉加载更多-->
+    <string name="tl_refresh_behavior">tl.com.testmaterialdesign.navigation71.pullrefresh.TLRefreshBehavior
+    </string>
+
+    <!--自定义的APPBarLayoutBehavior-->
+    <string name="my_appbar_bav">tl.com.testmaterialdesign.navigation61.dialog.MyAppBarLayoutBav</string>
+
 
 </resources>

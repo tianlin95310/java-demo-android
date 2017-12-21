@@ -46,20 +46,20 @@ public class MyCoordinatorLayout extends CoordinatorLayout
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev)
     {
-//        Log.w("my", "MyCoordinatorLayout dispatchTouchEvent");
+        Log.w("my", "MyCoordinatorLayout dispatchTouchEvent");
         return super.dispatchTouchEvent(ev);
     }
 
     @Override
     public boolean onInterceptTouchEvent(MotionEvent ev)
     {
-//        Log.w("my", "MyCoordinatorLayout onInterceptTouchEvent");
+        Log.w("my", "MyCoordinatorLayout onInterceptTouchEvent");
         return super.onInterceptTouchEvent(ev);
     }
     @Override
     public boolean onTouchEvent(MotionEvent ev)
     {
-//        Log.w("my", "MyCoordinatorLayout onTouchEvent");
+        Log.w("my", "MyCoordinatorLayout onTouchEvent");
         return super.onTouchEvent(ev);
     }
 

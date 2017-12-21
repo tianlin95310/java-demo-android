@@ -38,6 +38,8 @@ public class BehaviorActivity extends BaseActivity
     Button bt5;
     @BindView(R.id.bt)
     Button bt;
+    @BindView(R.id.bt_6)
+    Button bt6;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState)
@@ -105,9 +107,14 @@ public class BehaviorActivity extends BaseActivity
     }
 
     @OnClick(R.id.bt)
-    public void onViewClicked()
+    public void bt()
     {
         Intent intent = new Intent(this, TestFunCallActivity.class);
         startActivity(intent);
+    }
+
+    @OnClick(R.id.bt_6)
+    public void bt_6()
+    {
     }
 }

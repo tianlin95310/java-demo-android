@@ -20,19 +20,20 @@
             android:id="@+id/bt_1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="底部弹出对话框"
+            android:text="底部弹出对话框（BottomSheetBehavior）"
             />
 
         <Button
             android:id="@+id/f01_fab2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="列表的上下滑动来打开和关闭FAB"
+            android:textSize="12sp"
+            android:text="列表的上下滑动来打开和关闭FAB（FloatingActionButton.Behavior）"
             />
 
         <Button
             android:id="@+id/bt_3"
-            android:text="实现两个RecyclerView联动（不能完全的同步，事件中断时有bug）"
+            android:text="让控件跟随者另外的控件移动，不是滑动的"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 
@@ -47,6 +48,13 @@
             android:text="实现下拉刷新的RecyclerView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
+
+        <Button
+            android:id="@+id/bt_6"
+            android:text="OffSetBehavior的用法"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
 
     </LinearLayout>
 

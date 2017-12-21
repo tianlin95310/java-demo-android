@@ -2,18 +2,15 @@ package tl.com.testmaterialdesign.navigation01.behavior.doublemove;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.util.Log;
-
-import java.util.ArrayList;
-import java.util.List;
+import android.view.MotionEvent;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import tl.com.testmaterialdesign.R;
 import tl.com.testmaterialdesign.base.BaseActivity;
-import tl.com.testmaterialdesign.base.OnlyTextAdapter;
 
 /**
  * Created by tianlin on 2017/10/13.
@@ -23,10 +20,11 @@ import tl.com.testmaterialdesign.base.OnlyTextAdapter;
 
 public class BehaviorMoveActivity extends BaseActivity
 {
-    @BindView(R.id.rv1)
-    RecyclerView rv1;
-    @BindView(R.id.rv2)
-    RecyclerView rv2;
+
+    @BindView(R.id.button)
+    Button button;
+    @BindView(R.id.text)
+    TextView text;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState)
@@ -41,25 +39,16 @@ public class BehaviorMoveActivity extends BaseActivity
     @Override
     public void initView()
     {
-        rv1.setLayoutManager(new LinearLayoutManager(this));
-        List<String> list1 = new ArrayList<>();
-        for (int i = 0; i < 30; i++)
+        button.setOnTouchListener(new View.OnTouchListener()
         {
-            list1.add("left string " + (i + 1));
-        }
-        OnlyTextAdapter adapter1 = new OnlyTextAdapter(this, list1);
-        rv1.setAdapter(adapter1);
+            @Override
+            public boolean onTouch(View v, MotionEvent event)
+            {
 
-        rv2.setLayoutManager(new LinearLayoutManager(this));
-        List<String> list2 = new ArrayList<>();
-
-        for (int i = 0; i < 30; i++)
-        {
-            list2.add("right string " + (i + 1));
-        }
-        OnlyTextAdapter adapter2 = new OnlyTextAdapter(this, list2);
-        rv2.setAdapter(adapter2);
-
-        Log.d("my", "rv1 = "  + rv1.getId() + ", rv2 = "  + rv2.getId());
+                button.setX(event.getRawX() - button.getWidth() / 2);
+                button.setY(event.getRawY() - button.getHeight() * 3 / 2);
+                return false;
+            }
+        });
     }
 }

@@ -47,21 +47,21 @@ public class MyRecyclerView extends RecyclerView
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev)
     {
-//        Log.e("my", "MyRecyclerView dispatchTouchEvent");
+        Log.e("my", "MyRecyclerView dispatchTouchEvent");
         return super.dispatchTouchEvent(ev);
     }
 
     @Override
     public boolean onInterceptTouchEvent(MotionEvent e)
     {
-//        Log.e("my", "MyRecyclerView onInterceptTouchEvent");
+        Log.e("my", "MyRecyclerView onInterceptTouchEvent");
         return super.onInterceptTouchEvent(e);
     }
 
     @Override
     public boolean onTouchEvent(MotionEvent e)
     {
-//        Log.e("my", "MyRecyclerView onTouchEvent");
+        Log.e("my", "MyRecyclerView onTouchEvent");
         return super.onTouchEvent(e);
     }
 

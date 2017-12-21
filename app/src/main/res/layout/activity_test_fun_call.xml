@@ -18,7 +18,28 @@
             >
         </tl.com.testmaterialdesign.navigation01.behavior.test.MyRecyclerView>
 
-        <android.support.v7.widget.RecyclerView
+        <tl.com.testmaterialdesign.navigation01.behavior.test.MyTextView
+            android:id="@+id/text1"
+            android:layout_gravity="center_horizontal"
+            android:text="我是TextView1"
+            android:background="@color/colorPrimary"
+            android:layout_width="wrap_content"
+            android:layout_height="100dp"/>
+
+        <tl.com.testmaterialdesign.navigation01.behavior.test.MyLinear
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="120dp"
+            android:layout_width="wrap_content"
+            android:layout_height="100dp">
+            <tl.com.testmaterialdesign.navigation01.behavior.test.MyTextView
+                android:text="我是TextView2"
+                android:id="@+id/text2"
+                android:background="@color/colorPrimary"
+                android:layout_width="wrap_content"
+                android:layout_height="100dp"/>
+        </tl.com.testmaterialdesign.navigation01.behavior.test.MyLinear>
+
+        <tl.com.testmaterialdesign.navigation01.behavior.test.MyRecyclerView
             android:id="@+id/rv2"
             android:layout_gravity="right"
             android:layout_width="@dimen/rv_w"

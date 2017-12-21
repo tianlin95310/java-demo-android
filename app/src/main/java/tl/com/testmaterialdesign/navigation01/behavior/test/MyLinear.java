@@ -1,0 +1,53 @@
+package tl.com.testmaterialdesign.navigation01.behavior.test;
+
+import android.content.Context;
+import android.os.Build;
+import android.support.annotation.Nullable;
+import android.support.annotation.RequiresApi;
+import android.util.AttributeSet;
+import android.util.Log;
+import android.widget.LinearLayout;
+
+/**
+ * Created by tianlin on 2017/12/21.
+ * Tel : 15071485690
+ * QQ : 953108373
+ */
+
+public class MyLinear extends LinearLayout
+{
+    public MyLinear(Context context)
+    {
+        super(context);
+    }
+
+    public MyLinear(Context context, @Nullable AttributeSet attrs)
+    {
+        super(context, attrs);
+    }
+
+    public MyLinear(Context context, @Nullable AttributeSet attrs, int defStyleAttr)
+    {
+        super(context, attrs, defStyleAttr);
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    public MyLinear(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes)
+    {
+        super(context, attrs, defStyleAttr, defStyleRes);
+    }
+
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec)
+    {
+        Log.e("my", "MyLinear onMeasure");
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+    }
+
+    @Override
+    protected void onLayout(boolean changed, int l, int t, int r, int b)
+    {
+        Log.e("my", "MyLinear onLayout");
+        super.onLayout(changed, l, t, r, b);
+    }
+}

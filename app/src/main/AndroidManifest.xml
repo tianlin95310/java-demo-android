@@ -60,6 +60,7 @@
         <activity android:name=".navigation31.recyclereuse.RecyclerReuseActivity"/>
         <activity android:name=".navigation81.vue.VusJsActivity"/>
 
+        <!--进行隐式传递URI时需要-->
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="@string/authorities"
@@ -73,14 +74,14 @@
         <!--
         android:isolatedProcess="true" 服务运行在独立的进程,不允许调用getService，没有权限
         android:process=":ServiceProcess" 指定服务的进程，前缀是包名，如果使用.的话，就没有前缀包名了
-        若为进程指定了进程名，那么他将不能与主进程共享变量
+        若为进程指定了进程名，那么他将不能与主进程共享变量，但是可以使用getService
         -->
         <service
             android:name=".service.StayAlwaysService"
             android:process=":ServiceProcess">
         </service>
 
-        <!-- 5.0以后才有，但他不能实现服务的永驻 -->
+        <!-- 5.0以后才有，他也不能实现服务的永驻 -->
         <service
             android:name=".service.MyJobService"
             android:permission="android.permission.BIND_JOB_SERVICE"
@@ -92,7 +93,7 @@
             android:name=".service.bindservice.BindStartService"
             android:process=":BindService"/>
 
-        <!-- 以下广播在应用被强制关闭的情况下，应用会被添加一个新的标志位，导致应用退出后无法收到系统修改时间的广播 -->
+        <!-- 以下广播在应用被强制关闭的情况下，应用会被添加一个新的标志位，导致应用强制退出后无法收到系统修改时间的广播 -->
         <receiver android:name=".broadcastreceiver.SystemTimeChangeReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.TIME_SET"/>
@@ -104,7 +105,7 @@
             </intent-filter>
         </receiver>
 
-        <!-- 该广播也被系统修改成无效，需要系统授权才可以 -->
+        <!-- 该广播也被系统修改成无效，需要系统授权才可以，并且不一定可以 -->
         <receiver android:name=".broadcastreceiver.AutoStartReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED"/>
@@ -135,12 +136,20 @@
             <intent-filter>
                 <action android:name="android.intent.action.VIEW"/>
                 <action android:name="aaa.bbb.ccc"/>
+
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
         </activity>
         <activity android:name=".navigation41.imagescale.ImageScaleActivity"/>
         <activity android:name=".navigation41.mntimage.MntImageActivity"/>
         <activity android:name=".navigation41.paintshade.PaintShadeActivity"/>
+
+        <activity android:name=".navigation61.fullanddialog.DialogThemeActivity"
+                  android:theme="@style/DialogActivity"
+            />
+        <activity android:name=".navigation61.dialog.DialogActivity"
+            android:theme="@style/AppTheme.TranslucentStatus"
+            />
     </application>
 
 </manifest>

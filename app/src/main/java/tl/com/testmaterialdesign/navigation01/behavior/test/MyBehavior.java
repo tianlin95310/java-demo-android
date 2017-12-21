@@ -3,26 +3,11 @@ package tl.com.testmaterialdesign.navigation01.behavior.test;
 import android.content.Context;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.view.ViewCompat;
-import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
-
-//
-//         MyCoordinatorLayout  onMeasure
-//         MyBehavior           layoutDependsOn --- child = 2131624070, dependency = 2131624071
-//         MyBehavior           onMeasureChild
-//         MyRecyclerView       onMeasure
-//         MyCoordinatorLayout  onMeasure
-//         MyBehavior           layoutDependsOn --- child = 2131624070, dependency = 2131624071
-//         MyBehavior           onMeasureChild
-//         MyRecyclerView       onMeasure
-//         MyCoordinatorLayout  onLayout
-//         MyBehavior           onLayoutChild
-//         MyRecyclerView       onLayout
-//         MyBehavior           layoutDependsOn --- child = 2131624070, dependency = 2131624071
-//         MyBehavior           onDependentViewChanged
+import android.widget.LinearLayout;
 
 /**
  * Created by tianlin on 2017/10/13.
@@ -39,43 +24,57 @@ public class MyBehavior extends CoordinatorLayout.Behavior<View>
         Log.d("my", "MyBehavior");
     }
 
+    /**
+     * MyCoordinatorLayout拦截事件时，先将事件给MyBehavior，将权利给他
+     * @param parent
+     * @param child
+     * @param ev
+     * @return
+     */
     @Override
     public boolean onInterceptTouchEvent(CoordinatorLayout parent, View child, MotionEvent ev)
     {
-//        Log.d("my", "MyBehavior onInterceptTouchEvent");
+        Log.d("my", "MyBehavior onInterceptTouchEvent");
         return super.onInterceptTouchEvent(parent, child, ev);
+//        return true;
     }
 
     @Override
     public boolean onTouchEvent(CoordinatorLayout parent, View child, MotionEvent ev)
     {
-//        Log.d("my", "MyBehavior onTouchEvent");
+        Log.d("my", "MyBehavior onTouchEvent");
         return super.onTouchEvent(parent, child, ev);
     }
 
     /**
-     *  layoutDependsOn会先于onMeasureChild调用，在测量的时候会调用两次
+     *  layoutDependsOn会先于onMeasureChild调用，在测量的时候会调用多次
      * @param parent
      * @param child 是赋予behavior的控件
-     * @param dependency
-     * @return 返回true才能正常建立依赖关系，初始化时就会调用一次onDependentViewChanged，以后的每次滑动都会调用layoutDependsOn和onDependentViewChanged
-     * 返回false的话，初始化测量的时候会调用一下layoutDependsOn，之后滑动时就不会在调用layoutDependsOn和onDependentViewChanged
+     * @param dependency 其他的CoordinatorLayout的没有赋予behavior的一级孩子，都是dependency,有多少个dependency
+     *            layoutDependsOn就会调用几次，我们可以通过layoutDependsOn选择处理那个dependency的变化
+     *            dependency的onMeasure会先于MyBehavior的layoutDependsOn调用
+     *            child的onMeasure后于MyBehavior的onMeasureChild调用
      *
-     * 并且返回false的话，在onLayoutChild中不会刷新dependency的布局，导致dependency的getHeight时有时无，返回true能解决问题
+     * @return 返回true才能正常建立依赖关系，以后的每次滑动都会调用layoutDependsOn和onDependentViewChanged
+     *         返回false的话，滑动时只会调用layoutDependsOn，不会调用onDependentViewChanged，即我们只针对部分
+     *         dependency进行处理，并不是所有的dependency我们都要去处理
+     *
      */
     @Override
     public boolean layoutDependsOn(CoordinatorLayout parent, View child, View dependency)
     {
-        Log.d("my", "MyBehavior layoutDependsOn --- child = " + child.getId() + ", dependency = " + dependency.getId());
-        return child instanceof RecyclerView;
-
+        Log.d("my", "MyBehavior layoutDependsOn --- child = " + child.getId() + ", dependency = " + dependency.getId() + ", " + dependency.getClass().getSimpleName() + "" +
+                ", child.getMeasuredWidth() = " + child.getMeasuredWidth() + ", child.getMeasuredHeight() = " + child.getMeasuredHeight() + "----dependency.getMeasuredWidth() = " + dependency.getMeasuredWidth() + ", dependency.getMeasuredHeight = " + dependency.getMeasuredHeight());
+//        return child instanceof RecyclerView;
 //        return super.layoutDependsOn(parent, child, dependency);
+        return dependency instanceof LinearLayout;
+//        return dependency instanceof RecyclerView;
     }
 
     @Override
     public boolean onMeasureChild(CoordinatorLayout parent, View child, int parentWidthMeasureSpec, int widthUsed, int parentHeightMeasureSpec, int heightUsed)
     {
-        Log.d("my", "MyBehavior onMeasureChild");
+        Log.d("my", "MyBehavior onMeasureChild ");
         return super.onMeasureChild(parent, child, parentWidthMeasureSpec, widthUsed, parentHeightMeasureSpec, heightUsed);
     }
 
@@ -84,15 +83,18 @@ public class MyBehavior extends CoordinatorLayout.Behavior<View>
      * @param parent
      * @param child
      * @param layoutDirection
-     * @return 返回true使用自己的布局，返回false使用CoordinatorLayout默认的布局
-     * 这里需要注意的是所以得测量工作已经完成，即所有的view，包括parent，child，他们的getMeasuredHeight有值
-     * getHeight的值时有时无，因为getHeight的值实在他们的layout调用完之后才有的，包括getLeft,getTop等等
+     * @return 返回true使用必须自己去布局child，返回false使用CoordinatorLayout默认的布局去布局child
+     * onLayoutChild的调用会晚于layoutDependsOn中返回true的dependency的onLayout，这样我们才能在返回true的
+     * 情况下去自定义dependency的布局，否则我们在onLayoutChild写的dependency的布局会被dependency自己的默认布局覆盖
+     *
      */
     @Override
     public boolean onLayoutChild(CoordinatorLayout parent, View child, int layoutDirection)
     {
-        Log.d("my", "MyBehavior onLayoutChild");
-        return super.onLayoutChild(parent, child, layoutDirection);
+        Log.d("my", "MyBehavior onLayoutChild ");
+//        return super.onLayoutChild(parent, child, layoutDirection);
+
+        return true;
     }
 
     @Override
@@ -112,8 +114,9 @@ public class MyBehavior extends CoordinatorLayout.Behavior<View>
     /**
      *
      * @param coordinatorLayout
-     * @param child         带有behavior的view
-     * @param directTargetChild 当前滑动的view，他不一定是带有behavior的view，coordinatorLayout其他的孩子滑动也会触发该方法
+     * @param child             带有behavior的view
+     * @param directTargetChild 当前滑动的view，coordinatorLayout其他可以滑动的的孩子滑动也会触发该方法，如果是child滑动的
+     *                          那么child和target就是一样的，如果不是child是其他的滑动，那么child和target就不一样，
      * @param target            当前滑动的view，可多级
      * @param nestedScrollAxes
      * @return 返回true才会调用接下来的一系列的滑动方法
@@ -121,8 +124,8 @@ public class MyBehavior extends CoordinatorLayout.Behavior<View>
     @Override
     public boolean onStartNestedScroll(CoordinatorLayout coordinatorLayout, View child, View directTargetChild, View target, int nestedScrollAxes)
     {
-        Log.d("my", "MyBehavior onStartNestedScroll");
-        return (nestedScrollAxes & ViewCompat.SCROLL_AXIS_VERTICAL) != 0 && child.getId() == target.getId();
+        Log.d("my", "MyBehavior onStartNestedScroll" + ", child = " + child.getId() + "， directTargetChild = " + directTargetChild.getId() + ", target = " + target.getId());
+        return (nestedScrollAxes & ViewCompat.SCROLL_AXIS_VERTICAL) != 0;
     }
 
     @Override
@@ -139,7 +142,9 @@ public class MyBehavior extends CoordinatorLayout.Behavior<View>
      * @param target
      * @param dx
      * @param dy
-     * @param consumed
+     * @param consumed  给consumed[1]赋值后，dyUnconsumed in onNestedScroll = dy in onNestedPreScroll - consumed[1] in onNestedPreScroll
+     *       一旦消费了dy以后，子View就没有对应的dy偏移量了，导致子View没有偏移量，无法滑动， consumed是返回参数,size = 2，他会返回给子View消费了多少,消费了
+     *        之后他就不能在消费了
      */
     @Override
     public void onNestedPreScroll(CoordinatorLayout coordinatorLayout, View child, View target, int dx, int dy, int[] consumed)

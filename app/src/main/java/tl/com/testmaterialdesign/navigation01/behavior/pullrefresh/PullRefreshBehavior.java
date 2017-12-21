@@ -58,7 +58,10 @@ public class PullRefreshBehavior extends CoordinatorLayout.Behavior<View>
     @Override
     public boolean onLayoutChild(CoordinatorLayout parent, View child, int layoutDirection)
     {
-        Log.d("my", "onLayoutChild");
+        Log.d("my", "onLayoutChild parent.getMeasuredWidth() = " + parent.getMeasuredWidth() +
+                ", parent.getMeasuredHeight()" + parent.getMeasuredHeight() +
+                ", child.getMeasuredWidth() = " + child.getMeasuredWidth() + ", child.getMeasuredHeight()" + child.getMeasuredHeight());
+
         dep = parent.findViewById(R.id.ll_refresh);
         textView = (TextView) parent.findViewById(R.id.tv_refresh);
         // 将按上面的一块放到屏幕上方
@@ -73,16 +76,11 @@ public class PullRefreshBehavior extends CoordinatorLayout.Behavior<View>
     }
 
     @Override
-    public boolean onDependentViewChanged(CoordinatorLayout parent, View child, View dependency)
-    {
-        return super.onDependentViewChanged(parent, child, dependency);
-    }
-
-    @Override
     public boolean layoutDependsOn(CoordinatorLayout parent, View child, View dependency)
     {
         Log.d("my", "layoutDependsOn");
-        return child instanceof RecyclerView;
+//        return child instanceof RecyclerView;
+        return false;
     }
 
     @Override

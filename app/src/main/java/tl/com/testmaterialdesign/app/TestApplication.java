@@ -1,6 +1,7 @@
 package tl.com.testmaterialdesign.app;
 
 import android.app.Application;
+import android.content.Context;
 import android.os.Process;
 import android.util.Log;
 
@@ -27,6 +28,34 @@ public class TestApplication extends Application
         Log.d("my", "TestApplication onCreate, myUid = " + Process.myUid());
         initRealm();
 
+    }
+
+    @Override
+    protected void attachBaseContext(Context base)
+    {
+        super.attachBaseContext(base);
+        Log.d("my", "TestApplication attachBaseContext");
+    }
+
+    @Override
+    public void onLowMemory()
+    {
+        super.onLowMemory();
+        Log.d("my", "TestApplication onLowMemory");
+    }
+
+    @Override
+    public void onTerminate()
+    {
+        super.onTerminate();
+        Log.d("my", "TestApplication onTerminate");
+    }
+
+    @Override
+    public void onTrimMemory(int level)
+    {
+        super.onTrimMemory(level);
+        Log.d("my", "TestApplication onTrimMemory");
     }
 
     private void initRealm() {
