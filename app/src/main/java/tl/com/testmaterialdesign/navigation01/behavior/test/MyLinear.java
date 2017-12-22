@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.widget.LinearLayout;
 
 /**
@@ -35,6 +36,28 @@ public class MyLinear extends LinearLayout
     public MyLinear(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes)
     {
         super(context, attrs, defStyleAttr, defStyleRes);
+    }
+
+
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev)
+    {
+        Log.e("my", "MyLinear dispatchTouchEvent");
+        return super.dispatchTouchEvent(ev);
+    }
+
+    @Override
+    public boolean onInterceptTouchEvent(MotionEvent ev)
+    {
+        Log.e("my", "MyLinear onInterceptTouchEvent");
+        return super.onInterceptTouchEvent(ev);
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event)
+    {
+        Log.e("my", "MyLinear onTouchEvent");
+        return super.onTouchEvent(event);
     }
 
     @Override

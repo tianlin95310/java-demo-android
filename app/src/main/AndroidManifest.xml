@@ -150,6 +150,7 @@
         <activity android:name=".navigation61.dialog.DialogActivity"
             android:theme="@style/AppTheme.TranslucentStatus"
             />
+        <activity android:name=".navigation01.behavior.viewoffset.ViewOffSetActivity"/>
     </application>
 
 </manifest>

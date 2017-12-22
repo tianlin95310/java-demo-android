@@ -1,6 +1,7 @@
 package tl.com.testmaterialdesign.navigation61.dialog;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CoordinatorLayout;
@@ -38,11 +39,14 @@ public class MyAppBarLayoutBav extends AppBarLayout.Behavior implements AppBarLa
     float offset_h;
 
     Context context;
-    public MyAppBarLayoutBav() {
+
+    public MyAppBarLayoutBav()
+    {
         super();
     }
 
-    public void setDragable (final boolean canDrag) {
+    public void setDragable(final boolean canDrag)
+    {
         setDragCallback(new DragCallback()
         {
             @Override
@@ -53,7 +57,8 @@ public class MyAppBarLayoutBav extends AppBarLayout.Behavior implements AppBarLa
         });
     }
 
-    public MyAppBarLayoutBav(Context context, AttributeSet attrs) {
+    public MyAppBarLayoutBav(Context context, AttributeSet attrs)
+    {
         super(context, attrs);
 
         setDragable(true);
@@ -69,8 +74,11 @@ public class MyAppBarLayoutBav extends AppBarLayout.Behavior implements AppBarLa
         return super.onMeasureChild(parent, child, parentWidthMeasureSpec, widthUsed, parentHeightMeasureSpec, heightUsed);
     }
 
+    int verticalOffset;
+
     /**
      * 在偏移量发生变化时才会调用，verticalOffset，初始值为0
+     *
      * @param appBarLayout
      * @param verticalOffset
      */
@@ -78,65 +86,94 @@ public class MyAppBarLayoutBav extends AppBarLayout.Behavior implements AppBarLa
     public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset)
     {
 //        toolbar.setTranslationY(appBarLayout.getTotalScrollRange() + verticalOffset);
-//        Log.d("my", "onOffsetChanged verticalOffset = " + verticalOffset);
+        Log.d("my", "onOffsetChanged verticalOffset = " + verticalOffset);
+
+        if(verticalOffset < 0)
+            appBarLayout.setBackgroundColor(Color.TRANSPARENT);
+
+        this.verticalOffset = verticalOffset;
     }
 
     @Override
     public boolean onInterceptTouchEvent(CoordinatorLayout parent, AppBarLayout child, MotionEvent ev)
     {
-//        Log.d("my", "onInterceptTouchEvent ev = " + ev.toString());
+        Log.d("my", "onInterceptTouchEvent");
+
         return super.onInterceptTouchEvent(parent, child, ev);
+
     }
 
     float startY;
+
+    /**
+     * 点击AppBarLayout会走这里，因为AppBarLayout默认不消费，
+     * 而点击RecyclerView不会走，因为RecyclerView已经消费了,除非拦截了事件
+     *
+     * @param parent
+     * @param child
+     * @param ev
+     * @return
+     */
     @Override
     public boolean onTouchEvent(CoordinatorLayout parent, AppBarLayout child, MotionEvent ev)
     {
-//        Log.d("my", "onTouchEvent ev = " + ev.toString());
+        Log.d("my", "onTouchEvent");
 
-        switch (ev.getAction()) {
-            case MotionEvent.ACTION_DOWN:
-                startY = ev.getRawY();
-                break;
-            case MotionEvent.ACTION_MOVE:
-            case MotionEvent.ACTION_UP:
+        // 有一个向下的平移量，并且AppBarLayout没有折叠
+        if (offset_h >= 0 && verticalOffset == 0)
+        {
+            switch (ev.getAction())
+            {
+                case MotionEvent.ACTION_DOWN:
+                    startY = ev.getRawY();
+                    break;
 
-                float dy = ev.getRawY() - startY;
+                case MotionEvent.ACTION_MOVE:
+                case MotionEvent.ACTION_UP:
 
-                setAppBarLayoutParam(dy);
+                    // 滑动AppBarLayout时，下滑后，我们让CoordinatorLayout消费事件，禁止默认的行为
+                    float dy = ev.getRawY() - startY;
+                    setAppBarLayoutParam(dy);
+                    startY = ev.getRawY();
+                    return true;
+            }
+            return super.onTouchEvent(parent, child, ev);
 
-                startY = ev.getRawY();
-
-                break;
         }
-        return super.onTouchEvent(parent, child, ev);
+        else
+            return super.onTouchEvent(parent, child, ev);
     }
 
     public void setAppBarLayoutParam(float dy)
     {
         offset_h = offset_h + dy;
 
-        if(offset_h >= MAX_SLIDE)
+        if (offset_h >= MAX_SLIDE)
             offset_h = MAX_SLIDE;
 
-        if(offset_h < 0)
+        if (offset_h <= 0)
             offset_h = 0;
 
         CoordinatorLayout.LayoutParams layoutParams = (CoordinatorLayout.LayoutParams) appBarLayout.getLayoutParams();
-        layoutParams.width = parent.getWidth() - (int)(offset_h / SCALE);
+        layoutParams.width = parent.getWidth() - (int) (offset_h / SCALE);
 
-        if(layoutParams.width <= MIN_WIDTH)
+        if (layoutParams.width <= MIN_WIDTH)
             layoutParams.width = (int) MIN_WIDTH;
-        if(layoutParams.width >= parent.getWidth())
+        if (layoutParams.width >= parent.getWidth())
             layoutParams.width = parent.getWidth();
+
+        layoutParams.leftMargin = layoutParams.rightMargin = (parent.getWidth() - layoutParams.width) / 2;
+
         appBarLayout.setLayoutParams(layoutParams);
 
-        Log.d("my", "dy = " + dy + ", offset_h = " + offset_h + ", layoutParams.width = " + layoutParams.width);
+        Log.d("my", "dy = " + dy + ", offset_h = " + offset_h + ", layoutParams.width = " + layoutParams.width +
+                ", appBarLayout.getTotalScrollRange() = " + appBarLayout.getTotalScrollRange());
 
         appBarLayout.setTranslationY(offset_h);
         recyclerView.setTranslationY(offset_h);
 
         recyclerView.setAlpha(1 - offset_h / MAX_SLIDE);
+
     }
 
     @Override
@@ -145,14 +182,14 @@ public class MyAppBarLayoutBav extends AppBarLayout.Behavior implements AppBarLa
         Log.d("my", "onLayoutChild");
 
         boolean result = super.onLayoutChild(parent, abl, layoutDirection);
-        if(appBarLayout == null) {
+        if (appBarLayout == null)
+        {
             appBarLayout = abl;
             this.parent = parent;
             toolbar = (Toolbar) parent.findViewById(R.id.toolbar);
             recyclerView = (RecyclerView) parent.findViewById(R.id.recycler_view);
             appBarLayout.addOnOffsetChangedListener(this);
 
-            toolbar.setPadding(0, 56, 0, 0);
             // 初始化布局参数
             CoordinatorLayout.LayoutParams layoutParams = (CoordinatorLayout.LayoutParams) appBarLayout.getLayoutParams();
             layoutParams.width = parent.getWidth();
@@ -169,8 +206,6 @@ public class MyAppBarLayoutBav extends AppBarLayout.Behavior implements AppBarLa
             Log.d("my", "MIN_WIDTH = " + MIN_WIDTH);
             Log.d("my", "SCALE = " + SCALE);
 
-            abl.setTranslationY(offset_h);
-            recyclerView.setTranslationY(offset_h);
         }
 
         return result;
@@ -201,7 +236,15 @@ public class MyAppBarLayoutBav extends AppBarLayout.Behavior implements AppBarLa
     public void onNestedPreScroll(CoordinatorLayout coordinatorLayout, AppBarLayout child, View target, int dx, int dy, int[] consumed)
     {
         Log.d("my", "onNestedPreScroll dy = " + dy + ", consumed[1] = " + consumed[1]);
-        super.onNestedPreScroll(coordinatorLayout, child, target, dx, dy, consumed);
+        // 如果有偏移量，上滑时，我们要将appbar上移
+        if(offset_h > 0)
+        {
+            // 禁止RecyclerView的内部滑动
+            consumed[1] = dy;
+            setAppBarLayoutParam(-dy);
+        }
+        else
+            super.onNestedPreScroll(coordinatorLayout, child, target, dx, dy, consumed);
     }
 
     @Override
@@ -222,7 +265,13 @@ public class MyAppBarLayoutBav extends AppBarLayout.Behavior implements AppBarLa
     public boolean onNestedPreFling(CoordinatorLayout coordinatorLayout, AppBarLayout child, View target, float velocityX, float velocityY)
     {
         Log.d("my", "onNestedPreFling");
-        return super.onNestedPreFling(coordinatorLayout, child, target, velocityX, velocityY);
+        // 如果有平移量，禁止惯性滑动
+        if(offset_h > 0)
+        {
+            return true;
+        }
+        else
+            return super.onNestedPreFling(coordinatorLayout, child, target, velocityX, velocityY);
     }
 
     @Override

@@ -17,6 +17,7 @@ import tl.com.testmaterialdesign.navigation01.behavior.floataction.FloatActionAc
 import tl.com.testmaterialdesign.navigation01.behavior.likeuc.LikeUCHomeActivity;
 import tl.com.testmaterialdesign.navigation01.behavior.pullrefresh.PullRefreshActivity;
 import tl.com.testmaterialdesign.navigation01.behavior.test.TestFunCallActivity;
+import tl.com.testmaterialdesign.navigation01.behavior.viewoffset.ViewOffSetActivity;
 
 /**
  * Created by tianlin on 2017/10/13.
@@ -116,5 +117,7 @@ public class BehaviorActivity extends BaseActivity
     @OnClick(R.id.bt_6)
     public void bt_6()
     {
+        Intent intent = new Intent(this, ViewOffSetActivity.class);
+        startActivity(intent);
     }
 }

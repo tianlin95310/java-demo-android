@@ -25,11 +25,12 @@ public class MyBehavior extends CoordinatorLayout.Behavior<View>
     }
 
     /**
-     * MyCoordinatorLayout拦截事件时，先将事件给MyBehavior，将权利给他
+     * MyCoordinatorLayout拦截事件时，先将事件给MyBehavior，将权利给他,
+     * onInterceptTouchEvent优先子控件调用
      * @param parent
      * @param child
      * @param ev
-     * @return
+     * @return 如果拦截了,事件就不会往下传了,MyBehavior以及CoordinatorLayout的onTouchEvent会处理事件
      */
     @Override
     public boolean onInterceptTouchEvent(CoordinatorLayout parent, View child, MotionEvent ev)
@@ -39,11 +40,20 @@ public class MyBehavior extends CoordinatorLayout.Behavior<View>
 //        return true;
     }
 
+    /**
+     * 如果事件是让onTouchEvent处理，即事件是让CoordinatorLayout处理了，事件也是不往下分发的，所以
+     * MyBehavior只是CoordinatorLayout一层代理
+     * @param parent
+     * @param child
+     * @param ev
+     * @return
+     */
     @Override
     public boolean onTouchEvent(CoordinatorLayout parent, View child, MotionEvent ev)
     {
         Log.d("my", "MyBehavior onTouchEvent");
         return super.onTouchEvent(parent, child, ev);
+//        return true;
     }
 
     /**
@@ -94,7 +104,7 @@ public class MyBehavior extends CoordinatorLayout.Behavior<View>
         Log.d("my", "MyBehavior onLayoutChild ");
 //        return super.onLayoutChild(parent, child, layoutDirection);
 
-        return true;
+        return false;
     }
 
     @Override
@@ -117,7 +127,7 @@ public class MyBehavior extends CoordinatorLayout.Behavior<View>
      * @param child             带有behavior的view
      * @param directTargetChild 当前滑动的view，coordinatorLayout其他可以滑动的的孩子滑动也会触发该方法，如果是child滑动的
      *                          那么child和target就是一样的，如果不是child是其他的滑动，那么child和target就不一样，
-     * @param target            当前滑动的view，可多级
+     * @param target            当前滑动的view
      * @param nestedScrollAxes
      * @return 返回true才会调用接下来的一系列的滑动方法
      */
@@ -136,7 +146,7 @@ public class MyBehavior extends CoordinatorLayout.Behavior<View>
     }
 
     /**
-     * 在没有嵌套父子View滚动时child和target是相同的
+     * 当滚动的视图是child时，child和target是相同的
      * @param coordinatorLayout
      * @param child
      * @param target
