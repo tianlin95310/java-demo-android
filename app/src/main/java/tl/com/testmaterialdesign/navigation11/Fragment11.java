@@ -14,6 +14,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 import tl.com.testmaterialdesign.R;
+import tl.com.testmaterialdesign.navigation11.gridrecycler.GridRecyclerActivity;
 import tl.com.testmaterialdesign.navigation11.longpressd.LongPressedMoveActivity;
 import tl.com.testmaterialdesign.navigation11.slidedelete.SlideDeleteActivity;
 
@@ -69,6 +70,13 @@ public class Fragment11 extends Fragment
                 break;
         }
 
+        startActivity(intent);
+    }
+
+    @OnClick(R.id.bt_3)
+    public void bt_3()
+    {
+        Intent intent = new Intent(getActivity(), GridRecyclerActivity.class);
         startActivity(intent);
     }
 }

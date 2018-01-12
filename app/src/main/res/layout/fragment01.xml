@@ -42,40 +42,34 @@
                     />
             </LinearLayout>
 
-            <Button
-                android:layout_marginTop="30dp"
-                android:id="@+id/f01_fab5"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="关于Behavior的研究"
-                />
-
             <LinearLayout
-                android:layout_marginTop="30dp"
                 android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <Button
-                    android:layout_marginTop="20dp"
                     android:textSize="12sp"
                     android:id="@+id/f01_fab6"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="
-通过在父布局的事件分发中，将事件分别分发给孩子，这里子控件的
-点击事件存在bug，因为点击事件只是发给孩子的MotionEvent的一
-部分，并且滑动时两个列表并不是完全同步的，特殊情况有分离，
-因为点击事件跟点击的坐标有关，判断控件是否点击用的是
-点击点是否在控件内"
+                    android:text="通过事件的分发实现列表联动（类似CoordinatorLayout的思想）"
                     />
 
                 <Button
                     android:id="@+id/f01_fab7"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="使用API方法监听实现RecycleView联动"
+                    android:text="使用API方法监听实现列表联动"
                     />
             </LinearLayout>
+
+            <Button
+                android:layout_marginTop="30dp"
+                android:id="@+id/f01_fab5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="关于自定义Behavior的研究"
+                />
+
         </LinearLayout>
     </ScrollView>
 

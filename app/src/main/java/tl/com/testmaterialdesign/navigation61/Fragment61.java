@@ -24,7 +24,6 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 import tl.com.testmaterialdesign.R;
-import tl.com.testmaterialdesign.navigation61.dialog.DialogActivity;
 import tl.com.testmaterialdesign.navigation61.fullanddialog.DialogThemeActivity;
 import tl.com.testmaterialdesign.navigation61.marktext.MarkTextActivity;
 import tl.com.testmaterialdesign.service.TimingService;
@@ -159,13 +158,6 @@ public class Fragment61 extends Fragment
     public void bt_fun3()
     {
         Intent intent = new Intent(getActivity(), DialogThemeActivity.class);
-        startActivity(intent);
-    }
-
-    @OnClick(R.id.bt_fun4)
-    public void bt_fun4()
-    {
-        Intent intent = new Intent(getActivity(), DialogActivity.class);
         startActivity(intent);
     }
 

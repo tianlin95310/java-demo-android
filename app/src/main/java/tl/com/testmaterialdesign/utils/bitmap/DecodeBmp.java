@@ -15,7 +15,7 @@ import android.graphics.BitmapFactory;
 public class DecodeBmp
 {
     /**
-     * 已制定的密度加载应用内部图片
+     * 以指定的密度加载应用内部图片
      * @param context
      * @param imgID
      * @param densityDPI

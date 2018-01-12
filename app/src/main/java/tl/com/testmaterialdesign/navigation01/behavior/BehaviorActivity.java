@@ -17,7 +17,8 @@ import tl.com.testmaterialdesign.navigation01.behavior.floataction.FloatActionAc
 import tl.com.testmaterialdesign.navigation01.behavior.likeuc.LikeUCHomeActivity;
 import tl.com.testmaterialdesign.navigation01.behavior.pullrefresh.PullRefreshActivity;
 import tl.com.testmaterialdesign.navigation01.behavior.test.TestFunCallActivity;
-import tl.com.testmaterialdesign.navigation01.behavior.viewoffset.ViewOffSetActivity;
+import tl.com.testmaterialdesign.navigation01.behavior.bsr.BeiSaiErActivity;
+import tl.com.testmaterialdesign.navigation01.behavior.dialog.DialogActivity;
 
 /**
  * Created by tianlin on 2017/10/13.
@@ -117,7 +118,15 @@ public class BehaviorActivity extends BaseActivity
     @OnClick(R.id.bt_6)
     public void bt_6()
     {
-        Intent intent = new Intent(this, ViewOffSetActivity.class);
+        Intent intent = new Intent(this, BeiSaiErActivity.class);
         startActivity(intent);
+    }
+
+    @OnClick(R.id.bt_7)
+    public void bt_7()
+    {
+        Intent intent = new Intent(this, DialogActivity.class);
+        startActivity(intent);
+        overridePendingTransition(R.anim.activity_in, R.anim.activity_out);
     }
 }

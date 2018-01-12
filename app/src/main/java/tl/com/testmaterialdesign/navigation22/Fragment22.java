@@ -14,7 +14,6 @@ import tl.com.testmaterialdesign.R;
 import tl.com.testmaterialdesign.utils.ui.TlDatePickerFragment;
 import tl.com.testmaterialdesign.utils.ui.TlDialogFragment;
 import tl.com.testmaterialdesign.utils.ui.TlTimePickerFragment;
-import tl.com.testmaterialdesign.utils.ui.TlYearMonthPicker;
 
 /**
  * Created by tianlin on 2017/3/16.
@@ -120,7 +119,6 @@ public class Fragment22 extends Fragment implements View.OnClickListener
                         })
                         .setNoListener(null)
                         .show(getActivity().getSupportFragmentManager(), "alert");
-                ;
                 break;
 
 
@@ -139,7 +137,6 @@ public class Fragment22 extends Fragment implements View.OnClickListener
                             }
                         })
                         .show(getActivity().getSupportFragmentManager(), "date");
-                ;
                 break;
             }
 
@@ -158,15 +155,7 @@ public class Fragment22 extends Fragment implements View.OnClickListener
                             }
                         })
                         .show(getActivity().getSupportFragmentManager(), "time");
-                ;
                 break;
-
-            case R.id.f6_bt4:
-
-                TlYearMonthPicker tlYearMonthPicker = new TlYearMonthPicker();
-                tlYearMonthPicker.show(getActivity().getSupportFragmentManager(), "year_month");
-                break;
-
 
         }
     }

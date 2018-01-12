@@ -7,6 +7,7 @@
       <w>dragable</w>
       <w>floatintop</w>
       <w>fullanddialog</w>
+      <w>gridrecycler</w>
       <w>hideintent</w>
       <w>imagescale</w>
       <w>inputlimit</w>
@@ -28,6 +29,7 @@
       <w>slidedelete</w>
       <w>useapi</w>
       <w>viewanim</w>
+      <w>viewoffset</w>
     </words>
   </dictionary>
 </component>

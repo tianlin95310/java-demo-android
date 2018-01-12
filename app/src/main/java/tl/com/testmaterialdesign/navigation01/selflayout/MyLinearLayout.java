@@ -15,6 +15,12 @@ import android.widget.LinearLayout;
  * Created by tianlin on 2017/10/12.
  * Tel : 15071485690
  * QQ : 953108373
+ *
+ * 通过在父布局的事件分发中，将事件分别分发给孩子，这里子控件的
+ 点击事件存在bug，因为点击事件只是发给孩子的MotionEvent的一
+ 部分，并且滑动时两个列表并不是完全同步的，特殊情况有分离，
+ 因为点击事件跟点击的坐标有关，判断控件是否点击用的是
+ 点击点是否在控件内
  */
 
 public class MyLinearLayout extends LinearLayout

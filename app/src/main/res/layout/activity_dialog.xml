@@ -6,7 +6,7 @@
     android:id="@+id/coordinator"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".navigation61.dialog.DialogActivity">
+    tools:context=".navigation01.behavior.dialog.DialogActivity">
 
     <include layout="@layout/appbar_header"/>
 

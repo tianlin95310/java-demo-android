@@ -1,10 +1,13 @@
-package tl.com.testmaterialdesign.navigation61.dialog;
+package tl.com.testmaterialdesign.navigation01.behavior.dialog;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.Rect;
 import android.support.annotation.NonNull;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CoordinatorLayout;
+import android.support.v4.view.ViewPropertyAnimatorUpdateListener;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.AttributeSet;
@@ -13,6 +16,7 @@ import android.view.MotionEvent;
 import android.view.View;
 
 import tl.com.testmaterialdesign.R;
+import tl.com.testmaterialdesign.utils.anim.AnimUtils;
 
 /**
  * Created by tianlin on 2017/12/14.
@@ -23,7 +27,7 @@ import tl.com.testmaterialdesign.R;
 public class MyAppBarLayoutBav extends AppBarLayout.Behavior implements AppBarLayout.OnOffsetChangedListener
 {
     // 下滑过程中的最大距离
-    private static float MAX_SLIDE = 480;
+    private static float MAX_SLIDE;
 
     private static float MIN_WIDTH = 0;
 
@@ -88,7 +92,7 @@ public class MyAppBarLayoutBav extends AppBarLayout.Behavior implements AppBarLa
 //        toolbar.setTranslationY(appBarLayout.getTotalScrollRange() + verticalOffset);
         Log.d("my", "onOffsetChanged verticalOffset = " + verticalOffset);
 
-        if(verticalOffset < 0)
+        if (verticalOffset < 0)
             appBarLayout.setBackgroundColor(Color.TRANSPARENT);
 
         this.verticalOffset = verticalOffset;
@@ -97,8 +101,23 @@ public class MyAppBarLayoutBav extends AppBarLayout.Behavior implements AppBarLa
     @Override
     public boolean onInterceptTouchEvent(CoordinatorLayout parent, AppBarLayout child, MotionEvent ev)
     {
-        Log.d("my", "onInterceptTouchEvent");
+        Log.d("my", "onInterceptTouchEvent getAction = " + ev.getAction());
 
+        Rect rect = new Rect();
+        // setTranslationY只影响getX，getY，不影响实际的位置
+        rect.left = (int) appBarLayout.getX();
+        rect.top = (int) appBarLayout.getY();
+        rect.right = appBarLayout.getWidth() + rect.left;
+        rect.bottom = appBarLayout.getHeight() + rect.top;
+
+        Log.d("my", "rect = " + rect);
+        if(!rect.contains((int)ev.getRawX(), (int)ev.getRawY()) && offset_h > 0)
+        {
+            Activity activity = (Activity) context;
+            activity.finish();
+            activity.overridePendingTransition(R.anim.activity_in, R.anim.activity_out);
+            return true;
+        }
         return super.onInterceptTouchEvent(parent, child, ev);
 
     }
@@ -117,34 +136,48 @@ public class MyAppBarLayoutBav extends AppBarLayout.Behavior implements AppBarLa
     @Override
     public boolean onTouchEvent(CoordinatorLayout parent, AppBarLayout child, MotionEvent ev)
     {
-        Log.d("my", "onTouchEvent");
+        Log.d("my", "onTouchEvent getAction = " + ev.getAction());
 
         // 有一个向下的平移量，并且AppBarLayout没有折叠
-        if (offset_h >= 0 && verticalOffset == 0)
+        switch (ev.getAction())
         {
-            switch (ev.getAction())
-            {
-                case MotionEvent.ACTION_DOWN:
-                    startY = ev.getRawY();
-                    break;
+            case MotionEvent.ACTION_DOWN:
+                startY = ev.getRawY();
+                break;
 
-                case MotionEvent.ACTION_MOVE:
-                case MotionEvent.ACTION_UP:
+            case MotionEvent.ACTION_MOVE:
 
-                    // 滑动AppBarLayout时，下滑后，我们让CoordinatorLayout消费事件，禁止默认的行为
-                    float dy = ev.getRawY() - startY;
-                    setAppBarLayoutParam(dy);
-                    startY = ev.getRawY();
-                    return true;
-            }
-            return super.onTouchEvent(parent, child, ev);
+                float dy = ev.getRawY() - startY;
+                startY = ev.getRawY();
+
+                // 滑动AppBarLayout时，我们改变AppBarLayout的行为，不调用super.onTouchEvent
+                if(offset_h >= 0 && verticalOffset == 0)
+                    return setAppBarLayoutParam(dy);
+                else
+                    return super.onTouchEvent(parent, child, ev);
+
+            case MotionEvent.ACTION_UP:
+                dy = ev.getRawY() - startY;
+                startY = ev.getRawY();
+
+                // 临界控制
+                if(offset_h + dy < MAX_SLIDE / 2)
+                    offset_h = 0;
+                else
+                    offset_h = MAX_SLIDE;
+
+                // 滑动AppBarLayout时，我们改变AppBarLayout的行为，不调用super.onTouchEvent
+                if(offset_h >= 0 && verticalOffset == 0)
+                    return auToSlide(offset_h);
+                else
+                    return super.onTouchEvent(parent, child, ev);
 
         }
-        else
-            return super.onTouchEvent(parent, child, ev);
+        return super.onTouchEvent(parent, child, ev);
+
     }
 
-    public void setAppBarLayoutParam(float dy)
+    public boolean setAppBarLayoutParam(float dy)
     {
         offset_h = offset_h + dy;
 
@@ -174,6 +207,42 @@ public class MyAppBarLayoutBav extends AppBarLayout.Behavior implements AppBarLa
 
         recyclerView.setAlpha(1 - offset_h / MAX_SLIDE);
 
+        return false;
+    }
+
+    public boolean auToSlide(final float offset_h)
+    {
+        long duration = 200;
+
+        AnimUtils.translateY(appBarLayout, (int) offset_h, null, duration);
+        AnimUtils.translateY(recyclerView, (int) offset_h, null, duration);
+        AnimUtils.alpha(recyclerView, 1 - offset_h / MAX_SLIDE, duration, new ViewPropertyAnimatorUpdateListener()
+        {
+            @Override
+            public void onAnimationUpdate(View view)
+            {
+                Log.d("my", "view.getY() = " + view.getY() + ", view.getAlpha() = " + view.getAlpha());
+
+//                alpha = 1 - offset_h / MAX_SLIDE;
+//                offset_h = (1 - alpha) * MAX_SLIDE;
+//                width = parent.getWidth() - offset_h / SCALE
+
+                // 得到appBarLayout应有的宽度
+                float width = parent.getWidth() - (1 - view.getAlpha()) * MAX_SLIDE / SCALE;
+
+                CoordinatorLayout.LayoutParams layoutParams = (CoordinatorLayout.LayoutParams) appBarLayout.getLayoutParams();
+                layoutParams.width = (int) width;
+                if (layoutParams.width <= MIN_WIDTH)
+                    layoutParams.width = (int) MIN_WIDTH;
+                if (layoutParams.width >= parent.getWidth())
+                    layoutParams.width = parent.getWidth();
+                layoutParams.leftMargin = layoutParams.rightMargin = (parent.getWidth() - layoutParams.width) / 2;
+                appBarLayout.setLayoutParams(layoutParams);
+
+            }
+        }, null);
+
+        return false;
     }
 
     @Override
@@ -195,17 +264,25 @@ public class MyAppBarLayoutBav extends AppBarLayout.Behavior implements AppBarLa
             layoutParams.width = parent.getWidth();
             abl.setLayoutParams(layoutParams);
 
-            // 窗口的最小宽度
+            // 假设最大的滑动距离为appBarLayout高度的一半
+            MAX_SLIDE = appBarLayout.getHeight() / 2;
+
+            // 假设窗口的最小宽度
             MIN_WIDTH = layoutParams.width * 0.8f;
 
             // 窗口减到最小宽度移动的距离
             float dy = parent.getWidth() - MIN_WIDTH;
 
+            // 计算得到横纵长度变化比率
             SCALE = MAX_SLIDE / dy;
+
             Log.d("my", "parent.getWidth() = " + parent.getWidth());
             Log.d("my", "MIN_WIDTH = " + MIN_WIDTH);
             Log.d("my", "SCALE = " + SCALE);
 
+            // 初始化为对话框
+            offset_h = MAX_SLIDE;
+            setAppBarLayoutParam(0);
         }
 
         return result;
@@ -236,14 +313,11 @@ public class MyAppBarLayoutBav extends AppBarLayout.Behavior implements AppBarLa
     public void onNestedPreScroll(CoordinatorLayout coordinatorLayout, AppBarLayout child, View target, int dx, int dy, int[] consumed)
     {
         Log.d("my", "onNestedPreScroll dy = " + dy + ", consumed[1] = " + consumed[1]);
-        // 如果有偏移量，上滑时，我们要将appbar上移
-        if(offset_h > 0)
+        if (offset_h > 0)
         {
             // 禁止RecyclerView的内部滑动
             consumed[1] = dy;
-            setAppBarLayoutParam(-dy);
-        }
-        else
+        } else
             super.onNestedPreScroll(coordinatorLayout, child, target, dx, dy, consumed);
     }
 
@@ -266,11 +340,10 @@ public class MyAppBarLayoutBav extends AppBarLayout.Behavior implements AppBarLa
     {
         Log.d("my", "onNestedPreFling");
         // 如果有平移量，禁止惯性滑动
-        if(offset_h > 0)
+        if (offset_h > 0)
         {
             return true;
-        }
-        else
+        } else
             return super.onNestedPreFling(coordinatorLayout, child, target, velocityX, velocityY);
     }
 

@@ -34,11 +34,4 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
-    <Button
-        android:text="打开年份与月份对话框"
-        android:id="@+id/f6_bt4"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-
-
 </LinearLayout>

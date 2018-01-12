@@ -147,10 +147,11 @@
         <activity android:name=".navigation61.fullanddialog.DialogThemeActivity"
                   android:theme="@style/DialogActivity"
             />
-        <activity android:name=".navigation61.dialog.DialogActivity"
+        <activity android:name=".navigation01.behavior.dialog.DialogActivity"
             android:theme="@style/AppTheme.TranslucentStatus"
             />
-        <activity android:name=".navigation01.behavior.viewoffset.ViewOffSetActivity"/>
+        <activity android:name=".navigation01.behavior.bsr.BeiSaiErActivity"/>
+        <activity android:name=".navigation11.gridrecycler.GridRecyclerActivity"/>
     </application>
 
 </manifest>

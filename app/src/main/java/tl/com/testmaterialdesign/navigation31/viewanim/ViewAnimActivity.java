@@ -130,12 +130,12 @@ public class ViewAnimActivity extends BaseActivity
             }
             case R.id.bt_big3:
             {
-                AnimUtils.translateX(tvText3, 200, null);
+                AnimUtils.translateX(tvText3, 200, null, 800);
             }
             break;
             case R.id.bt_small3:
             {
-                AnimUtils.translateX(tvText3, 0, null);
+                AnimUtils.translateX(tvText3, 0, null, 800);
 
                 break;
             }

@@ -1,4 +1,4 @@
-package tl.com.testmaterialdesign.navigation61.dialog;
+package tl.com.testmaterialdesign.navigation01.behavior.dialog;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -7,9 +7,7 @@ import android.support.design.widget.CoordinatorLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.widget.Toast;
+import android.view.KeyEvent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -68,16 +66,15 @@ public class DialogActivity extends BaseActivity
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu)
+    public boolean onKeyUp(int keyCode, KeyEvent event)
     {
-        getMenuInflater().inflate(R.menu.dialog_activity, menu);
-        return true;
-    }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item)
-    {
-        Toast.makeText(this, "onOptionsItemSelected " + item.getItemId(), Toast.LENGTH_SHORT).show();
-        return true;
+        if(keyCode == KeyEvent.KEYCODE_BACK)
+        {
+            finish();
+            overridePendingTransition(R.anim.activity_in, R.anim.activity_out);
+            return true;
+        }
+        return super.onKeyUp(keyCode, event);
     }
 }

@@ -79,8 +79,7 @@ public class PullRefreshBehavior extends CoordinatorLayout.Behavior<View>
     public boolean layoutDependsOn(CoordinatorLayout parent, View child, View dependency)
     {
         Log.d("my", "layoutDependsOn");
-//        return child instanceof RecyclerView;
-        return false;
+        return true;
     }
 
     @Override

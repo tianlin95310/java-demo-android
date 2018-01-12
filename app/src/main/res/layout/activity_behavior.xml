@@ -51,7 +51,13 @@
 
         <Button
             android:id="@+id/bt_6"
-            android:text="OffSetBehavior的用法"
+            android:text="贝塞尔曲线"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <Button
+            android:id="@+id/bt_7"
+            android:text="类饿了么商品详情动画"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 

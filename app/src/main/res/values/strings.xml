@@ -8,7 +8,7 @@
     <!--上下滑动显示和隐藏Fab-->
     <string name="scale_up_show_behavior">tl.com.testmaterialdesign.navigation01.behavior.floataction.MyFloatActionBehavior</string>
 
-    <!--列表联动-->
+    <!--通过视图的位置变化去移动另外一个视图-->
     <string name="double_move_behavior">tl.com.testmaterialdesign.navigation01.behavior.doublemove.MyDoubleMoveBehavior</string>
 
     <!--通过滑动显示影藏另一个视图-->
@@ -25,7 +25,7 @@
     </string>
 
     <!--自定义的APPBarLayoutBehavior-->
-    <string name="my_appbar_bav">tl.com.testmaterialdesign.navigation61.dialog.MyAppBarLayoutBav</string>
+    <string name="my_appbar_bav">tl.com.testmaterialdesign.navigation01.behavior.dialog.MyAppBarLayoutBav</string>
 
 
 </resources>

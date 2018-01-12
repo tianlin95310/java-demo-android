@@ -56,14 +56,14 @@ public class MyFloatActionBehavior extends FloatingActionButton.Behavior
         if (((dyConsumed > 0 && dyUnconsumed == 0) || (dyConsumed == 0
                 && dyUnconsumed > 0)))
         {
-            AnimUtils.translateX(child, child.getWidth(), null);
+            AnimUtils.translateX(child, child.getWidth(), null, 800);
 
         }
         // 下滑
         else if (((dyConsumed < 0 && dyUnconsumed == 0) || (dyConsumed == 0
                 && dyUnconsumed < 0)))
         {
-            AnimUtils.translateX(child, 0, null);
+            AnimUtils.translateX(child, 0, null, 800);
         }
     }
 

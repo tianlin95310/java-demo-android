@@ -47,7 +47,7 @@ public class FloatActionActivity extends AppCompatActivity
     public void onWindowFocusChanged(boolean hasFocus)
     {
         super.onWindowFocusChanged(hasFocus);
-        AnimUtils.translateX(fabToTop, fabToTop.getWidth(), null);
+        AnimUtils.translateX(fabToTop, fabToTop.getWidth(), null, 800);
     }
 
 
