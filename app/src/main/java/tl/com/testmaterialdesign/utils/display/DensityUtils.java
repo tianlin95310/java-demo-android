@@ -45,20 +45,6 @@ public class DensityUtils
     }
 
     /**
-     * 获取屏幕密度的近整数值
-     * @param context
-     * @return
-     */
-    public static int getScreenDensityFloor(Context context)
-    {
-        WindowManager windowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
-        Display display = windowManager.getDefaultDisplay();
-        DisplayMetrics displayMetrics = new DisplayMetrics();
-        display.getMetrics(displayMetrics);
-        return (int) Math.floor(displayMetrics.density);
-    }
-
-    /**
      * 获取屏幕的像素宽度
      * @param context
      * @return

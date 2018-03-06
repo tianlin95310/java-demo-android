@@ -14,6 +14,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import tl.com.testmaterialdesign.R;
 import tl.com.testmaterialdesign.navigation01.behavior.BehaviorActivity;
+import tl.com.testmaterialdesign.navigation01.bsr.BeiSaiErActivity;
 import tl.com.testmaterialdesign.navigation01.floatintop.FloatInTopActivity;
 import tl.com.testmaterialdesign.navigation01.liaotian.LiaotianActivity;
 import tl.com.testmaterialdesign.navigation01.searchview.SearchViewActivity;
@@ -42,6 +43,8 @@ public class Fragment01 extends Fragment
     Button f01Fab6;
     @BindView(R.id.f01_fab7)
     Button f01Fab7;
+    @BindView(R.id.f01_fab8)
+    Button f01Fab8;
 
     @Nullable
     @Override
@@ -98,5 +101,18 @@ public class Fragment01 extends Fragment
                 break;
         }
 
+    }
+
+    @Override
+    public void onDestroyView()
+    {
+        super.onDestroyView();
+    }
+
+    @OnClick(R.id.f01_fab8)
+    public void onViewClicked()
+    {
+        Intent intent = new Intent(getContext(), BeiSaiErActivity.class);
+        startActivity(intent);
     }
 }

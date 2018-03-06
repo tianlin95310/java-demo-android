@@ -1,6 +1,9 @@
 package tl.com.testmaterialdesign.navigation91;
 
 import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
@@ -13,7 +16,9 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -35,6 +40,8 @@ public class Fragment91 extends Fragment
     Button btGetPath;
     @BindView(R.id.bt_get_sys_time)
     Button btGetSysTime;
+    @BindView(R.id.bt_get_home_app)
+    Button btGetHomeApp;
 
     @Nullable
     @Override
@@ -53,7 +60,7 @@ public class Fragment91 extends Fragment
     }
 
     @OnClick(R.id.bt_get_path)
-    public void onViewClicked()
+    public void bt_get_path()
     {
         getPathData(getActivity());
     }
@@ -101,5 +108,27 @@ public class Fragment91 extends Fragment
     {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd HHmmss");
         Log.d("my", "time = " + sdf.format(new Date()));
+    }
+
+    @OnClick(R.id.bt_get_home_app)
+    public void onViewClicked()
+    {
+        List<String> names = new ArrayList<>();
+        PackageManager packageManager = this.getActivity().getPackageManager();
+        //属性
+        Intent intent = new Intent(Intent.ACTION_MAIN);
+        intent.addCategory(Intent.CATEGORY_HOME);
+//        intent.addCategory(Intent.CATEGORY_LAUNCHER);
+        List<ResolveInfo> resolveInfo = packageManager.queryIntentActivities(intent,
+                PackageManager.MATCH_DEFAULT_ONLY);
+        for(ResolveInfo ri : resolveInfo){
+            Log.d("my", "packageName = " + ri.activityInfo.packageName);
+            Log.d("my", "parentActivityName = " + ri.activityInfo.parentActivityName);
+            Log.d("my", "targetActivity = " + ri.activityInfo.targetActivity);
+            Log.d("my", "name = " + ri.activityInfo.name);
+            Log.d("my", "processName = " + ri.activityInfo.processName);
+            Log.d("my", "----------------------------------------------------");
+            names.add(ri.activityInfo.packageName);
+        }
     }
 }

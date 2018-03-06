@@ -24,6 +24,7 @@ import tl.com.testmaterialdesign.navigation61.Fragment61;
 import tl.com.testmaterialdesign.navigation71.Fragment71;
 import tl.com.testmaterialdesign.navigation81.Fragment81;
 import tl.com.testmaterialdesign.navigation91.Fragment91;
+import tl.com.testmaterialdesign.utils.nullcheck.NullCheckUtils;
 import tl.com.testmaterialdesign.utils.toast.SnackbarUtils;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener
@@ -47,6 +48,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         initView();
 
+        test();
+    }
+
+    private void test()
+    {
+        NullCheckUtils.isEmpty(null);
     }
 
     @Override

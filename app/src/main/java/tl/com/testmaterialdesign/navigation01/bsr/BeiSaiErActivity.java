@@ -1,13 +1,16 @@
-package tl.com.testmaterialdesign.navigation01.behavior.bsr;
+package tl.com.testmaterialdesign.navigation01.bsr;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.RecyclerView;
+import android.widget.Button;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import tl.com.testmaterialdesign.R;
 import tl.com.testmaterialdesign.base.BaseActivity;
+import tl.com.testmaterialdesign.navigation01.bsr.element.ElementAddShopActivity;
 
 /**
  * Created by tianlin on 2017/12/22.
@@ -17,8 +20,8 @@ import tl.com.testmaterialdesign.base.BaseActivity;
 
 public class BeiSaiErActivity extends BaseActivity
 {
-    @BindView(R.id.recycler_view)
-    RecyclerView recyclerView;
+    @BindView(R.id.bt_element_add_shop)
+    Button btElementAddShop;
 
     @Override
     public void initView()
@@ -32,6 +35,13 @@ public class BeiSaiErActivity extends BaseActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bei_sai_er);
         ButterKnife.bind(this);
+    }
+
+    @OnClick(R.id.bt_element_add_shop)
+    public void onViewClicked()
+    {
+        Intent intent = new Intent(this, ElementAddShopActivity.class);
+        startActivity(intent);
     }
 }
 

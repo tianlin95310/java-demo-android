@@ -1,20 +1,24 @@
 package tl.com.testmaterialdesign.service;
 
+import android.app.ActivityManager;
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.IBinder;
 import android.os.Process;
 import android.os.SystemClock;
-import android.support.annotation.IntDef;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
+
+import tl.com.testmaterialdesign.utils.nullcheck.NullCheckUtils;
 
 /**
  * Created by tianlin on 2017/6/26.
@@ -43,19 +47,30 @@ public class TimingService extends Service
     };
 
     // 每2分钟校验一次时间
-    TimerTask checkTime = new TimerTask()
+    TimerTask checkCurrentApp = new TimerTask()
     {
         @Override
         public void run()
         {
-
-            checkTime();
+            checkCurrentApp();
         }
     };
 
-    private void checkTime()
+    /**
+     * 判断当前前台运行的应用
+     */
+    private void checkCurrentApp()
     {
+        ActivityManager mActivityManager = (ActivityManager)getSystemService(Context.ACTIVITY_SERVICE);
+        List<ActivityManager.RunningTaskInfo> rti = mActivityManager.getRunningTasks(5);
 
+        if(!NullCheckUtils.isEmpty(rti))
+        {
+            ActivityManager.RunningTaskInfo runningTaskInfo = rti.get(0);
+
+
+            Log.d("my", "当前处于前台的应用是：" + runningTaskInfo.topActivity.getPackageName() + ", " + runningTaskInfo.topActivity.getClassName());
+        }
     }
 
     // 每30分钟更新一次时间戳
@@ -98,7 +113,7 @@ public class TimingService extends Service
         Log.d("my", "currentThreadTimeMillis = " + SystemClock.currentThreadTimeMillis());
 
         // 获取开机时间
-        SystemClock.elapsedRealtime();
+//        SystemClock.elapsedRealtime();
     }
 
     public SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss:SSS");
@@ -109,7 +124,9 @@ public class TimingService extends Service
         if(timer == null)
         {
             timer = new Timer();
-            timer.schedule(timing, 0, 1000);
+//            timer.schedule(timing, 0, 1000);
+
+            timer.schedule(checkCurrentApp, 0, 2000);
         }
 
         // 初始化时间

@@ -12,13 +12,12 @@ import butterknife.OnClick;
 import tl.com.testmaterialdesign.R;
 import tl.com.testmaterialdesign.base.BaseActivity;
 import tl.com.testmaterialdesign.navigation01.behavior.bottomsheet.BottomSheetActivity;
+import tl.com.testmaterialdesign.navigation01.behavior.dialog.DialogActivity;
 import tl.com.testmaterialdesign.navigation01.behavior.doublemove.BehaviorMoveActivity;
 import tl.com.testmaterialdesign.navigation01.behavior.floataction.FloatActionActivity;
 import tl.com.testmaterialdesign.navigation01.behavior.likeuc.LikeUCHomeActivity;
 import tl.com.testmaterialdesign.navigation01.behavior.pullrefresh.PullRefreshActivity;
 import tl.com.testmaterialdesign.navigation01.behavior.test.TestFunCallActivity;
-import tl.com.testmaterialdesign.navigation01.behavior.bsr.BeiSaiErActivity;
-import tl.com.testmaterialdesign.navigation01.behavior.dialog.DialogActivity;
 
 /**
  * Created by tianlin on 2017/10/13.
@@ -40,8 +39,6 @@ public class BehaviorActivity extends BaseActivity
     Button bt5;
     @BindView(R.id.bt)
     Button bt;
-    @BindView(R.id.bt_6)
-    Button bt6;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState)
@@ -112,13 +109,6 @@ public class BehaviorActivity extends BaseActivity
     public void bt()
     {
         Intent intent = new Intent(this, TestFunCallActivity.class);
-        startActivity(intent);
-    }
-
-    @OnClick(R.id.bt_6)
-    public void bt_6()
-    {
-        Intent intent = new Intent(this, BeiSaiErActivity.class);
         startActivity(intent);
     }
 

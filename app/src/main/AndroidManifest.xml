@@ -8,6 +8,7 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"/>
 
+    <uses-permission android:name="android.permission.GET_TOP_ACTIVITY_INFO"/>
     <!-- 开机自启动权限 -->
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
 
@@ -18,13 +19,10 @@
     -->
     <application
         android:name=".app.TestApplication"
-        android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:persistent="true"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
 
         <activity
             android:name=".MainActivity"
@@ -150,8 +148,12 @@
         <activity android:name=".navigation01.behavior.dialog.DialogActivity"
             android:theme="@style/AppTheme.TranslucentStatus"
             />
-        <activity android:name=".navigation01.behavior.bsr.BeiSaiErActivity"/>
+        <activity android:name=".navigation01.bsr.BeiSaiErActivity"/>
         <activity android:name=".navigation11.gridrecycler.GridRecyclerActivity"/>
+
+        <!--android:exported="true"能让Activity直接运行，变成应用首页-->
+        <activity android:name=".navigation01.bsr.element.ElementAddShopActivity"
+            android:exported="true"/>
     </application>
 
 </manifest>

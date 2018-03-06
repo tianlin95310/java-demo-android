@@ -15,4 +15,10 @@
         android:id="@+id/bt_get_sys_time"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
+
+    <Button
+        android:text="获取手机的桌面应用"
+        android:id="@+id/bt_get_home_app"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
 </LinearLayout>

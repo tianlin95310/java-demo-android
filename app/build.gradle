@@ -33,7 +33,7 @@ android {
         debug {
             signingConfig signingConfigs.tl
             debuggable true
-            jniDebuggable true
+            jniDebuggable false
             minifyEnabled false
         }
     }

@@ -26,6 +26,7 @@ import butterknife.Unbinder;
 import tl.com.testmaterialdesign.R;
 import tl.com.testmaterialdesign.navigation61.fullanddialog.DialogThemeActivity;
 import tl.com.testmaterialdesign.navigation61.marktext.MarkTextActivity;
+import tl.com.testmaterialdesign.navigation61.wallpaper.SetWallpaperActivity;
 import tl.com.testmaterialdesign.service.TimingService;
 import tl.com.testmaterialdesign.service.bindservice.BindStartService;
 
@@ -73,6 +74,8 @@ public class Fragment61 extends Fragment
     Button btSendDataToService;
     @BindView(R.id.bt_get_service_data)
     Button btGetServiceData;
+    @BindView(R.id.bt_fun4)
+    Button btFun4;
 
     @Nullable
     @Override
@@ -100,13 +103,7 @@ public class Fragment61 extends Fragment
     }
 
     @OnClick(R.id.bt_begin_clock)
-    public void onViewClicked()
-    {
-        // 启动计时服务
-        startTimingService();
-    }
-
-    private void startTimingService()
+    public void bt_begin_clock()
     {
         Intent intent = new Intent(getActivity(), TimingService.class);
         getActivity().startService(intent);
@@ -158,6 +155,13 @@ public class Fragment61 extends Fragment
     public void bt_fun3()
     {
         Intent intent = new Intent(getActivity(), DialogThemeActivity.class);
+        startActivity(intent);
+    }
+
+    @OnClick(R.id.bt_fun4)
+    public void bt_fun4()
+    {
+        Intent intent = new Intent(getActivity(), SetWallpaperActivity.class);
         startActivity(intent);
     }
 

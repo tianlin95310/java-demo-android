@@ -18,12 +18,13 @@
                 android:layout_height="wrap_content">
                 <Button
                     android:id="@+id/bt_begin_clock"
-                    android:text="开始计时服务"
+                    android:text="开始计时服务(判断当前处于前台的应用)"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
             </LinearLayout>
 
             <LinearLayout
+                android:paddingTop="20dp"
                 android:background="@color/colorPrimary"
                 android:layout_marginTop="30dp"
                 android:orientation="horizontal"
@@ -75,6 +76,14 @@
                 android:textSize="12sp"
                 android:text="全屏式的Activity和对话框式的Activity(通过主题 -- 无效)"
                 android:id="@+id/bt_fun3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <Button
+                android:layout_marginTop="20dp"
+                android:textSize="12sp"
+                android:text="设置壁纸"
+                android:id="@+id/bt_fun4"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
 
