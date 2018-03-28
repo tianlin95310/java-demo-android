@@ -10,8 +10,8 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +22,6 @@ import tl.com.testmaterialdesign.R;
 import tl.com.testmaterialdesign.base.BaseActivity;
 import tl.com.testmaterialdesign.base.BaseVo;
 import tl.com.testmaterialdesign.utils.display.PixsUtils;
-import tl.com.testmaterialdesign.utils.display.ScreenUtils;
 
 /**
  * Created by tianlin on 2018/2/8.
@@ -34,8 +33,8 @@ public class ElementAddShopActivity extends BaseActivity implements BeiSaiErAdap
 {
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
-    @BindView(R.id.iv_end)
-    ImageView ivEnd;
+    @BindView(R.id.bt_end)
+    Button bt_end;
     @BindView(R.id.bt_beisaier)
     Button btBeisaier;
 
@@ -60,30 +59,40 @@ public class ElementAddShopActivity extends BaseActivity implements BeiSaiErAdap
         @Override
         public Point evaluate(float t, Point startValue, Point endValue)
         {
+
+            Log.d("my", "evaluate t = " + t);
             int x = (int) ((1 - t) * (1 - t) * startValue.x + 2 * t * (1 - t) * controlPoint.x + t * t * endValue.x);
             int y = (int) ((1 - t) * (1 - t) * startValue.y + 2 * t * (1 - t) * controlPoint.y + t * t * endValue.y);
             return new Point(x, y);
         }
     }
     @Override
-    public void onItemClick(Point start)
+    public void onItemClick(View itemBt)
     {
-        Log.d("my", "状态栏 = " + ScreenUtils.getStateHeight(this) + ", 标题栏 = " + ScreenUtils.getTitleHeight(this));
 
+        btBeisaier.setVisibility(View.VISIBLE);
+        int []recycler = new int[2];
+        recyclerView.getLocationOnScreen(recycler);
+        Log.d("my", "---状态栏加上标题栏---" + recycler[1]);
+
+        int position[] = new int[2];
+        itemBt.getLocationOnScreen(position);
+        Point start = new Point();
+        start.x = position[0];
+        start.y = position[1] - recycler[1];
         Log.d("my", "---start---" + start.toString());
 
         int endPositions[] = new int[2];
-        ivEnd.getLocationOnScreen(endPositions);
+        bt_end.getLocationOnScreen(endPositions);
         Point end = new Point();
         end.x = endPositions[0];
-        end.y = endPositions[1];
-
+        end.y = endPositions[1] - recycler[1];
         Log.d("my", "---end---" + end.toString());
 
         int pointX = (start.x + end.x) / 2;
-        int pointY = (start.y - PixsUtils.dp2px(this, 150));
-
+        int pointY = (start.y - PixsUtils.dp2px(this, 100));
         final Point controlPoint = new Point(pointX, pointY);
+        Log.d("my", "---controlPoint---" + controlPoint.toString());
 
         ValueAnimator valueAnimator = ValueAnimator.ofObject(new MyTypeEvaluator(controlPoint), start, end);
 
@@ -97,19 +106,26 @@ public class ElementAddShopActivity extends BaseActivity implements BeiSaiErAdap
                 Log.d("my", "onAnimationUpdate position = " + position.toString());
                 btBeisaier.setX(position.x);
                 btBeisaier.setY(position.y);
+
             }
         });
         valueAnimator.addListener(new AnimatorListenerAdapter()
         {
             @Override
+            public void onAnimationStart(Animator animation)
+            {
+                super.onAnimationStart(animation);
+            }
+
+            @Override
             public void onAnimationEnd(Animator animation)
             {
-
+                btBeisaier.setVisibility(View.GONE);
             }
             @Override
             public void onAnimationCancel(Animator animation)
             {
-
+                btBeisaier.setVisibility(View.GONE);
             }
         });
 

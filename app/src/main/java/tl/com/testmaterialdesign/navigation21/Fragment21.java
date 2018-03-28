@@ -1,14 +1,20 @@
 package tl.com.testmaterialdesign.navigation21;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.NotificationManagerCompat;
 import android.support.v4.content.FileProvider;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -48,6 +54,8 @@ public class Fragment21 extends Fragment
     Unbinder unbinder;
 
     File file;
+    @BindView(R.id.bt_notification)
+    Button btNotification;
 
     @Nullable
     @Override
@@ -104,7 +112,7 @@ public class Fragment21 extends Fragment
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data)
     {
-        if(file.exists())
+        if (file.exists())
         {
             Toast.makeText(getActivity(), "file exist " + file.getPath(), Toast.LENGTH_SHORT).show();
             Log.d("my", "file exist " + file.getPath());
@@ -112,8 +120,7 @@ public class Fragment21 extends Fragment
             Intent intent = new Intent(getActivity(), PhotoShowActivity.class);
             intent.putExtra("file", file.getPath());
             startActivity(intent);
-        }
-        else
+        } else
         {
             Toast.makeText(getActivity(), "file not exist ", Toast.LENGTH_SHORT).show();
         }
@@ -131,7 +138,7 @@ public class Fragment21 extends Fragment
 
         file = new File(img_dir, fileName + ".jpg");
 
-        if(Build.VERSION.SDK_INT <= Build.VERSION_CODES.M)
+        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.M)
         {
             // file开头的uri
             Uri uri = Uri.fromFile(file);
@@ -139,8 +146,7 @@ public class Fragment21 extends Fragment
             Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
             intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
             startActivityForResult(intent, 1);
-        }
-        else
+        } else
         {
             // content开头的
             Uri uri = FileProvider.getUriForFile(context, context.getString(R.string.authorities), file);
@@ -151,5 +157,37 @@ public class Fragment21 extends Fragment
             startActivityForResult(intent, 1);
         }
 
+    }
+
+    @OnClick(R.id.bt_notification)
+    public void onViewClicked()
+    {
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
+        {
+            createChannel();
+        }
+
+        int notificationId = 0x1234;
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(getActivity(), "1");
+
+        builder.setSmallIcon(android.R.drawable.stat_notify_chat);
+        builder.setContentText("aaa");
+        builder.setContentTitle("bbb");
+        NotificationManagerCompat notificationManagerCompat = NotificationManagerCompat.from(getActivity());
+        notificationManagerCompat.notify(notificationId, builder.build());
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    private void createChannel()
+    {
+        NotificationManager notificationManager =(NotificationManager)getActivity().getSystemService(Context.NOTIFICATION_SERVICE);
+
+        NotificationChannel channel = new NotificationChannel("1",
+                "Channel1", NotificationManager.IMPORTANCE_DEFAULT);
+        channel.enableLights(true); //是否在桌面icon右上角展示小红点
+        channel.setLightColor(Color.GREEN); //小红点颜色
+        channel.setShowBadge(true); //是否在久按桌面图标时显示此渠道的通知
+        notificationManager.createNotificationChannel(channel);
     }
 }

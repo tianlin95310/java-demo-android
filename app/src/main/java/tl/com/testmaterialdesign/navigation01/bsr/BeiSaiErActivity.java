@@ -11,6 +11,7 @@ import butterknife.OnClick;
 import tl.com.testmaterialdesign.R;
 import tl.com.testmaterialdesign.base.BaseActivity;
 import tl.com.testmaterialdesign.navigation01.bsr.element.ElementAddShopActivity;
+import tl.com.testmaterialdesign.navigation01.bsr.flowwater.PathFlowWaterActivity;
 
 /**
  * Created by tianlin on 2017/12/22.
@@ -41,6 +42,13 @@ public class BeiSaiErActivity extends BaseActivity
     public void onViewClicked()
     {
         Intent intent = new Intent(this, ElementAddShopActivity.class);
+        startActivity(intent);
+    }
+
+    @OnClick(R.id.bt_float_water)
+    public void bt_float_water()
+    {
+        Intent intent = new Intent(this, PathFlowWaterActivity.class);
         startActivity(intent);
     }
 }

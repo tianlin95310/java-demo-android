@@ -2,7 +2,6 @@ package tl.com.testmaterialdesign.navigation01.bsr.element;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.graphics.Point;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -71,14 +70,8 @@ public class BeiSaiErAdapter extends RecyclerView.Adapter
         @OnClick(R.id.bt_beisaier)
         public void onViewClicked()
         {
-            int position[] = new int[2];
-            btBeisaier.getLocationOnScreen(position);
-
-            Point start = new Point();
-            start.x = position[0];
-            start.y = position[1];
             if(onItemClickListener != null) {
-                onItemClickListener.onItemClick(start);
+                onItemClickListener.onItemClick(btBeisaier);
             }
         }
     }
@@ -96,6 +89,6 @@ public class BeiSaiErAdapter extends RecyclerView.Adapter
     OnItemClickListener onItemClickListener;
 
     public interface OnItemClickListener {
-        void onItemClick(Point start);
+        void onItemClick(View itemBt);
     }
 }

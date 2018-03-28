@@ -154,6 +154,7 @@
         <!--android:exported="true"能让Activity直接运行，变成应用首页-->
         <activity android:name=".navigation01.bsr.element.ElementAddShopActivity"
             android:exported="true"/>
+        <activity android:name=".navigation01.bsr.flowwater.PathFlowWaterActivity"/>
     </application>
 
 </manifest>
