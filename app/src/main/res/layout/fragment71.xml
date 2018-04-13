@@ -6,13 +6,19 @@
 
     <Button
         android:id="@+id/bt1_f702"
-        android:text="圆形百分制控件"
+        android:text="圆形控件"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
     <Button
         android:id="@+id/bt1_f71"
         android:text="下拉刷新"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <Button
+        android:id="@+id/bt1_f72"
+        android:text="条形图"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 </LinearLayout>

@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <group android:checkableBehavior="single">
+    <group android:checkableBehavior="none">
         <!---=========================material design======================-->
         <item
             android:id="@+id/menu_01"
+
             android:title="01，测试material design"/>
 
         <!---=======================================================-->

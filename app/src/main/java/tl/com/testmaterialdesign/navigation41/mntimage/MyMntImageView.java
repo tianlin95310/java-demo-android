@@ -50,6 +50,12 @@ public class MyMntImageView extends AppCompatImageView
 
         File file = new File(Environment.getExternalStorageDirectory(), "1.png");
 
+        if(!file.exists())
+        {
+            ToastUtils.show(context, file.getName() + "不存在或者没有内存卡权限");
+            return;
+        }
+
         // 1，加载原始图片大小,图片是多大就是多大，300 * 630
         raw_bmp = BitmapFactory.decodeFile(file.getAbsolutePath());
 
@@ -60,7 +66,7 @@ public class MyMntImageView extends AppCompatImageView
         }
         // 2，通过目标密度来改变图片，对于内存卡上的图片，inTargetDensity无法改变大小
         BitmapFactory.Options option = new BitmapFactory.Options();
-        // 加载的图片的实际密度，只能对应用内部的图片有效，内存卡内的图片无效
+        // 加载的图片的实际密度，只能对应用内部/data/data的图片有效，内存卡内的图片无效
         option.inTargetDensity = DensityUtils.getScreenDensityDPI(context) / 2;
         scaleBmp = BitmapFactory.decodeFile(file.getAbsolutePath(), option);
 

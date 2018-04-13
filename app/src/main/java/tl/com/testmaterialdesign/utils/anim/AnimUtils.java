@@ -18,8 +18,8 @@ public class AnimUtils
 
     // 放大到原本大小(顶部方向)
     public static void scaleShow(View view, ViewPropertyAnimatorListener viewPropertyAnimatorListener) {
-        ViewCompat.setPivotX(view, view.getWidth() / 2);
-        ViewCompat.setPivotY(view, 0);
+        view.setPivotX(view.getWidth() / 2);
+        view.setPivotY(0);
         ViewCompat.animate(view)
                 .scaleX(1.0f)
                 .scaleY(1.0f)
@@ -31,8 +31,8 @@ public class AnimUtils
     }
     // 缩小到消失(顶部方向)
     public static void scaleHide(View view, ViewPropertyAnimatorListener viewPropertyAnimatorListener) {
-        ViewCompat.setPivotX(view, view.getWidth() / 2);
-        ViewCompat.setPivotY(view, 0);
+        view.setPivotX(view.getWidth() / 2);
+        view.setPivotY(0);
         ViewCompat.animate(view)
                 .scaleX(1.0f)
                 .scaleY(0.0f)
@@ -95,8 +95,8 @@ public class AnimUtils
 
     public static void scale(View view, float scaleX, float scaleY, ViewPropertyAnimatorListener viewPropertyAnimatorListener, long duration)
     {
-        ViewCompat.setPivotX(view, view.getWidth() / 2);
-        ViewCompat.setPivotY(view, view.getHeight() / 2);
+        view.setPivotX(view.getWidth() / 2);
+        view.setPivotY(view.getHeight() / 2);
 
         ViewCompat.animate(view)
                 .scaleX(scaleX)

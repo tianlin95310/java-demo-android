@@ -155,6 +155,8 @@
         <activity android:name=".navigation01.bsr.element.ElementAddShopActivity"
             android:exported="true"/>
         <activity android:name=".navigation01.bsr.flowwater.PathFlowWaterActivity"/>
+        <activity android:name=".navigation61.wallpaper.SetWallpaperActivity"/>
+        <activity android:name=".navigation71.tiaoxingtu.TiaoXingTuActivity"/>
     </application>
 
 </manifest>
