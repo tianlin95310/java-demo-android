@@ -1,6 +1,7 @@
 package tl.com.testmaterialdesign.navigation71.pullrefresh;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.view.ViewCompat;
 import android.support.v4.view.ViewPropertyAnimatorListener;
@@ -105,14 +106,18 @@ public class TLRefreshBehavior extends CoordinatorLayout.Behavior<View>
     }
 
     @Override
-    public boolean onStartNestedScroll(CoordinatorLayout coordinatorLayout, View child, View directTargetChild, View target, int nestedScrollAxes)
+    public boolean onStartNestedScroll(@NonNull CoordinatorLayout coordinatorLayout, @NonNull View child, @NonNull View directTargetChild, @NonNull View target, int axes, int type)
     {
-        return nestedScrollAxes == ViewCompat.SCROLL_AXIS_VERTICAL;
+        return axes == ViewCompat.SCROLL_AXIS_VERTICAL;
     }
 
+
     @Override
-    public void onNestedPreScroll(CoordinatorLayout coordinatorLayout, View child, View target, int dx, int dy, int[] consumed)
+    public void onNestedPreScroll(@NonNull CoordinatorLayout coordinatorLayout, @NonNull View child, @NonNull View target, int dx, int dy, @NonNull int[] consumed, int type)
     {
+        if(type != ViewCompat.TYPE_TOUCH) {
+            return;
+        }
 
         if(isAnimRunning)
             return;
@@ -125,7 +130,7 @@ public class TLRefreshBehavior extends CoordinatorLayout.Behavior<View>
             if(position == 0)
             {
                 // 如果当前在顶部，并且已经往下滑了一部分，这时往上滑时，应消费掉dy，让RecyclerView不进行内部滑动
-                if(dy > 0)
+                if(dy > 0 && recyclerView.getTranslationY() > 0)
                 {
                     consumed[1] = dy;
                 }
@@ -154,7 +159,7 @@ public class TLRefreshBehavior extends CoordinatorLayout.Behavior<View>
             if(position == linearLayoutManager.getItemCount() - 1)
             {
 
-                if(dy < 0)
+                if(dy < 0 && recyclerView.getTranslationY() < 0)
                 {
                     consumed[1] = dy;
                 }
@@ -214,9 +219,13 @@ public class TLRefreshBehavior extends CoordinatorLayout.Behavior<View>
         this.mode = MODE;
     }
 
+
     @Override
-    public void onStopNestedScroll(CoordinatorLayout coordinatorLayout, View child, View target)
+    public void onStopNestedScroll(@NonNull CoordinatorLayout coordinatorLayout, @NonNull View child, @NonNull View target, int type)
     {
+        if(type != ViewCompat.TYPE_TOUCH) {
+            return;
+        }
 
         if(isAnimRunning)
             return;
@@ -241,7 +250,6 @@ public class TLRefreshBehavior extends CoordinatorLayout.Behavior<View>
         {
             finish();
         }
-
     }
 
     public void finish()
