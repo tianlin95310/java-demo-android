@@ -16,21 +16,21 @@ import java.util.Calendar;
  * Function :
  */
 
-public class TlTimePickerFragment extends DialogFragment
+public class TLTimePickerFragment extends DialogFragment
 {
     private int hourOfDay;
     private int minute;
     private boolean is24;
     private String divider = "-";
 
-    public TlTimePickerFragment initTime(int hourOfDay, int minute)
+    public TLTimePickerFragment initTime(int hourOfDay, int minute)
     {
         this.hourOfDay = hourOfDay;
         this.minute = minute;
         return this;
     }
 
-    public TlTimePickerFragment setIs24(boolean is24)
+    public TLTimePickerFragment setIs24(boolean is24)
     {
         this.is24 = is24;
         return this;
@@ -43,21 +43,21 @@ public class TlTimePickerFragment extends DialogFragment
 
     OnTlTimeSetListener onTlTimeSetListener;
 
-    public TlTimePickerFragment setOnTlTimeSetListener(OnTlTimeSetListener onTlTimeSetListener)
+    public TLTimePickerFragment setOnTlTimeSetListener(OnTlTimeSetListener onTlTimeSetListener)
     {
         this.onTlTimeSetListener = onTlTimeSetListener;
         return this;
     }
 
-    public TlTimePickerFragment setDivider(String divider)
+    public TLTimePickerFragment setDivider(String divider)
     {
         this.divider = divider;
         return this;
     }
 
-    public static TlTimePickerFragment newInstance()
+    public static TLTimePickerFragment newInstance()
     {
-        TlTimePickerFragment fragment = new TlTimePickerFragment();
+        TLTimePickerFragment fragment = new TLTimePickerFragment();
         return fragment;
     }
     @NonNull

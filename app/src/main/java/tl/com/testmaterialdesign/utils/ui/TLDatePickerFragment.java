@@ -16,7 +16,7 @@ import java.util.Calendar;
  * Function :
  */
 
-public class TlDatePickerFragment extends DialogFragment
+public class TLDatePickerFragment extends DialogFragment
 {
     /**
      * 时间分隔线,
@@ -29,13 +29,13 @@ public class TlDatePickerFragment extends DialogFragment
     private int monthOfYear;
     private int dayOfMonth;
 
-    public TlDatePickerFragment setDivider(String divider)
+    public TLDatePickerFragment setDivider(String divider)
     {
         this.divider = divider;
         return this;
     }
 
-    public TlDatePickerFragment setOnDateSetListener(OnTlDateSetListener onTlDateSetListener)
+    public TLDatePickerFragment setOnDateSetListener(OnTlDateSetListener onTlDateSetListener)
     {
         this.onTlDateSetListener = onTlDateSetListener;
         return this;
@@ -46,7 +46,7 @@ public class TlDatePickerFragment extends DialogFragment
         void onDateSet(String date);
     }
 
-    public TlDatePickerFragment initDate(int year, int monthOfYear, int dayOfMonth)
+    public TLDatePickerFragment initDate(int year, int monthOfYear, int dayOfMonth)
     {
         this.year = year;
         this.monthOfYear = monthOfYear;
@@ -54,9 +54,9 @@ public class TlDatePickerFragment extends DialogFragment
         return this;
     }
 
-    public static TlDatePickerFragment newInstance()
+    public static TLDatePickerFragment newInstance()
     {
-        TlDatePickerFragment fragment = new TlDatePickerFragment();
+        TLDatePickerFragment fragment = new TLDatePickerFragment();
 
         return fragment;
     }

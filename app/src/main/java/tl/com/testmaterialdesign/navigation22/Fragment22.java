@@ -11,9 +11,9 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import tl.com.testmaterialdesign.R;
-import tl.com.testmaterialdesign.utils.ui.TlDatePickerFragment;
-import tl.com.testmaterialdesign.utils.ui.TlDialogFragment;
-import tl.com.testmaterialdesign.utils.ui.TlTimePickerFragment;
+import tl.com.testmaterialdesign.utils.ui.TLDatePickerFragment;
+import tl.com.testmaterialdesign.utils.ui.TLDialogFragment;
+import tl.com.testmaterialdesign.utils.ui.TLTimePickerFragment;
 
 /**
  * Created by tianlin on 2017/3/16.
@@ -51,7 +51,7 @@ public class Fragment22 extends Fragment implements View.OnClickListener
                 /**
                  * 在show调用之后，TlDialogFragment才会开始创建
                  */
-                TlDialogFragment
+                TLDialogFragment
                         .newInstance()
                         .setStyleId(R.style.AppCompatAlertDialogStyle1)
                         .setTitle("提示")
@@ -76,7 +76,7 @@ public class Fragment22 extends Fragment implements View.OnClickListener
                 /**
                  * 在show调用之后，TlDialogFragment才会开始创建
                  */
-                TlDialogFragment
+                TLDialogFragment
                         .newInstance()
                         .setStyleId(R.style.AppCompatAlertDialogStyle2)
                         .setTitle("提示")
@@ -102,7 +102,7 @@ public class Fragment22 extends Fragment implements View.OnClickListener
                 /**
                  * 在show调用之后，TlDialogFragment才会开始创建
                  */
-                TlDialogFragment
+                TLDialogFragment
                         .newInstance()
                         .setStyleId(R.style.AppCompatAlertDialogStyle3)
                         .setTitle("提示")
@@ -125,10 +125,10 @@ public class Fragment22 extends Fragment implements View.OnClickListener
             case R.id.f6_bt2:
             {
 
-                TlDatePickerFragment
+                TLDatePickerFragment
                         .newInstance()
                         .setDivider("/")
-                        .setOnDateSetListener(new TlDatePickerFragment.OnTlDateSetListener()
+                        .setOnDateSetListener(new TLDatePickerFragment.OnTlDateSetListener()
                         {
                             @Override
                             public void onDateSet(String date)
@@ -142,11 +142,11 @@ public class Fragment22 extends Fragment implements View.OnClickListener
 
             case R.id.f6_bt3:
 
-                TlTimePickerFragment
+                TLTimePickerFragment
                         .newInstance()
                         .setIs24(true)
                         .setDivider("\\")
-                        .setOnTlTimeSetListener(new TlTimePickerFragment.OnTlTimeSetListener()
+                        .setOnTlTimeSetListener(new TLTimePickerFragment.OnTlTimeSetListener()
                         {
                             @Override
                             public void onTimeSet(String time)

@@ -157,6 +157,7 @@
         <activity android:name=".navigation01.bsr.flowwater.PathFlowWaterActivity"/>
         <activity android:name=".navigation61.wallpaper.SetWallpaperActivity"/>
         <activity android:name=".navigation71.tiaoxingtu.TiaoXingTuActivity"/>
+        <activity android:name=".navigation71.shanxing.ShanXingRatioActivity"/>
     </application>
 
 </manifest>

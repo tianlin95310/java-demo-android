@@ -16,6 +16,7 @@ import butterknife.Unbinder;
 import tl.com.testmaterialdesign.R;
 import tl.com.testmaterialdesign.navigation71.check.OnKeyCheckActivity;
 import tl.com.testmaterialdesign.navigation71.pullrefresh.TLPullRefActivity;
+import tl.com.testmaterialdesign.navigation71.shanxing.ShanXingRatioActivity;
 import tl.com.testmaterialdesign.navigation71.tiaoxingtu.TiaoXingTuActivity;
 
 /**
@@ -34,6 +35,8 @@ public class Fragment71 extends Fragment
     Button bt1F71;
     @BindView(R.id.bt1_f72)
     Button bt1F72;
+    @BindView(R.id.bt1_f73)
+    Button bt1F73;
 
     @Nullable
     @Override
@@ -66,9 +69,16 @@ public class Fragment71 extends Fragment
     }
 
     @OnClick(R.id.bt1_f72)
-    public void onViewClicked()
+    public void bt1_f72()
     {
         Intent intent = new Intent(getActivity(), TiaoXingTuActivity.class);
+        startActivity(intent);
+    }
+
+    @OnClick(R.id.bt1_f73)
+    public void bt1_f73()
+    {
+        Intent intent = new Intent(getActivity(), ShanXingRatioActivity.class);
         startActivity(intent);
     }
 }

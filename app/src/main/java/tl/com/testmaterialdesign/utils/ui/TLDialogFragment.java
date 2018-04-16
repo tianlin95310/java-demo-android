@@ -18,7 +18,7 @@ import tl.com.testmaterialdesign.utils.nullcheck.NullCheckUtils;
  * Function : v4 DialogFragment对话框
  */
 
-public class TlDialogFragment extends DialogFragment
+public class TLDialogFragment extends DialogFragment
 {
 
     /**
@@ -61,55 +61,55 @@ public class TlDialogFragment extends DialogFragment
      */
     private int styleId = 0;
 
-    public TlDialogFragment setView(View view)
+    public TLDialogFragment setView(View view)
     {
         this.view = view;
         return this;
     }
 
-    public static TlDialogFragment newInstance()
+    public static TLDialogFragment newInstance()
     {
-        TlDialogFragment fragment = new TlDialogFragment();
+        TLDialogFragment fragment = new TLDialogFragment();
         return fragment;
     }
 
-    public TlDialogFragment setStyleId(int styleId)
+    public TLDialogFragment setStyleId(int styleId)
     {
         this.styleId = styleId;
         return this;
     }
 
-    public TlDialogFragment setOkText(String okText)
+    public TLDialogFragment setOkText(String okText)
     {
         this.okText = okText;
         return this;
     }
 
-    public TlDialogFragment setNoText(String noText)
+    public TLDialogFragment setNoText(String noText)
     {
         this.noText = noText;
         return this;
     }
 
-    public TlDialogFragment setOkListener(DialogInterface.OnClickListener okListener)
+    public TLDialogFragment setOkListener(DialogInterface.OnClickListener okListener)
     {
         this.okListener = okListener;
         return this;
     }
 
-    public TlDialogFragment setNoListener(DialogInterface.OnClickListener noListener)
+    public TLDialogFragment setNoListener(DialogInterface.OnClickListener noListener)
     {
         this.noListener = noListener;
         return this;
     }
 
-    public TlDialogFragment setTitle(String title)
+    public TLDialogFragment setTitle(String title)
     {
         this.title = title;
         return this;
     }
 
-    public TlDialogFragment setMsg(String msg)
+    public TLDialogFragment setMsg(String msg)
     {
         this.msg = msg;
         return this;

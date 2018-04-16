@@ -33,7 +33,6 @@ public class CheckControl extends BasePresenter<ICheckView>
         public void run()
         {
 
-
         }
     };
 }
