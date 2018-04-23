@@ -88,12 +88,24 @@ public class PullRefreshBehavior extends CoordinatorLayout.Behavior<View>
         return (nestedScrollAxes & ViewCompat.SCROLL_AXIS_VERTICAL) != 0;
     }
 
+//    {
+//        LinearLayoutManager linearLayoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
+//        int first1 = linearLayoutManager.findFirstVisibleItemPosition();
+//        int first2 = linearLayoutManager.findFirstCompletelyVisibleItemPosition();
+//        int last1 = linearLayoutManager.findLastVisibleItemPosition();
+//        int last2 = linearLayoutManager.findLastCompletelyVisibleItemPosition();
+//
+    // 当某一个item的高度太高时findFirstCompletelyVisibleItemPosition可能为-1，
+    // findLastVisibleItemPosition根findFirstVisibleItemPosition的值一样，这种情况不能
+    // 用这些方法判断第一和最后一行
+//        Log.d("my", "dy = " + dy + ", first1 = " + first1 + ", first2 = " + first2 + ", last1 = " + last1 + ", last2 = " + last2);
+//    }
+
     @Override
     public void onNestedPreScroll(CoordinatorLayout coordinatorLayout, View child, View target, int dx, int dy, int[] consumed)
     {
 
         // 滑动方式1
-
         RecyclerView recyclerView = (RecyclerView) child;
         LinearLayoutManager linearLayoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
         int first = linearLayoutManager.findFirstCompletelyVisibleItemPosition();
@@ -187,37 +199,5 @@ public class PullRefreshBehavior extends CoordinatorLayout.Behavior<View>
                 dep.setTranslationY(0);
             }
         }, 500);
-//        if (!isAnim)
-//        {
-//            AnimUtils.translateY(dep, 0, new ViewPropertyAnimatorListener()
-//            {
-//                @Override
-//                public void onAnimationStart(View view)
-//                {
-//                    if (recycler.getTranslationY() >= dep_h)
-//                    {
-//                        textView.setText("刷新完成");
-//                        refresh();
-//                    }
-//
-//                    isAnim = true;
-//                }
-//
-//                @Override
-//                public void onAnimationEnd(View view)
-//                {
-//                    isAnim = false;
-//                    textView.setText("下拉刷新");
-//                }
-//
-//                @Override
-//                public void onAnimationCancel(View view)
-//                {
-//                    isAnim = false;
-//                }
-//            }, (long) Math.abs(recycler.getTranslationY()));
-//
-//            AnimUtils.translateY(recycler, 0, null, (long) Math.abs(recycler.getTranslationY()));
-//        }
     }
 }

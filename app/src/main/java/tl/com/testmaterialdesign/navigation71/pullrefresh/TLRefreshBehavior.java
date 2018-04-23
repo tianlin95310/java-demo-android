@@ -1,11 +1,9 @@
 package tl.com.testmaterialdesign.navigation71.pullrefresh;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.view.ViewCompat;
 import android.support.v4.view.ViewPropertyAnimatorListener;
-import android.support.v7.widget.LinearLayoutManager;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
@@ -16,14 +14,14 @@ import android.widget.TextView;
 import tl.com.testmaterialdesign.R;
 import tl.com.testmaterialdesign.utils.anim.AnimUtils;
 
+
 /**
  * Created by tianlin on 2017/10/19.
  * Tel : 15071485690
  * QQ : 953108373
  */
 
-public class TLRefreshBehavior extends CoordinatorLayout.Behavior<View>
-{
+public class TLRefreshBehavior extends CoordinatorLayout.Behavior<View> {
     /**
      * 最开始的状态，以及下拉距离还没有到可以出发下拉刷新临界值的状态
      */
@@ -58,43 +56,39 @@ public class TLRefreshBehavior extends CoordinatorLayout.Behavior<View>
     // 当前是刷新还是加载更多
     int mode = 0;
 
-    public TLRefreshBehavior()
-    {
+    public TLRefreshBehavior() {
     }
 
-    public TLRefreshBehavior(Context context, AttributeSet attrs)
-    {
+    public TLRefreshBehavior(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
     /**
      * 该方法返回true，才会刷新dependency的布局，特别是在这样onLayoutChild返回true的情况下，onLayoutChild中的refreshViewHolder.ll_refresh才能正常的布局
+     *
      * @param parent
      * @param child
      * @param dependency
      * @return 通常返回true,
      */
     @Override
-    public boolean layoutDependsOn(CoordinatorLayout parent, View child, View dependency)
-    {
+    public boolean layoutDependsOn(CoordinatorLayout parent, View child, View dependency) {
 //        return child instanceof TLRefreshRecyclerView;
         return dependency instanceof LinearLayout;
     }
 
     /**
-     *
      * @param parent
      * @param child
      * @param layoutDirection
      * @return 在返回true的情况下，对于那些使用behavior的child，我们需要自己去布局他，否则控件无法显示，没有加behavior的dependency能正常显示
-     *
+     * <p>
      * 有时候，有些dependency会比onLayoutChild执行要晚，导致onLayoutChild效果被覆盖，导致对dependency的布局无效
      * 我们可以让layoutDependsOn返回true，或者依赖于我们需要再onLayoutChild中需要自己实现布局,能保证LinearLayout的
      * onLayout先于this.onLayoutChild调用
      */
     @Override
-    public boolean onLayoutChild(CoordinatorLayout parent, View child, int layoutDirection)
-    {
+    public boolean onLayoutChild(CoordinatorLayout parent, View child, int layoutDirection) {
         // 初始化列表和监听器
         initRecyclerView(child);
         // 初始化View
@@ -105,110 +99,131 @@ public class TLRefreshBehavior extends CoordinatorLayout.Behavior<View>
         return super.onLayoutChild(parent, child, layoutDirection);
     }
 
+
     @Override
-    public boolean onStartNestedScroll(@NonNull CoordinatorLayout coordinatorLayout, @NonNull View child, @NonNull View directTargetChild, @NonNull View target, int axes, int type)
-    {
-        return axes == ViewCompat.SCROLL_AXIS_VERTICAL;
+    public boolean onStartNestedScroll(CoordinatorLayout coordinatorLayout, View child, View directTargetChild, View target, int nestedScrollAxes) {
+        return nestedScrollAxes == ViewCompat.SCROLL_AXIS_VERTICAL;
     }
 
-
     @Override
-    public void onNestedPreScroll(@NonNull CoordinatorLayout coordinatorLayout, @NonNull View child, @NonNull View target, int dx, int dy, @NonNull int[] consumed, int type)
-    {
-        if(type != ViewCompat.TYPE_TOUCH) {
+    public void onNestedPreScroll(CoordinatorLayout coordinatorLayout, View child, View target, int dx, int dy, int[] consumed) {
+
+        if (mode == MODE_READY) {
             return;
         }
-
-        if(isAnimRunning)
+        if (isAnimRunning)
             return;
 
-        {
-            LinearLayoutManager linearLayoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
-            int position = linearLayoutManager.findFirstCompletelyVisibleItemPosition();
-
-            // 当前是第一个item
-            if(position == 0)
-            {
-                // 如果当前在顶部，并且已经往下滑了一部分，这时往上滑时，应消费掉dy，让RecyclerView不进行内部滑动
-                if(dy > 0 && recyclerView.getTranslationY() > 0)
-                {
-                    consumed[1] = dy;
+        // recyclerView有平移时不让recyclerView进行内部滑动
+        if(recyclerView.getTranslationY() != 0) {
+            float transition = recyclerView.getTranslationY() - dy;
+            if (transition >= 0 && transition <= MAX_REFRESH_LAYOUT_HEIGHT) {
+                refreshViewHolder.ll_refresh.setTranslationY(transition);
+                recyclerView.setTranslationY(transition);
+                if (transition >= BEGIN_REFRESH_HEIGHT) {
+                    setMode(MODE_BEGIN);
+                } else if (transition > 0 && transition < BEGIN_REFRESH_HEIGHT && this.mode == MODE_BEGIN) {
+                    setMode(MODE_INIT);
                 }
-                float transition = recyclerView.getTranslationY() - dy;
+            }
+            else if (transition >= -MAX_REFRESH_LAYOUT_HEIGHT && transition <= 0) {
+                refreshViewHolder.ll_load.setTranslationY(transition);
+                recyclerView.setTranslationY(transition);
+                if (transition <= -BEGIN_REFRESH_HEIGHT) {
+                    setMode(MODE_BEGIN);
+                } else if (transition > -BEGIN_REFRESH_HEIGHT && transition < 0 && this.mode == MODE_BEGIN) {
+                    setMode(MODE_INIT);
+                }
+            }
 
-                if(transition >= 0 && transition <= MAX_REFRESH_LAYOUT_HEIGHT)
-                {
-                    refreshViewHolder.ll_refresh.setTranslationY(transition);
-                    recyclerView.setTranslationY(transition);
+            // 禁止让recyclerView内部滑动
+            consumed[1] = dy;
+        }
 
-                    if(transition >= BEGIN_REFRESH_HEIGHT)
-                    {
-                        setMode(MODE_BEGIN);
-                    }
-                    else if(transition > 0 && transition < BEGIN_REFRESH_HEIGHT && this.mode == MODE_BEGIN)
-                    {
-                        setMode(MODE_INIT);
-                    }
+
+    }
+
+    @Override
+    public void onNestedScroll(CoordinatorLayout coordinatorLayout, View child, View target, int dxConsumed, int dyConsumed, int dxUnconsumed, int dyUnconsumed) {
+
+        Log.d("my", "dyConsumed = " + dyConsumed + ", dyUnconsumed = " + dyUnconsumed + ", recyclerView.getTranslationY() = " + recyclerView.getTranslationY());
+        if (mode == MODE_READY) {
+            return;
+        }
+        if (isAnimRunning)
+            return;
+
+        // 滑动到顶端后的滑动，触发recyclerView的移动
+        if (dyConsumed == 0) {
+            float transition = recyclerView.getTranslationY() - dyUnconsumed;
+            if (transition >= 0 && transition <= MAX_REFRESH_LAYOUT_HEIGHT) {
+                refreshViewHolder.ll_refresh.setTranslationY(transition);
+                recyclerView.setTranslationY(transition);
+                if (transition >= BEGIN_REFRESH_HEIGHT) {
+                    setMode(MODE_BEGIN);
+                } else if (transition > 0 && transition < BEGIN_REFRESH_HEIGHT && this.mode == MODE_BEGIN) {
+                    setMode(MODE_INIT);
+                }
+            }
+            else if (transition >= -MAX_REFRESH_LAYOUT_HEIGHT && transition <= 0) {
+                refreshViewHolder.ll_load.setTranslationY(transition);
+                recyclerView.setTranslationY(transition);
+                if (transition <= -BEGIN_REFRESH_HEIGHT) {
+                    setMode(MODE_BEGIN);
+                } else if (transition > -BEGIN_REFRESH_HEIGHT && transition < 0 && this.mode == MODE_BEGIN) {
+                    setMode(MODE_INIT);
                 }
             }
         }
-        {
-            LinearLayoutManager linearLayoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
-            int position = linearLayoutManager.findLastCompletelyVisibleItemPosition();
+    }
 
-            if(position == linearLayoutManager.getItemCount() - 1)
-            {
+    @Override
+    public void onStopNestedScroll(CoordinatorLayout coordinatorLayout, View child, View target) {
 
-                if(dy < 0 && recyclerView.getTranslationY() < 0)
-                {
-                    consumed[1] = dy;
-                }
-                float transition = recyclerView.getTranslationY() - dy;
+        if (mode == MODE_READY) {
+            return;
+        }
 
-                if(transition >= -MAX_REFRESH_LAYOUT_HEIGHT && transition <= 0)
-                {
-                    refreshViewHolder.ll_load.setTranslationY(transition);
-                    recyclerView.setTranslationY(transition);
+        if (isAnimRunning)
+            return;
 
-                    if(transition <= -BEGIN_REFRESH_HEIGHT)
-                    {
-                        setMode(MODE_BEGIN);
-                    }
-                    else if(transition > -BEGIN_REFRESH_HEIGHT && transition < 0 && this.mode == MODE_BEGIN)
-                    {
-                        setMode(MODE_INIT);
-                    }
-                }
+        float transition = recyclerView.getTranslationY();
+        if (transition >= BEGIN_REFRESH_HEIGHT) {
+            setMode(MODE_READY);
+            if (recyclerView.getTlOnRefreshListener() != null) {
+                recyclerView.getTlOnRefreshListener().onRefresh();
             }
+
+        } else if (transition <= -BEGIN_REFRESH_HEIGHT) {
+            setMode(MODE_READY);
+            if (recyclerView.getTlOnRefreshListener() != null) {
+                recyclerView.getTlOnRefreshListener().onLoad();
+            }
+        } else {
+            finish();
         }
     }
 
-    private void setMode(int MODE)
-    {
+    private void setMode(int MODE) {
 
-        if(MODE == MODE_BEGIN)
-        {
+        if (MODE == MODE_BEGIN) {
             refreshViewHolder.tv_refresh.setText("松开刷新");
             refreshViewHolder.tv_load.setText("松开加载");
         }
 
-        if(MODE == MODE_READY)
-        {
+        if (MODE == MODE_READY) {
             refreshViewHolder.tv_refresh.setText("正在刷新");
             refreshViewHolder.tv_load.setText("正在加载");
             refreshViewHolder.pb_load.setVisibility(View.VISIBLE);
             refreshViewHolder.pb_refresh.setVisibility(View.VISIBLE);
         }
-        if(MODE == MODE_INIT)
-        {
+        if (MODE == MODE_INIT) {
             refreshViewHolder.tv_refresh.setText("下拉刷新");
             refreshViewHolder.tv_load.setText("上拉加载");
         }
 
-        if(MODE == MODE_OVER)
-        {
-            if(this.mode == MODE_READY)
-            {
+        if (MODE == MODE_OVER) {
+            if (this.mode == MODE_READY) {
                 refreshViewHolder.tv_refresh.setText("刷新完成");
                 refreshViewHolder.tv_load.setText("加载完成");
             }
@@ -219,66 +234,29 @@ public class TLRefreshBehavior extends CoordinatorLayout.Behavior<View>
         this.mode = MODE;
     }
 
-
-    @Override
-    public void onStopNestedScroll(@NonNull CoordinatorLayout coordinatorLayout, @NonNull View child, @NonNull View target, int type)
-    {
-        if(type != ViewCompat.TYPE_TOUCH) {
-            return;
-        }
-
-        if(isAnimRunning)
-            return;
-
-        float transition = recyclerView.getTranslationY();
-        if (transition >= BEGIN_REFRESH_HEIGHT)
-        {
-            setMode(MODE_READY);
-            if (recyclerView.getTlOnRefreshListener() != null)
-            {
-                recyclerView.getTlOnRefreshListener().onRefresh();
-            }
-
-        } else if (transition <= -BEGIN_REFRESH_HEIGHT)
-        {
-            setMode(MODE_READY);
-            if (recyclerView.getTlOnRefreshListener() != null)
-            {
-                recyclerView.getTlOnRefreshListener().onLoad();
-            }
-        } else
-        {
-            finish();
-        }
-    }
-
-    public void finish()
-    {
+    public void finish() {
         float translationY = recyclerView.getTranslationY();
-        if(translationY == 0)
+        if (translationY == 0)
             return;
 
-        if(!isAnimRunning)
-        {
-            long duration = (long)Math.abs(translationY * 2);
+        if (!isAnimRunning) {
+            long duration = (long) Math.abs(translationY * 2);
 
-            AnimUtils.translateY(recyclerView, 0, new ViewPropertyAnimatorListener()
-            {
+            AnimUtils.translateY(recyclerView, 0, new ViewPropertyAnimatorListener() {
                 @Override
-                public void onAnimationStart(View view)
-                {
+                public void onAnimationStart(View view) {
                     setMode(MODE_OVER);
                     isAnimRunning = true;
                 }
+
                 @Override
-                public void onAnimationEnd(View view)
-                {
+                public void onAnimationEnd(View view) {
                     setMode(MODE_INIT);
                     isAnimRunning = false;
                 }
+
                 @Override
-                public void onAnimationCancel(View view)
-                {
+                public void onAnimationCancel(View view) {
 
                 }
             }, duration);
@@ -289,16 +267,13 @@ public class TLRefreshBehavior extends CoordinatorLayout.Behavior<View>
 
     }
 
-    private void initRecyclerView(View child)
-    {
+    private void initRecyclerView(View child) {
         recyclerView = (TLRefreshRecyclerView) child;
         recyclerView.setTlRefreshBehavior(this);
     }
 
-    private void initViewHolder(CoordinatorLayout parent)
-    {
-        if(refreshViewHolder == null)
-        {
+    private void initViewHolder(CoordinatorLayout parent) {
+        if (refreshViewHolder == null) {
             refreshViewHolder = new RefreshViewHolder();
             refreshViewHolder.ll_refresh = (LinearLayout) parent.findViewById(R.id.ll_refresh);
             refreshViewHolder.pb_refresh = (ProgressBar) parent.findViewById(R.id.pb_refresh);
@@ -310,8 +285,7 @@ public class TLRefreshBehavior extends CoordinatorLayout.Behavior<View>
         }
     }
 
-    private void initAndLayoutChild(CoordinatorLayout parent)
-    {
+    private void initAndLayoutChild(CoordinatorLayout parent) {
         // 在进行布局时，此时肯定都是测量过年的，所以getMeasuredHeight是有值的
         MAX_REFRESH_LAYOUT_HEIGHT = refreshViewHolder.ll_refresh.getMeasuredHeight();
         BEGIN_REFRESH_HEIGHT = MAX_REFRESH_LAYOUT_HEIGHT * 3 / 4;
@@ -319,18 +293,17 @@ public class TLRefreshBehavior extends CoordinatorLayout.Behavior<View>
         refreshViewHolder.ll_load.layout(0, parent.getMeasuredHeight(), refreshViewHolder.ll_load.getMeasuredWidth(), parent.getMeasuredHeight() + MAX_REFRESH_LAYOUT_HEIGHT);
         recyclerView.layout(0, 0, recyclerView.getMeasuredWidth(), recyclerView.getMeasuredHeight());
 
-        showSize(parent);
-        showSize(refreshViewHolder.ll_refresh);
-        showSize(refreshViewHolder.ll_load);
-        showSize(recyclerView);
+//        showSize(parent);
+//        showSize(refreshViewHolder.ll_refresh);
+//        showSize(refreshViewHolder.ll_load);
+//        showSize(recyclerView);
     }
 
     private void showSize(View view) {
         Log.d("my", "view.getMeasuredWidth() = " + view.getMeasuredWidth() + ", view.getMeasuredHeight" + view.getMeasuredHeight());
     }
 
-    class RefreshViewHolder
-    {
+    class RefreshViewHolder {
         LinearLayout ll_refresh;
         ProgressBar pb_refresh;
         TextView tv_refresh;
