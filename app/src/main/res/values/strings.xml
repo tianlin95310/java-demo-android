@@ -21,8 +21,7 @@
     <string name="pull_refresh_behavior">tl.com.testmaterialdesign.navigation01.behavior.pullrefresh.PullRefreshBehavior</string>
 
     <!--下拉刷新，上拉加载更多-->
-    <string name="tl_refresh_behavior">tl.com.testmaterialdesign.navigation71.pullrefresh.TLRefreshBehavior
-    </string>
+    <string name="tl_refresh_behavior">tl.com.testmaterialdesign.navigation71.pullrefresh.TLRefreshBehavior</string>
 
     <!--自定义的APPBarLayoutBehavior-->
     <string name="my_appbar_bav">tl.com.testmaterialdesign.navigation01.behavior.dialog.MyAppBarLayoutBav</string>

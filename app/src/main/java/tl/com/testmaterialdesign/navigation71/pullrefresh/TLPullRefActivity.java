@@ -13,7 +13,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import tl.com.testmaterialdesign.R;
 import tl.com.testmaterialdesign.base.BaseActivity;
-import tl.com.testmaterialdesign.base.OnlyTextAdapter;
 import tl.com.testmaterialdesign.utils.toast.ToastUtils;
 
 /**
@@ -22,7 +21,7 @@ import tl.com.testmaterialdesign.utils.toast.ToastUtils;
  * QQ : 953108373
  */
 
-public class TLPullRefActivity extends BaseActivity implements TLRefreshRecyclerView.TLOnRefreshListener
+public class TLPullRefActivity extends BaseActivity implements TLOnRefreshListener
 {
     @BindView(R.id.recycler_view)
     TLRefreshRecyclerView recyclerView;
@@ -42,13 +41,16 @@ public class TLPullRefActivity extends BaseActivity implements TLRefreshRecycler
     {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setTlOnRefreshListener(this);
-        List<String> list1 = new ArrayList<>();
-        for (int i = 0; i < 15; i++)
-        {
-            list1.add("left string " + (i + 1));
+
+        List<RefreshVo> refreshVos = new ArrayList<>();
+        for(int i = 0; i < 20; i++) {
+            RefreshVo refreshVo = new RefreshVo();
+            refreshVo.viewType = RefreshAdapter.VIEW_TYPE_ITEM;
+            refreshVo.content = "content" + i;
+            refreshVos.add(refreshVo);
         }
-        OnlyTextAdapter adapter1 = new OnlyTextAdapter(this, list1);
-        recyclerView.setAdapter(adapter1);
+        RefreshAdapter refreshAdapter=  new RefreshAdapter(this, refreshVos);
+        recyclerView.setAdapter(refreshAdapter);
     }
 
     @Override
@@ -75,13 +77,18 @@ public class TLPullRefActivity extends BaseActivity implements TLRefreshRecycler
             public void run()
             {
                 Log.d("my", "onLoad");
-                List<String> list = new ArrayList<>();
-                for (int i = 0; i < 15; i++)
-                {
-                    list.add("new String " + (i + 1));
+                List<RefreshVo> refreshVos = new ArrayList<>();
+                for(int i = 0; i < 5; i++) {
+                    RefreshVo refreshVo = new RefreshVo();
+                    refreshVo.viewType = RefreshAdapter.VIEW_TYPE_ITEM;
+                    refreshVo.content = "new content" + i;
+                    refreshVos.add(refreshVo);
                 }
-                OnlyTextAdapter onlyTextAdapter = (OnlyTextAdapter) recyclerView.getAdapter();
-                onlyTextAdapter.addList(list);
+                RefreshAdapter refreshAdapter = (RefreshAdapter) recyclerView.getAdapter();
+                int preSize = refreshAdapter.getItemCount();
+                refreshAdapter.addList(refreshVos);
+
+                recyclerView.smoothScrollToPosition(preSize);
 
                 recyclerView.finish();
             }

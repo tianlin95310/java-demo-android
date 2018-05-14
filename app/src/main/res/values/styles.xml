@@ -48,7 +48,7 @@
 
     <!--对话框风格的activity-->
     <style name="DialogActivity" parent="Theme.AppCompat.Light.Dialog">
-
+        <item name="windowNoTitle">true</item>
     </style>
 
 

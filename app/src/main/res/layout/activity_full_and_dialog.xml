@@ -1,18 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_width="300dp"
+    android:layout_height="300dp"
+    android:orientation="vertical">
 
-    <LinearLayout
+    <ImageView
+        android:scaleType="centerCrop"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="200dp"
+        android:src="@drawable/toolbar_bg"/>
 
-        <Button
-            android:id="@+id/bt_change"
-            android:text="改变样式"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-    </LinearLayout>
+    <Button
+        android:id="@+id/bt_change"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="改变样式"/>
 
-</android.support.constraint.ConstraintLayout>
+</LinearLayout>

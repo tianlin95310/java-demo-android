@@ -68,7 +68,6 @@ public class TimingService extends Service
         {
             ActivityManager.RunningTaskInfo runningTaskInfo = rti.get(0);
 
-
             Log.d("my", "当前处于前台的应用是：" + runningTaskInfo.topActivity.getPackageName() + ", " + runningTaskInfo.topActivity.getClassName());
         }
     }

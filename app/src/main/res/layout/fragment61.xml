@@ -18,7 +18,7 @@
                 android:layout_height="wrap_content">
                 <Button
                     android:id="@+id/bt_begin_clock"
-                    android:text="开始计时服务(判断当前处于前台的应用)"
+                    android:text="开始计时服务(在服务里判断当前处于前台的应用)"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
             </LinearLayout>
@@ -52,7 +52,7 @@
 
             <Button
                 android:layout_marginTop="20dp"
-                android:text="EditText将一段文字进行高亮标记"
+                android:text="TextView将一段文字进行高亮标记"
                 android:id="@+id/bt_mark_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
@@ -82,7 +82,7 @@
             <Button
                 android:layout_marginTop="20dp"
                 android:textSize="12sp"
-                android:text="设置壁纸"
+                android:text="调用不在前台的Activity的方法"
                 android:id="@+id/bt_fun4"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>

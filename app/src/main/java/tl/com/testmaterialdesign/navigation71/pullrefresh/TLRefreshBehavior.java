@@ -21,7 +21,8 @@ import tl.com.testmaterialdesign.utils.anim.AnimUtils;
  * QQ : 953108373
  */
 
-public class TLRefreshBehavior extends CoordinatorLayout.Behavior<View> {
+public class TLRefreshBehavior extends CoordinatorLayout.Behavior<View> implements TLRefresh
+{
     /**
      * 最开始的状态，以及下拉距离还没有到可以出发下拉刷新临界值的状态
      */
@@ -120,6 +121,7 @@ public class TLRefreshBehavior extends CoordinatorLayout.Behavior<View> {
             if (transition >= 0 && transition <= MAX_REFRESH_LAYOUT_HEIGHT) {
                 refreshViewHolder.ll_refresh.setTranslationY(transition);
                 recyclerView.setTranslationY(transition);
+
                 if (transition >= BEGIN_REFRESH_HEIGHT) {
                     setMode(MODE_BEGIN);
                 } else if (transition > 0 && transition < BEGIN_REFRESH_HEIGHT && this.mode == MODE_BEGIN) {
@@ -129,6 +131,7 @@ public class TLRefreshBehavior extends CoordinatorLayout.Behavior<View> {
             else if (transition >= -MAX_REFRESH_LAYOUT_HEIGHT && transition <= 0) {
                 refreshViewHolder.ll_load.setTranslationY(transition);
                 recyclerView.setTranslationY(transition);
+
                 if (transition <= -BEGIN_REFRESH_HEIGHT) {
                     setMode(MODE_BEGIN);
                 } else if (transition > -BEGIN_REFRESH_HEIGHT && transition < 0 && this.mode == MODE_BEGIN) {
@@ -234,6 +237,7 @@ public class TLRefreshBehavior extends CoordinatorLayout.Behavior<View> {
         this.mode = MODE;
     }
 
+    @Override
     public void finish() {
         float translationY = recyclerView.getTranslationY();
         if (translationY == 0)
@@ -269,7 +273,7 @@ public class TLRefreshBehavior extends CoordinatorLayout.Behavior<View> {
 
     private void initRecyclerView(View child) {
         recyclerView = (TLRefreshRecyclerView) child;
-        recyclerView.setTlRefreshBehavior(this);
+        recyclerView.setTlRefresh(this);
     }
 
     private void initViewHolder(CoordinatorLayout parent) {

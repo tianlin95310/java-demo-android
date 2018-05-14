@@ -13,7 +13,7 @@
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
 
     <!--
-     android:persistent="true"  通过在androidmanifest.xml中的application标签中加入android:persistent="true"属性
+     android:persistent="true"  通过在AndroidManifest.xml中的application标签中加入android:persistent="true"属性
     后的确就能够达到保证该应用程序所在进程不会被LMK杀死。但有个前提就是应用程序必须是系统应用，
     也就是说应用程序不能采用通常的安装方式。必须将应用程序的apk包直接放到/system/app目录下。而且必须重启系统后才能生效。
     -->
@@ -45,6 +45,7 @@
         <activity
             android:name=".navigation01.behavior.floataction.FloatActionActivity"
             android:theme="@style/AppTheme.NoActionBar"/>
+
         <activity android:name=".navigation71.check.OnKeyCheckActivity"/>
         <activity android:name=".navigation11.longpressd.LongPressedMoveActivity"/>
         <activity android:name=".navigation11.slidedelete.SlideDeleteActivity"/>
@@ -155,7 +156,7 @@
         <activity android:name=".navigation01.bsr.element.ElementAddShopActivity"
             android:exported="true"/>
         <activity android:name=".navigation01.bsr.flowwater.PathFlowWaterActivity"/>
-        <activity android:name=".navigation61.wallpaper.SetWallpaperActivity"/>
+        <activity android:name=".navigation61.callfun.CallNotForeFunActivity"/>
         <activity android:name=".navigation71.tiaoxingtu.TiaoXingTuActivity"/>
         <activity android:name=".navigation71.shanxing.ShanXingRatioActivity"/>
     </application>

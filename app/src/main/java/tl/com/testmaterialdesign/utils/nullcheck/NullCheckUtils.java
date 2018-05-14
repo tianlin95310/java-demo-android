@@ -2,6 +2,8 @@ package tl.com.testmaterialdesign.utils.nullcheck;
 
 import java.util.Collection;
 
+import javax.annotation.Nonnull;
+
 /**
  * Created by tianlin on 2017/1/23.
  * Tel : 15071485690
@@ -12,7 +14,7 @@ import java.util.Collection;
 public class NullCheckUtils
 {
     @SuppressWarnings("rawtypes")
-    public static boolean isEmpty(Object object)
+    public static boolean isEmpty(@Nonnull Object object)
     {
         if (object == null)
             return true;

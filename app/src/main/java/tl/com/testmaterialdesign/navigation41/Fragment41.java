@@ -1,14 +1,18 @@
 package tl.com.testmaterialdesign.navigation41;
 
 import android.content.Intent;
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.LinearLayout;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
@@ -30,6 +34,18 @@ public class Fragment41 extends Fragment implements View.OnClickListener
 
     LinearLayout linearLayout;
     Unbinder unbinder;
+    @BindView(R.id.bt_photo_scale)
+    Button btPhotoScale;
+    @BindView(R.id.bt_photo2)
+    Button btPhoto2;
+    @BindView(R.id.bt_photo3)
+    Button btPhoto3;
+    @BindView(R.id.bt_photo4)
+    Button btPhoto4;
+    @BindView(R.id.bt_photo5)
+    Button btPhoto5;
+    @BindView(R.id.ll_41)
+    LinearLayout ll41;
 
     @Nullable
     @Override
@@ -87,5 +103,23 @@ public class Fragment41 extends Fragment implements View.OnClickListener
     {
         Intent intent = new Intent(getActivity(), PaintShadeActivity.class);
         startActivity(intent);
+    }
+
+    @OnClick(R.id.bt_photo5)
+    public void onViewClicked()
+    {
+        Rect rect1 = new Rect();
+        rect1.left = 0;
+        rect1.top = 0;
+        rect1.right = 100;
+        rect1.bottom = 100;
+
+        Rect rect2 = new Rect();
+        rect2.left = 0;
+        rect2.top = 100;
+        rect2.right = 100;
+        rect2.bottom = 200;
+
+        Log.d("my", "intersect = " + rect1.intersect(rect2));
     }
 }

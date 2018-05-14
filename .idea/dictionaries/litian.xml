@@ -9,11 +9,13 @@
       <w>doublemove</w>
       <w>dragable</w>
       <w>floatintop</w>
+      <w>flowwater</w>
       <w>fullanddialog</w>
       <w>gridrecycler</w>
       <w>heng</w>
       <w>hideintent</w>
       <w>imagescale</w>
+      <w>imgdivide</w>
       <w>inputlimit</w>
       <w>jian</w>
       <w>jobservice</w>
@@ -31,10 +33,12 @@
       <w>searchview</w>
       <w>selflayout</w>
       <w>shan</w>
+      <w>shanxing</w>
       <w>simplelabel</w>
       <w>slidedelete</w>
       <w>tiao</w>
       <w>tiaoxing</w>
+      <w>tiaoxingtu</w>
       <w>useapi</w>
       <w>viewanim</w>
       <w>viewoffset</w>

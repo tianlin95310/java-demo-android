@@ -9,10 +9,12 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import tl.com.testmaterialdesign.base.ActivityList;
 import tl.com.testmaterialdesign.navigation01.Fragment01;
 import tl.com.testmaterialdesign.navigation11.Fragment11;
 import tl.com.testmaterialdesign.navigation21.Fragment21;
@@ -36,6 +38,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     DrawerLayout drawerLayout;
 
+    private int flag = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -48,12 +52,33 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         initView();
 
+        ActivityList.add(this);
+
         test();
     }
 
     private void test()
     {
         NullCheckUtils.isEmpty(null);
+    }
+
+    public void doSomething() {
+        flag++;
+    }
+
+    @Override
+    protected void onResume()
+    {
+        super.onResume();
+
+        Log.d("my", "flag = " + flag);
+    }
+
+    @Override
+    protected void onDestroy()
+    {
+        super.onDestroy();
+        ActivityList.clear();
     }
 
     @Override

@@ -70,8 +70,11 @@ public class OnlyTextAdapter extends RecyclerView.Adapter<OnlyTextAdapter.MyView
 
     public void addList(List<String> list)
     {
+        int preSize = this.strings.size();
         this.strings.addAll(list);
-        notifyDataSetChanged();
+        int currentSize = this.strings.size();
+
+        notifyItemRangeInserted(preSize, list.size());
     }
 
     public List<String> getStrings()

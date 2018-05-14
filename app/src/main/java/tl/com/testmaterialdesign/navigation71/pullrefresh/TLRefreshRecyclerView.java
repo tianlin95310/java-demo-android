@@ -15,7 +15,8 @@ public class TLRefreshRecyclerView extends RecyclerView
 {
 
     private TLOnRefreshListener tlOnRefreshListener;
-    private TLRefreshBehavior tlRefreshBehavior;
+
+    private TLRefresh tlRefresh;
 
     public TLRefreshRecyclerView(Context context)
     {
@@ -32,14 +33,14 @@ public class TLRefreshRecyclerView extends RecyclerView
         super(context, attrs, defStyle);
     }
 
-    public TLRefreshBehavior getTlRefreshBehavior()
+    public TLRefresh getTlRefresh()
     {
-        return tlRefreshBehavior;
+        return tlRefresh;
     }
 
-    void setTlRefreshBehavior(TLRefreshBehavior tlRefreshBehavior)
+    public void setTlRefresh(TLRefresh tlRefresh)
     {
-        this.tlRefreshBehavior = tlRefreshBehavior;
+        this.tlRefresh = tlRefresh;
     }
 
     public TLOnRefreshListener getTlOnRefreshListener()
@@ -52,18 +53,11 @@ public class TLRefreshRecyclerView extends RecyclerView
         this.tlOnRefreshListener = tlOnRefreshListener;
     }
 
-    public interface TLOnRefreshListener
-    {
-        void onRefresh();
-
-        void onLoad();
-    }
-
     public void finish()
     {
-        if(tlRefreshBehavior != null)
+        if(tlRefresh != null)
         {
-            tlRefreshBehavior.finish();
+            tlRefresh.finish();
         }
     }
 }

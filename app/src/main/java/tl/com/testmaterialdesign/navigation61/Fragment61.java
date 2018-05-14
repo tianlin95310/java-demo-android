@@ -26,7 +26,7 @@ import butterknife.Unbinder;
 import tl.com.testmaterialdesign.R;
 import tl.com.testmaterialdesign.navigation61.fullanddialog.DialogThemeActivity;
 import tl.com.testmaterialdesign.navigation61.marktext.MarkTextActivity;
-import tl.com.testmaterialdesign.navigation61.wallpaper.SetWallpaperActivity;
+import tl.com.testmaterialdesign.navigation61.callfun.CallNotForeFunActivity;
 import tl.com.testmaterialdesign.service.TimingService;
 import tl.com.testmaterialdesign.service.bindservice.BindStartService;
 
@@ -161,7 +161,7 @@ public class Fragment61 extends Fragment
     @OnClick(R.id.bt_fun4)
     public void bt_fun4()
     {
-        Intent intent = new Intent(getActivity(), SetWallpaperActivity.class);
+        Intent intent = new Intent(getActivity(), CallNotForeFunActivity.class);
         startActivity(intent);
     }
 
