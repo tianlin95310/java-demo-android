@@ -8,11 +8,14 @@ android {
     buildToolsVersion "26.0.2"
     defaultConfig {
         applicationId "tl.com.testmaterialdesign"
-        minSdkVersion 19
+        minSdkVersion 18
         targetSdkVersion 26
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        renderscriptTargetApi 19
+        renderscriptSupportModeEnabled  true
     }
 
     // 签名配置

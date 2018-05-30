@@ -78,6 +78,14 @@
                 android:text="关于自定义Behavior的研究"
                 />
 
+            <Button
+                android:layout_marginTop="30dp"
+                android:id="@+id/f01_fab9"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="关于高斯模糊的研究"
+                />
+
         </LinearLayout>
     </ScrollView>
 

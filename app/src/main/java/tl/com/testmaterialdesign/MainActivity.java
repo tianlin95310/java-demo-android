@@ -64,14 +64,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     public void doSomething() {
         flag++;
+        Log.d("my", "doSomething flag = " + flag);
+        doUiThing();
+    }
+
+    public void doUiThing() {
+        getSupportActionBar().setTitle("MainActivity" + flag);
     }
 
     @Override
     protected void onResume()
     {
         super.onResume();
-
-        Log.d("my", "flag = " + flag);
+//        doUiThing();
     }
 
     @Override

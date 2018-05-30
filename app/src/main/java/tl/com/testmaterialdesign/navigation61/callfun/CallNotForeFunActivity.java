@@ -49,7 +49,7 @@ public class CallNotForeFunActivity extends BaseActivity
             {
                 MainActivity mainActivity = (MainActivity) activity;
 
-                // 方法是会调用的，但是UI不会更新，
+                // 不在前台的应用是会调用的，包括更新UI
                 mainActivity.doSomething();
             }
         }

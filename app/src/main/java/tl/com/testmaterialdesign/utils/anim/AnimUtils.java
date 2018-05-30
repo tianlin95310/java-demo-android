@@ -5,6 +5,7 @@ import android.support.v4.view.ViewPropertyAnimatorListener;
 import android.support.v4.view.ViewPropertyAnimatorUpdateListener;
 import android.view.View;
 import android.view.animation.AccelerateInterpolator;
+import android.view.animation.DecelerateInterpolator;
 
 /**
  * Created by tianlin on 2017/6/30.
@@ -105,5 +106,6 @@ public class AnimUtils
                 .setListener(viewPropertyAnimatorListener)
                 .start();
     }
+
 
 }

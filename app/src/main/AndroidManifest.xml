@@ -159,6 +159,10 @@
         <activity android:name=".navigation61.callfun.CallNotForeFunActivity"/>
         <activity android:name=".navigation71.tiaoxingtu.TiaoXingTuActivity"/>
         <activity android:name=".navigation71.shanxing.ShanXingRatioActivity"/>
+        <activity android:name=".navigation71.menu.ShanXingMenuActivity"/>
+        <activity android:name=".navigation01.gaussblur.GaussianBlurImageActivity"/>
+        <activity android:name=".navigation01.gaussblur.GaussianBlurNoImageActivity"/>
+        <activity android:name=".navigation01.gaussblur.GaussianBlurActivity"/>
     </application>
 
 </manifest>

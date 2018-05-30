@@ -16,6 +16,7 @@ import tl.com.testmaterialdesign.R;
 import tl.com.testmaterialdesign.navigation01.behavior.BehaviorActivity;
 import tl.com.testmaterialdesign.navigation01.bsr.BeiSaiErActivity;
 import tl.com.testmaterialdesign.navigation01.floatintop.FloatInTopActivity;
+import tl.com.testmaterialdesign.navigation01.gaussblur.GaussianBlurActivity;
 import tl.com.testmaterialdesign.navigation01.liaotian.LiaotianActivity;
 import tl.com.testmaterialdesign.navigation01.searchview.SearchViewActivity;
 import tl.com.testmaterialdesign.navigation01.selflayout.SelfLayoutActivity;
@@ -45,6 +46,8 @@ public class Fragment01 extends Fragment
     Button f01Fab7;
     @BindView(R.id.f01_fab8)
     Button f01Fab8;
+    @BindView(R.id.f01_fab9)
+    Button f01Fab9;
 
     @Nullable
     @Override
@@ -110,9 +113,16 @@ public class Fragment01 extends Fragment
     }
 
     @OnClick(R.id.f01_fab8)
-    public void onViewClicked()
+    public void f01_fab8()
     {
         Intent intent = new Intent(getContext(), BeiSaiErActivity.class);
+        startActivity(intent);
+    }
+
+    @OnClick(R.id.f01_fab9)
+    public void f01_fab9()
+    {
+        Intent intent = new Intent(getContext(), GaussianBlurActivity.class);
         startActivity(intent);
     }
 }
