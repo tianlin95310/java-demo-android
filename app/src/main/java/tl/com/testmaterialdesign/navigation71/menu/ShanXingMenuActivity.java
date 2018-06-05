@@ -4,6 +4,9 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.os.SystemClock;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v8.renderscript.Allocation;
@@ -40,6 +43,28 @@ public class ShanXingMenuActivity extends BaseActivity implements OnMenuListener
 
     private Bitmap bitmap;
 
+    Handler handler = new Handler()
+    {
+        @Override
+        public void handleMessage(Message msg)
+        {
+
+            Log.d("my", "msg.what = " + msg.what);
+            if (msg.what == 1)
+            {
+                Bitmap blur = (Bitmap) msg.obj;
+                if (!blur.isRecycled())
+                {
+                    BitmapDrawable bitmapDrawable = new BitmapDrawable(getResources(), blur);
+                    llBgLayer.setBackground(bitmapDrawable);
+                }
+            } else if (msg.what == 2)
+            {
+                llBgLayer.setBackground(null);
+            }
+        }
+    };
+
     @Override
     public void initView()
     {
@@ -69,9 +94,6 @@ public class ShanXingMenuActivity extends BaseActivity implements OnMenuListener
     public void onSelectMenu(int menu)
     {
         response(this, "选择的功能是" + menu);
-
-        llBgLayer.setBackground(null);
-
     }
 
     @Override
@@ -92,48 +114,48 @@ public class ShanXingMenuActivity extends BaseActivity implements OnMenuListener
     }
 
     @Override
-    public void onSlideDistance(float distance, float maxValue, float minValue)
+    public void onSlideDistance(float distance, float maxValue, float minValue, boolean isOver)
     {
-        Log.d("my", "currentTimeMillis = " + System.currentTimeMillis());
-
-        if (distance < maxValue && distance > minValue)
+        if (isOver)
         {
-
-            float k = (maxValue - minValue) / 25.0f;
-            float b = minValue;
-            final float radius = (distance - b) / k;
-
-            bitmap = nsv.getDrawingCache(true);
-
             ThreadManager.execute(new Runnable()
             {
                 @Override
                 public void run()
                 {
-                    if (bitmap != null && !bitmap.isRecycled())
-                    {
-                        Bitmap blur = blurBitmap(bitmap, radius);
-                        refresh(blur);
-                    }
+                    SystemClock.sleep(300);
+                    handler.sendEmptyMessage(2);
                 }
             });
-        }
-    }
 
-    private void refresh(final Bitmap blur)
-    {
-        runOnUiThread(new Runnable()
+        } else
         {
-            @Override
-            public void run()
+            if (distance < maxValue && distance > minValue)
             {
-                if (!blur.isRecycled())
+                float k = (maxValue - minValue) / 25.0f;
+                float b = minValue;
+                final float radius = (distance - b) / k;
+
+                bitmap = nsv.getDrawingCache(true);
+
+                ThreadManager.execute(new Runnable()
                 {
-                    BitmapDrawable bitmapDrawable = new BitmapDrawable(getResources(), blur);
-                    llBgLayer.setBackground(bitmapDrawable);
-                }
+                    @Override
+                    public void run()
+                    {
+                        if (bitmap != null && !bitmap.isRecycled())
+                        {
+                            Bitmap blur = blurBitmap(bitmap, radius);
+                            Message message = handler.obtainMessage();
+                            message.what = 1;
+                            message.obj = blur;
+                            handler.sendMessage(message);
+                        }
+                    }
+                });
             }
-        });
+        }
+
     }
 
     public Bitmap blurBitmap(Bitmap bitmap, float radius)

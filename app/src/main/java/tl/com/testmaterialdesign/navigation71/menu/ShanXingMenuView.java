@@ -134,6 +134,7 @@ public class ShanXingMenuView extends View
 
     private OnMenuListener onMenuListener;
     private long lastTimeStamp;
+    private int progressIcon;
 
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh)
@@ -148,7 +149,9 @@ public class ShanXingMenuView extends View
     {
 
         // 画三个菜单
-        drawMenu(canvas);
+        if(progress >= initArcRadius) {
+            drawMenu(canvas);
+        }
 
         // 画初始的小扇形
         if (opening)
@@ -163,9 +166,34 @@ public class ShanXingMenuView extends View
         if (isOpen)
         {
             drawMenuText(canvas);
-
             drawMenuIcon(canvas);
         }
+        else {
+            drawMovingIcon(canvas);
+        }
+    }
+
+    private void drawMovingIcon(Canvas canvas)
+    {
+        drawAMovingIcon(menu1Icon, canvas, 15);
+        drawAMovingIcon(menu2Icon, canvas, 45);
+        drawAMovingIcon(menu3Icon, canvas, 75);
+    }
+
+    private void drawAMovingIcon(Bitmap bitmap, Canvas canvas, int degree)
+    {
+        int x = (int) (viewLength - progressIcon * Math.cos(Math.toRadians(degree)));
+        int y = (int) (viewLength - progressIcon * Math.sin(Math.toRadians(degree)));
+
+        int radius = progressIcon / 9;
+
+        RectF proRect = new RectF();
+        proRect.left = x - radius;
+        proRect.top = y - radius;
+        proRect.right = proRect.left + radius * 2;
+        proRect.bottom = proRect.top + radius * 2;
+
+        canvas.drawBitmap(bitmap, null, proRect, new Paint());
     }
 
     private void drawMenuIcon(Canvas canvas)
@@ -386,7 +414,7 @@ public class ShanXingMenuView extends View
                             float distance = viewLength - x + viewLength - y ;
 
                             if(thisTimeStamp - lastTimeStamp > MOVE_EVENT_TRIGGER_TIME) {
-                                onMenuListener.onSlideDistance(distance, radius, initArcRadiusOpen);
+                                onMenuListener.onSlideDistance(distance, radius, initArcRadiusOpen, false);
                                 lastTimeStamp = thisTimeStamp;
                             }
                         }
@@ -410,6 +438,8 @@ public class ShanXingMenuView extends View
         if (onMenuListener != null && menu != 0)
         {
             onMenuListener.onSelectMenu(menu);
+
+            onMenuListener.onSlideDistance(0, 0, 0, true);
         }
         menu = 0;
     }
@@ -613,30 +643,47 @@ public class ShanXingMenuView extends View
                 @Override
                 public void run()
                 {
-                    for (int i = initArcRadius; i <= radius && isRunning; )
+                    for (int i = 0; i <= radius; )
                     {
                         progress = i += SPREAD_SPEED;
+
+                        progressIcon = (int) (progress * 0.85);
                         // 自定义匀加速
                         SPREAD_SPEED++;
 
                         postInvalidate();
                         SystemClock.sleep(REFRESH_SPEED);
                     }
-
-                    // 重置速度
                     SPREAD_SPEED = 5;
                     isRunning = false;
+
+                    int times = 3;
+                    for(int i = times; i > 0;) {
+                        progressIcon += i * 8;
+                        postInvalidate();
+                        SystemClock.sleep(REFRESH_SPEED * times);
+                        progressIcon -= i * 8;
+                        postInvalidate();
+                        SystemClock.sleep(REFRESH_SPEED * times);
+                        progressIcon -= i * 8;
+                        postInvalidate();
+                        SystemClock.sleep(REFRESH_SPEED * times);
+                        progressIcon += i * 8;
+                        postInvalidate();
+                        SystemClock.sleep(REFRESH_SPEED * times);
+                        i--;
+                    }
 
                     if (progress > radius)
                     {
                         // 菜单完全打开
                         isOpen = true;
-                        SystemClock.sleep(500);
+                        SystemClock.sleep(100);
                         postInvalidate();
                     }
-
                 }
             });
+
         } else
         {
             isOpen = false;
@@ -650,9 +697,10 @@ public class ShanXingMenuView extends View
                 @Override
                 public void run()
                 {
-                    for (int i = radius; i >= initArcRadius && isRunning; )
+                    for (int i = radius; i >= 0; )
                     {
                         progress = i -= SPREAD_SPEED;
+                        progressIcon = (int) (progress * 0.85);
                         // 自定义匀加速
                         SPREAD_SPEED++;
 
@@ -663,14 +711,13 @@ public class ShanXingMenuView extends View
                     SPREAD_SPEED = 5;
                     isRunning = false;
 
-                    SystemClock.sleep(500);
+                    SystemClock.sleep(200);
                     postInvalidate();
 
                 }
             });
         }
     }
-
 
     private void initView(Context context)
     {

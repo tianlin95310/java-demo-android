@@ -12,5 +12,5 @@ public interface OnMenuListener
 
     void onMenuStatusChange(boolean isOpen);
 
-    void onSlideDistance(float distance, float maxValue, float minValue);
+    void onSlideDistance(float distance, float maxValue, float minValue, boolean isOver);
 }
