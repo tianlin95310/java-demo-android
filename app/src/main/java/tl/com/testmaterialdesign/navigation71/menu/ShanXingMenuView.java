@@ -20,6 +20,7 @@ import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
 
 import tl.com.testmaterialdesign.utils.display.DensityUtils;
@@ -36,8 +37,6 @@ public class ShanXingMenuView extends View
 {
     // 没两秒钟菜单自动弹出
     private static final long AUTO_SHOW_TIME = 2000;
-    // MOVE事件没300毫秒触发一次
-    private static final long MOVE_EVENT_TRIGGER_TIME = 300;
     /**
      * 菜单伸长扩展速度
      */
@@ -81,10 +80,6 @@ public class ShanXingMenuView extends View
     private int radius;
 
     /**
-     * 是否正在
-     */
-    private boolean opening = false;
-    /**
      * 菜单展开的进度
      */
     private int progress;
@@ -113,9 +108,6 @@ public class ShanXingMenuView extends View
     // 消息提示数量
     private String message;
 
-    // 菜单扩展或收缩中
-    private boolean isRunning;
-
     private double padding = 12;
 
     private boolean isAnimRunning;
@@ -131,10 +123,11 @@ public class ShanXingMenuView extends View
         }
     };
 
-
     private OnMenuListener onMenuListener;
-    private long lastTimeStamp;
     private int progressIcon;
+    private boolean opening;
+
+    private int degree;
 
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh)
@@ -147,30 +140,42 @@ public class ShanXingMenuView extends View
     @Override
     protected void onDraw(Canvas canvas)
     {
-
-        // 画三个菜单
-        if(progress >= initArcRadius) {
-            drawMenu(canvas);
-        }
-
-        // 画初始的小扇形
-        if (opening)
-        {
-            drawInitCycleOpen(canvas);
-        } else
-        {
+        if(progress < initArcRadius) {
             drawInitCycle(canvas);
+            drawMovingIcon(canvas);
+        }
+        else if(progress >= initArcRadius && progress < initArcRadiusOpen){
+            drawInitCycleSpread(canvas);
+            drawInitCycle(canvas);
+            drawMovingIcon(canvas);
+        }
+        else if(progress >= initArcRadiusOpen) {
+            drawMenu(canvas);
+            drawInitCycleOpen(canvas);
+            drawMovingIcon(canvas);
         }
 
-        // 画菜单标题
-        if (isOpen)
-        {
+        if(progress > radius){
             drawMenuText(canvas);
             drawMenuIcon(canvas);
         }
-        else {
-            drawMovingIcon(canvas);
+
+    }
+
+    private void drawInitCycleSpread(Canvas canvas)
+    {
+        int radius = progress;
+        if(progress > initArcRadiusOpen) {
+            radius = initArcRadiusOpen;
         }
+        RectF initRect = new RectF();
+        initRect.left = viewLength - radius;
+        initRect.top = viewLength - radius;
+        initRect.right = initRect.left + radius * 2;
+        initRect.bottom = initRect.top + radius * 2;
+
+        initPaint.setColor(Color.WHITE);
+        canvas.drawArc(initRect, -180, 90, true, initPaint);
     }
 
     private void drawMovingIcon(Canvas canvas)
@@ -185,7 +190,7 @@ public class ShanXingMenuView extends View
         int x = (int) (viewLength - progressIcon * Math.cos(Math.toRadians(degree)));
         int y = (int) (viewLength - progressIcon * Math.sin(Math.toRadians(degree)));
 
-        int radius = progressIcon / 9;
+        int radius = progressIcon / 10;
 
         RectF proRect = new RectF();
         proRect.left = x - radius;
@@ -209,12 +214,14 @@ public class ShanXingMenuView extends View
     private void drawAMenuIcon(Canvas canvas, Paint paint, Bitmap icon, double degree)
     {
         Rect menuIconRect = new Rect();
-        int x = (int) (radius * 0.85 * Math.cos(Math.toRadians(degree)));
-        int y = (int) (radius * 0.85 * Math.sin(Math.toRadians(degree)));
-        menuIconRect.left = viewLength - x - initArcRadius / 4;
-        menuIconRect.top = viewLength - y - initArcRadius / 4;
-        menuIconRect.right = viewLength - x + initArcRadius / 4;
-        menuIconRect.bottom = viewLength - y + initArcRadius / 4;
+        int x = (int) (progressIcon * Math.cos(Math.toRadians(degree)));
+        int y = (int) (progressIcon * Math.sin(Math.toRadians(degree)));
+        int radius = progressIcon / 10;
+
+        menuIconRect.left = viewLength - x - radius;
+        menuIconRect.top = viewLength - y - radius;
+        menuIconRect.right = viewLength - x + radius;
+        menuIconRect.bottom = viewLength - y + radius;
 
         if (icon != null)
             canvas.drawBitmap(icon, null, menuIconRect, paint);
@@ -270,27 +277,25 @@ public class ShanXingMenuView extends View
 
         Rect menuRect = new Rect();
         textPaint.getTextBounds(menu, 0, menu.length(), menuRect);
-        float x = viewLength - (float) (radius * Math.cos(Math.toRadians(degree)) + menuRect.width() +
+        float x = viewLength - (float) (progressIcon / 0.8f * Math.cos(Math.toRadians(degree)) + menuRect.width() +
                 padding * Math.cos(Math.toRadians(degree)));
-        float y = viewLength - (float) (radius * Math.sin(Math.toRadians(degree)) +
+        float y = viewLength - (float) (progressIcon / 0.8f * Math.sin(Math.toRadians(degree)) +
                 padding * Math.sin(Math.toRadians(degree)));
         canvas.drawText(menu, x, y, textPaint);
     }
 
     private void drawInitCycleOpen(Canvas canvas)
     {
-
-        Paint tempPaint = new Paint();
-        tempPaint.setAntiAlias(true);
-
         RectF initRect = new RectF();
         initRect.left = viewLength - initArcRadiusOpen;
         initRect.top = viewLength - initArcRadiusOpen;
         initRect.right = initRect.left + initArcRadiusOpen * 2;
         initRect.bottom = initRect.top + initArcRadiusOpen * 2;
-
-        tempPaint.setColor(Color.WHITE);
+        initPaint.setColor(Color.WHITE);
         canvas.drawArc(initRect, -180, 90, true, initPaint);
+
+        Paint tempPaint = new Paint();
+        tempPaint.setAntiAlias(true);
 
         RectF initRectIcon = new RectF();
         initRectIcon.left = viewLength - initArcRadiusOpen * 0.99f;
@@ -304,7 +309,6 @@ public class ShanXingMenuView extends View
 
     private void drawInitCycle(Canvas canvas)
     {
-
         Paint tempPaint = new Paint();
         tempPaint.setAntiAlias(true);
 
@@ -313,6 +317,7 @@ public class ShanXingMenuView extends View
         initRect.top = viewLength - initArcRadius;
         initRect.right = initRect.left + initArcRadius * 2;
         initRect.bottom = initRect.top + initArcRadius * 2;
+        initPaint.setColor(Color.parseColor("#A5D6A7"));
         canvas.drawArc(initRect, -180, 90, true, initPaint);
 
         Rect iconRect = new Rect();
@@ -377,48 +382,32 @@ public class ShanXingMenuView extends View
                 break;
             case MotionEvent.ACTION_MOVE:
 
-                long thisTimeStamp = System.currentTimeMillis();
-
                 boolean inCycle = checkInInnerCycle(event, initArcRadiusOpen);
 
                 if (!inCycle && isOpen)
                 {
-                    if (this.menu == 0)
+                    int menu = checkWhichMenu(event);
+
+                    this.menu = menu;
+
+                    if (menu == 1)
                     {
-                        int menu = checkWhichMenu(event);
-
-                        this.menu = menu;
-
-                        if (menu == 1)
-                        {
-                            menu1Paint.setColor(Color.parseColor("#7FC482"));
-                            invalidate();
-                        } else if (menu == 2)
-                        {
-                            menu2Paint.setColor(Color.parseColor("#7FC482"));
-                            invalidate();
-                        } else if (menu == 3)
-                        {
-                            menu3Paint.setColor(Color.parseColor("#7FC482"));
-                            invalidate();
-                        }
-
-                    }
-
-                    if (!inCycle && menu != 0)
+                        menu1Paint.setColor(Color.parseColor("#7FC482"));
+                        menu2Paint.setColor(Color.parseColor("#6FB172"));
+                        menu3Paint.setColor(Color.parseColor("#6FB172"));
+                        invalidate();
+                    } else if (menu == 2)
                     {
-                        if (onMenuListener != null)
-                        {
-                            float x = event.getX();
-                            float y = event.getY();
-                            float distance = viewLength - x + viewLength - y ;
-
-                            if(thisTimeStamp - lastTimeStamp > MOVE_EVENT_TRIGGER_TIME) {
-                                onMenuListener.onSlideDistance(distance, radius, initArcRadiusOpen, false);
-                                lastTimeStamp = thisTimeStamp;
-                            }
-                        }
-
+                        menu2Paint.setColor(Color.parseColor("#7FC482"));
+                        menu1Paint.setColor(Color.parseColor("#6FB172"));
+                        menu3Paint.setColor(Color.parseColor("#6FB172"));
+                        invalidate();
+                    } else if (menu == 3)
+                    {
+                        menu3Paint.setColor(Color.parseColor("#7FC482"));
+                        menu1Paint.setColor(Color.parseColor("#6FB172"));
+                        menu2Paint.setColor(Color.parseColor("#6FB172"));
+                        invalidate();
                     }
                 }
                 break;
@@ -434,12 +423,9 @@ public class ShanXingMenuView extends View
 
     private void response()
     {
-
         if (onMenuListener != null && menu != 0)
         {
             onMenuListener.onSelectMenu(menu);
-
-            onMenuListener.onSlideDistance(0, 0, 0, true);
         }
         menu = 0;
     }
@@ -519,31 +505,7 @@ public class ShanXingMenuView extends View
 
     public void hide()
     {
-        if (isAnimRunning)
-        {
-            return;
-        }
-
-        translateXY(this, getWidth(), getHeight(), new ViewPropertyAnimatorListener()
-        {
-            @Override
-            public void onAnimationStart(View view)
-            {
-                isAnimRunning = true;
-            }
-
-            @Override
-            public void onAnimationEnd(View view)
-            {
-                isAnimRunning = false;
-            }
-
-            @Override
-            public void onAnimationCancel(View view)
-            {
-            }
-        });
-
+        anim(-viewLength / 10, -viewLength / 10, viewLength, viewLength);
         handler.postDelayed(new Runnable()
         {
             @Override
@@ -556,66 +518,77 @@ public class ShanXingMenuView extends View
 
     public void show()
     {
-        if (isAnimRunning)
-        {
-            return;
-        }
-        translateXY(this, 0, 0, new ViewPropertyAnimatorListener()
-        {
-            @Override
-            public void onAnimationStart(View view)
-            {
-                isAnimRunning = true;
-            }
-
-            @Override
-            public void onAnimationEnd(View view)
-            {
-                isAnimRunning = false;
-            }
-
-            @Override
-            public void onAnimationCancel(View view)
-            {
-
-            }
-        });
+        anim(0, 0,0, 0);
     }
 
-    public static void translateXY(View view, int dx, int dy, ViewPropertyAnimatorListener viewPropertyAnimatorListener)
+    final ViewPropertyAnimatorListener viewPropertyAnimatorListener = new ViewPropertyAnimatorListener()
     {
-        ViewCompat.animate(view)
-                .translationX(dx)
-                .translationY(dy)
-                .setListener(viewPropertyAnimatorListener)
-                .setInterpolator(new DecelerateInterpolator())
-                .setDuration(1000)
+        @Override
+        public void onAnimationStart(View view)
+        {
+        }
+        @Override
+        public void onAnimationEnd(View view)
+        {
+            isAnimRunning = false;
+        }
+        @Override
+        public void onAnimationCancel(View view)
+        {
+        }
+    };
+    public void anim(final int dx1, final int dy1, final int dx2, final int dy2)
+    {
+        if(isAnimRunning) {
+            return;
+        }
+
+        ViewCompat.animate(this)
+                .translationX(dx1)
+                .translationY(dy1)
+                .setDuration(200)
+                .setInterpolator(new AccelerateDecelerateInterpolator())
+                .setListener(new ViewPropertyAnimatorListener()
+                {
+                    @Override
+                    public void onAnimationStart(View view)
+                    {
+                        isAnimRunning = true;
+                    }
+
+                    @Override
+                    public void onAnimationEnd(View view)
+                    {
+                        ViewCompat.animate(ShanXingMenuView.this)
+                                .translationX(dx2)
+                                .translationY(dy2)
+                                .setListener(viewPropertyAnimatorListener)
+                                .setInterpolator(new DecelerateInterpolator())
+                                .setDuration(800)
+                                .start();
+                    }
+
+                    @Override
+                    public void onAnimationCancel(View view)
+                    {
+
+                    }
+                })
                 .start();
+
     }
 
     private void opening(final boolean isOpening)
     {
-        if (isRunning)
-        {
-            return;
-        }
-        if (opening == isOpening)
-        {
-            return;
-        }
-        isRunning = true;
         opening = isOpening;
 
-        if (isOpening)
+        if (opening)
         {
-            initPaint.setColor(Color.parseColor("#ffffff"));
-
             ThreadManager.execute(new Runnable()
             {
                 @Override
                 public void run()
                 {
-                    int degree = 0;
                     Paint paint = new Paint();
                     paint.setAntiAlias(true);
                     Matrix matrix = new Matrix();
@@ -635,19 +608,19 @@ public class ShanXingMenuView extends View
                         postInvalidate();
                         SystemClock.sleep(200);
                     }
-
                 }
             });
+
             ThreadManager.execute(new Runnable()
             {
                 @Override
                 public void run()
                 {
-                    for (int i = 0; i <= radius; )
+                    for (int i = progress; i <= radius && opening; )
                     {
                         progress = i += SPREAD_SPEED;
 
-                        progressIcon = (int) (progress * 0.85);
+                        progressIcon = (int) (progress * 0.8);
                         // 自定义匀加速
                         SPREAD_SPEED++;
 
@@ -655,31 +628,33 @@ public class ShanXingMenuView extends View
                         SystemClock.sleep(REFRESH_SPEED);
                     }
                     SPREAD_SPEED = 5;
-                    isRunning = false;
-
-                    int times = 3;
-                    for(int i = times; i > 0;) {
-                        progressIcon += i * 8;
-                        postInvalidate();
-                        SystemClock.sleep(REFRESH_SPEED * times);
-                        progressIcon -= i * 8;
-                        postInvalidate();
-                        SystemClock.sleep(REFRESH_SPEED * times);
-                        progressIcon -= i * 8;
-                        postInvalidate();
-                        SystemClock.sleep(REFRESH_SPEED * times);
-                        progressIcon += i * 8;
-                        postInvalidate();
-                        SystemClock.sleep(REFRESH_SPEED * times);
-                        i--;
-                    }
 
                     if (progress > radius)
                     {
+                        int temp = progressIcon;
+                        int max = (int) (temp * 1.2);
+                        for(int i = temp; i < max;) {
+                            progressIcon = i;
+                            postInvalidate();
+                            SystemClock.sleep(REFRESH_SPEED);
+                            i += SPREAD_SPEED;
+                            SPREAD_SPEED++;
+                        }
+                        for(int i = max; i > temp;) {
+                            progressIcon = i;
+                            postInvalidate();
+                            SystemClock.sleep(REFRESH_SPEED);
+                            i -= SPREAD_SPEED;
+                            SPREAD_SPEED++;
+                        }
+                        SPREAD_SPEED = 5;
+
                         // 菜单完全打开
                         isOpen = true;
-                        SystemClock.sleep(100);
-                        postInvalidate();
+                        if(onMenuListener != null) {
+                            onMenuListener.onMenuOpen(true);
+                        }
+
                     }
                 }
             });
@@ -687,33 +662,29 @@ public class ShanXingMenuView extends View
         } else
         {
             isOpen = false;
+            if(onMenuListener != null) {
+                onMenuListener.onMenuOpen(false);
+            }
+
             menu1Paint.setColor(Color.parseColor("#6FB172"));
             menu2Paint.setColor(Color.parseColor("#6FB172"));
             menu3Paint.setColor(Color.parseColor("#6FB172"));
-            initPaint.setColor(Color.parseColor("#A5D6A7"));
-
             ThreadManager.execute(new Runnable()
             {
                 @Override
                 public void run()
                 {
-                    for (int i = radius; i >= 0; )
+                    for (int i = progress; i >= 0 && !opening; )
                     {
                         progress = i -= SPREAD_SPEED;
-                        progressIcon = (int) (progress * 0.85);
+                        progressIcon = (int) (progress * 0.8);
                         // 自定义匀加速
                         SPREAD_SPEED++;
 
                         postInvalidate();
                         SystemClock.sleep(REFRESH_SPEED);
                     }
-
                     SPREAD_SPEED = 5;
-                    isRunning = false;
-
-                    SystemClock.sleep(200);
-                    postInvalidate();
-
                 }
             });
         }
