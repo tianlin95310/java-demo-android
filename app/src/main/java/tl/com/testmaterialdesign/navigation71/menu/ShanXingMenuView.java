@@ -546,7 +546,7 @@ public class ShanXingMenuView extends View
         ViewCompat.animate(this)
                 .translationX(dx1)
                 .translationY(dy1)
-                .setDuration(200)
+                .setDuration(150)
                 .setInterpolator(new AccelerateDecelerateInterpolator())
                 .setListener(new ViewPropertyAnimatorListener()
                 {
@@ -564,7 +564,7 @@ public class ShanXingMenuView extends View
                                 .translationY(dy2)
                                 .setListener(viewPropertyAnimatorListener)
                                 .setInterpolator(new DecelerateInterpolator())
-                                .setDuration(800)
+                                .setDuration(850)
                                 .start();
                     }
 
@@ -606,8 +606,14 @@ public class ShanXingMenuView extends View
                         openingIconDraw = bitmap;
 
                         postInvalidate();
+
+                        if(!opening) {
+                            break;
+                        }
                         SystemClock.sleep(200);
                     }
+
+//                    Log.d("my", "前面的循环结束。。。" + System.currentTimeMillis());
                 }
             });
 
