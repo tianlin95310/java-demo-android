@@ -1,9 +1,11 @@
 package tl.com.testmaterialdesign.navigation21;
 
+import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
@@ -43,8 +45,7 @@ import tl.com.testmaterialdesign.navigation21.requestpremission.ContactsActivity
  * Function :
  */
 
-public class Fragment21 extends Fragment
-{
+public class Fragment21 extends Fragment {
     @BindView(R.id.bt_new_take_photo)
     Button btNewTakePhoto;
     @BindView(R.id.bt_request_p)
@@ -56,11 +57,14 @@ public class Fragment21 extends Fragment
     File file;
     @BindView(R.id.bt_notification)
     Button btNotification;
+    @BindView(R.id.bt_4)
+    Button bt4;
+    @BindView(R.id.bt_5)
+    Button bt5;
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState)
-    {
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment21, container, false);
         unbinder = ButterKnife.bind(this, view);
@@ -68,17 +72,14 @@ public class Fragment21 extends Fragment
     }
 
     @Override
-    public void onDestroyView()
-    {
+    public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
     }
 
     @OnClick({R.id.bt_new_take_photo, R.id.bt_request_p, R.id.bt_job_service})
-    public void onViewClicked(View view)
-    {
-        switch (view.getId())
-        {
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
             case R.id.bt_new_take_photo:
                 /**
                  * 拍照相关
@@ -110,44 +111,37 @@ public class Fragment21 extends Fragment
     }
 
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data)
-    {
-        if (file.exists())
-        {
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (file.exists()) {
             Toast.makeText(getActivity(), "file exist " + file.getPath(), Toast.LENGTH_SHORT).show();
             Log.d("my", "file exist " + file.getPath());
 
             Intent intent = new Intent(getActivity(), PhotoShowActivity.class);
             intent.putExtra("file", file.getPath());
             startActivity(intent);
-        } else
-        {
+        } else {
             Toast.makeText(getActivity(), "file not exist ", Toast.LENGTH_SHORT).show();
         }
 
     }
 
-    private void takePhoto(Context context, File img_dir, String fileName)
-    {
+    private void takePhoto(Context context, File img_dir, String fileName) {
 
-        if (!img_dir.exists())
-        {
+        if (!img_dir.exists()) {
             boolean bool = img_dir.mkdirs();
             Log.d("my", "创建目录成功！" + bool + " " + img_dir.getPath());
         }
 
         file = new File(img_dir, fileName + ".jpg");
 
-        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.M)
-        {
+        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.M) {
             // file开头的uri
             Uri uri = Uri.fromFile(file);
 
             Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
             intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
             startActivityForResult(intent, 1);
-        } else
-        {
+        } else {
             // content开头的
             Uri uri = FileProvider.getUriForFile(context, context.getString(R.string.authorities), file);
             Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
@@ -160,11 +154,9 @@ public class Fragment21 extends Fragment
     }
 
     @OnClick(R.id.bt_notification)
-    public void onViewClicked()
-    {
+    public void onViewClicked() {
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
-        {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             createChannel();
         }
 
@@ -179,9 +171,8 @@ public class Fragment21 extends Fragment
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
-    private void createChannel()
-    {
-        NotificationManager notificationManager =(NotificationManager)getActivity().getSystemService(Context.NOTIFICATION_SERVICE);
+    private void createChannel() {
+        NotificationManager notificationManager = (NotificationManager) getActivity().getSystemService(Context.NOTIFICATION_SERVICE);
 
         NotificationChannel channel = new NotificationChannel("1",
                 "Channel1", NotificationManager.IMPORTANCE_DEFAULT);
@@ -189,5 +180,35 @@ public class Fragment21 extends Fragment
         channel.setLightColor(Color.GREEN); //小红点颜色
         channel.setShowBadge(true); //是否在久按桌面图标时显示此渠道的通知
         notificationManager.createNotificationChannel(channel);
+}
+
+    @OnClick(R.id.bt_4)
+    public void onBt4Clicked() {
+
+        NotificationManager notifyManager = (NotificationManager) getActivity().getSystemService(Context.NOTIFICATION_SERVICE);
+
+        NotificationCompat.Builder notifyBuilder =
+                new NotificationCompat.Builder( getActivity(), "2" )
+                        .setContentTitle( "setContentTitle" )
+                        .setContentText( "setContentText")
+                        .setSmallIcon( R.drawable.toolbar_bg )
+                        .setAutoCancel( true )
+// 设置该通知优先级
+                        .setPriority( Notification.PRIORITY_MAX )
+                        .setLargeIcon( BitmapFactory.decodeResource( getActivity().getResources(), R.drawable.toolbar_bg ) )
+                        .setTicker( "setTicker" )
+// 通知首次出现在通知栏,带上升动画效果的
+                        .setWhen( System.currentTimeMillis() )
+// 通知产生的时间,会在通知信息里显示
+// 向通知添加声音、闪灯和振动效果的最简单、最一致的方式是使用当前的用户默认设置,使用defaults属性,可以组合:
+                        .setDefaults( Notification.DEFAULT_VIBRATE | Notification.DEFAULT_ALL | Notification.DEFAULT_SOUND );
+//        PendingIntent resultPendingIntent =
+//                PendingIntent.getActivity( getActivity(), 0, mResultIntent, PendingIntent.FLAG_UPDATE_CURRENT );
+//        notifyBuilder.setContentIntent( resultPendingIntent );
+        notifyManager.notify( 0x1235, notifyBuilder.build() );
+    }
+
+    @OnClick(R.id.bt_5)
+    public void onBt5Clicked() {
     }
 }

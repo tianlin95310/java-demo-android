@@ -18,6 +18,7 @@ import tl.com.testmaterialdesign.navigation71.check.OnKeyCheckActivity;
 import tl.com.testmaterialdesign.navigation71.menu.ShanXingMenuActivity;
 import tl.com.testmaterialdesign.navigation71.pullrefresh.TLPullRefActivity;
 import tl.com.testmaterialdesign.navigation71.shanxing.ShanXingRatioActivity;
+import tl.com.testmaterialdesign.navigation71.shanxingpro.ShanXingProgressActivity;
 import tl.com.testmaterialdesign.navigation71.tiaoxingtu.TiaoXingTuActivity;
 
 /**
@@ -27,8 +28,7 @@ import tl.com.testmaterialdesign.navigation71.tiaoxingtu.TiaoXingTuActivity;
  * Function :
  */
 
-public class Fragment71 extends Fragment
-{
+public class Fragment71 extends Fragment {
     @BindView(R.id.bt1_f702)
     Button bt1F702;
     Unbinder unbinder;
@@ -40,55 +40,56 @@ public class Fragment71 extends Fragment
     Button bt1F73;
     @BindView(R.id.bt1_f74)
     Button bt1F74;
+    @BindView(R.id.bt1_f75)
+    Button bt1F75;
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState)
-    {
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment71, container, false);
         unbinder = ButterKnife.bind(this, view);
         return view;
     }
 
     @Override
-    public void onDestroyView()
-    {
+    public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
     }
 
     @OnClick(R.id.bt1_f702)
-    public void bt1_f702()
-    {
+    public void bt1_f702() {
         Intent intent = new Intent(getActivity(), OnKeyCheckActivity.class);
         startActivity(intent);
     }
 
     @OnClick(R.id.bt1_f71)
-    public void bt1_f71()
-    {
+    public void bt1_f71() {
         Intent intent = new Intent(getActivity(), TLPullRefActivity.class);
         startActivity(intent);
     }
 
     @OnClick(R.id.bt1_f72)
-    public void bt1_f72()
-    {
+    public void bt1_f72() {
         Intent intent = new Intent(getActivity(), TiaoXingTuActivity.class);
         startActivity(intent);
     }
 
     @OnClick(R.id.bt1_f73)
-    public void bt1_f73()
-    {
+    public void bt1_f73() {
         Intent intent = new Intent(getActivity(), ShanXingRatioActivity.class);
         startActivity(intent);
     }
 
     @OnClick(R.id.bt1_f74)
-    public void onViewClicked()
-    {
+    public void onViewClicked() {
         Intent intent = new Intent(getActivity(), ShanXingMenuActivity.class);
+        startActivity(intent);
+    }
+
+    @OnClick(R.id.bt1_f75)
+    public void bt1_f75() {
+        Intent intent = new Intent(getActivity(), ShanXingProgressActivity.class);
         startActivity(intent);
     }
 }

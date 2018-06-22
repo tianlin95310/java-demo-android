@@ -163,6 +163,8 @@
         <activity android:name=".navigation01.gaussblur.GaussianBlurImageActivity"/>
         <activity android:name=".navigation01.gaussblur.GaussianBlurNoImageActivity"/>
         <activity android:name=".navigation01.gaussblur.GaussianBlurActivity"/>
+        <activity android:name=".navigation71.shanxingpro.ShanXingProgressActivity" />
+        <activity android:name=".navigation71.shanxingpro.NewActivity" />
     </application>
 
 </manifest>
