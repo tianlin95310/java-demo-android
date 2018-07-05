@@ -4,7 +4,9 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.Toolbar;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,20 +24,25 @@ import tl.com.testmaterialdesign.utils.toast.ToastUtils;
  * QQ : 953108373
  */
 
-public class PullRefreshActivity extends BaseActivity implements TLPullRefreshRecycleView.OnRefreshListener
-{
+public class PullRefreshActivity extends BaseActivity implements TLPullRefreshRecycleView.OnRefreshListener {
     @BindView(R.id.ll_refresh)
     LinearLayout llRefresh;
     @BindView(R.id.rv)
     TLPullRefreshRecycleView rv;
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
+    @BindView(R.id.tv_refresh)
+    TextView tvRefresh;
 
     @Override
-    public void initView()
-    {
+    public void initView() {
+
+        toolbar.setTitle("半透明状态栏");
+        setSupportActionBar(toolbar);
+
         rv.setLayoutManager(new LinearLayoutManager(this));
         List<String> list1 = new ArrayList<>();
-        for (int i = 0; i < 30; i++)
-        {
+        for (int i = 0; i < 30; i++) {
             list1.add("string " + (i + 1));
         }
         OnlyTextAdapter adapter1 = new OnlyTextAdapter(this, list1);
@@ -45,8 +52,7 @@ public class PullRefreshActivity extends BaseActivity implements TLPullRefreshRe
     }
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState)
-    {
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pull_refresh);
         ButterKnife.bind(this);
@@ -55,14 +61,11 @@ public class PullRefreshActivity extends BaseActivity implements TLPullRefreshRe
     }
 
     @Override
-    public void onRefresh()
-    {
+    public void onRefresh() {
 
-        new Handler().postDelayed(new Runnable()
-        {
+        new Handler().postDelayed(new Runnable() {
             @Override
-            public void run()
-            {
+            public void run() {
                 // 主线程
                 ToastUtils.show(PullRefreshActivity.this, "onRefresh");
                 rv.close();

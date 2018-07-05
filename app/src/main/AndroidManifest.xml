@@ -1,14 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="tl.com.testmaterialdesign">
+    xmlns:tools="http://schemas.android.com/tools"
+    package="tl.com.testmaterialdesign">
 
     <!-- 进入应用时需要请求是否具有相关出现，不给出响应权限应用应该不能出现奔溃的问题，只是本分功能不能正常使用 -->
     <uses-permission android:name="android.permission.READ_CONTACTS"/>
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"/>
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"
+        tools:ignore="ProtectedPermissions" />
 
-    <uses-permission android:name="android.permission.GET_TOP_ACTIVITY_INFO"/>
+    <uses-permission android:name="android.permission.GET_TOP_ACTIVITY_INFO"
+        tools:ignore="ProtectedPermissions" />
     <!-- 开机自启动权限 -->
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
 
@@ -124,9 +127,14 @@
         <activity android:name=".navigation01.behavior.BehaviorActivity"/>
         <activity android:name=".navigation01.behavior.bottomsheet.BottomSheetActivity"/>
         <activity android:name=".navigation01.behavior.doublemove.BehaviorMoveActivity"/>
-        <activity android:name=".navigation01.behavior.likeuc.LikeUCHomeActivity"/>
+
+        <activity android:name=".navigation01.behavior.likeuc.LikeUCHomeActivity"
+            android:theme="@style/AppTheme.FullScreen"/>
+
         <activity android:name=".navigation01.behavior.test.TestFunCallActivity"/>
-        <activity android:name=".navigation01.behavior.pullrefresh.PullRefreshActivity"/>
+        <activity android:name=".navigation01.behavior.pullrefresh.PullRefreshActivity"
+            android:theme="@style/AppTheme.TranslucentStatus"
+            />
         <activity android:name=".navigation71.pullrefresh.TLPullRefActivity"/>
         <activity android:name=".navigation61.marktext.MarkTextActivity"/>
         <activity android:name=".navigation81.realm.RealmTestActivity"/>
@@ -165,6 +173,8 @@
         <activity android:name=".navigation01.gaussblur.GaussianBlurActivity"/>
         <activity android:name=".navigation71.shanxingpro.ShanXingProgressActivity" />
         <activity android:name=".navigation71.shanxingpro.NewActivity" />
+        <activity android:name=".navigation31.transition.ActivityViewTransition" />
+        <activity android:name=".navigation01.bsr.bubble.BubbleActivity" />
     </application>
 
 </manifest>

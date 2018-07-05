@@ -20,5 +20,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 
+        <Button
+            android:text="气泡上升"
+            android:id="@+id/bt_bubble"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>

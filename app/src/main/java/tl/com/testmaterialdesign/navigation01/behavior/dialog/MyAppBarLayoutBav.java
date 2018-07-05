@@ -1,9 +1,7 @@
 package tl.com.testmaterialdesign.navigation01.behavior.dialog;
 
-import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
-import android.graphics.Rect;
 import android.support.annotation.NonNull;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CoordinatorLayout;
@@ -96,30 +94,6 @@ public class MyAppBarLayoutBav extends AppBarLayout.Behavior implements AppBarLa
             appBarLayout.setBackgroundColor(Color.TRANSPARENT);
 
         this.verticalOffset = verticalOffset;
-    }
-
-    @Override
-    public boolean onInterceptTouchEvent(CoordinatorLayout parent, AppBarLayout child, MotionEvent ev)
-    {
-        Log.d("my", "onInterceptTouchEvent getAction = " + ev.getAction());
-
-        Rect rect = new Rect();
-        // setTranslationY只影响getX，getY，不影响实际的位置
-        rect.left = (int) appBarLayout.getX();
-        rect.top = (int) appBarLayout.getY();
-        rect.right = appBarLayout.getWidth() + rect.left;
-        rect.bottom = appBarLayout.getHeight() + rect.top;
-
-        Log.d("my", "rect = " + rect);
-        if(!rect.contains((int)ev.getRawX(), (int)ev.getRawY()) && offset_h > 0)
-        {
-            Activity activity = (Activity) context;
-            activity.finish();
-            activity.overridePendingTransition(R.anim.activity_in, R.anim.activity_out);
-            return true;
-        }
-        return super.onInterceptTouchEvent(parent, child, ev);
-
     }
 
     float startY;
@@ -282,7 +256,7 @@ public class MyAppBarLayoutBav extends AppBarLayout.Behavior implements AppBarLa
 
             // 初始化为对话框
             offset_h = MAX_SLIDE;
-            setAppBarLayoutParam(0);
+            setAppBarLayoutParam(offset_h);
         }
 
         return result;

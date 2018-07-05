@@ -19,8 +19,8 @@
         <android.support.design.widget.AppBarLayout
             android:id="@+id/toolbar_layout"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            app:theme="@style/Base.ThemeOverlay.AppCompat.Dark.ActionBar"
+            android:layout_height="wrap_content"
+            app:theme="@style/AppTheme.AppBarOverlay"
             >
             <!-- 改变标题颜色-->
             <android.support.v7.widget.Toolbar
