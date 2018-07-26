@@ -15,14 +15,26 @@
             android:layout_height="wrap_content"/>
 
         <Button
-            android:text="流水效果（Path类）"
+            android:text="气泡上升"
+            android:id="@+id/bt_bubble"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <Button
+            android:text="贝塞尔曲线函数测试（Path类）"
             android:id="@+id/bt_float_water"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 
         <Button
-            android:text="气泡上升"
-            android:id="@+id/bt_bubble"
+            android:text="矩形容器储水"
+            android:id="@+id/bt_zhan_bubble"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <Button
+            android:text="圆形容器储水"
+            android:id="@+id/bt_cycle_bubble"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 

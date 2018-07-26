@@ -11,7 +11,7 @@ public class ThreadManager
 {
 
     // 线程池核心线程数
-    private static int CORE_POOL_SIZE = 5;
+    private static int CORE_POOL_SIZE = 10;
     // 线程池最大线程数
     private static int MAX_POOL_SIZE = 100;
     // 额外线程空状态生存时间

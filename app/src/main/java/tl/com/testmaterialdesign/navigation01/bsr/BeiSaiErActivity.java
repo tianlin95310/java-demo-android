@@ -11,8 +11,10 @@ import butterknife.OnClick;
 import tl.com.testmaterialdesign.R;
 import tl.com.testmaterialdesign.base.BaseActivity;
 import tl.com.testmaterialdesign.navigation01.bsr.bubble.BubbleActivity;
+import tl.com.testmaterialdesign.navigation01.bsr.cyclebubblewave.CycleBubbleWaveActivity;
 import tl.com.testmaterialdesign.navigation01.bsr.element.ElementAddShopActivity;
 import tl.com.testmaterialdesign.navigation01.bsr.flowwater.PathFlowWaterActivity;
+import tl.com.testmaterialdesign.navigation01.bsr.zhanlianbubble.WaveViewActivity;
 
 /**
  * Created by tianlin on 2017/12/22.
@@ -27,6 +29,10 @@ public class BeiSaiErActivity extends BaseActivity {
     Button btFloatWater;
     @BindView(R.id.bt_bubble)
     Button btBubble;
+    @BindView(R.id.bt_zhan_bubble)
+    Button btZhanBubble;
+    @BindView(R.id.bt_cycle_bubble)
+    Button btCycleBubble;
 
     @Override
     public void initView() {
@@ -55,6 +61,18 @@ public class BeiSaiErActivity extends BaseActivity {
     @OnClick(R.id.bt_bubble)
     public void bt_bubble() {
         Intent intent = new Intent(this, BubbleActivity.class);
+        startActivity(intent);
+    }
+
+    @OnClick(R.id.bt_zhan_bubble)
+    public void bt_zhan_bubble() {
+        Intent intent = new Intent(this, WaveViewActivity.class);
+        startActivity(intent);
+    }
+
+    @OnClick(R.id.bt_cycle_bubble)
+    public void bt_cycle_bubble() {
+        Intent intent = new Intent(this, CycleBubbleWaveActivity.class);
         startActivity(intent);
     }
 }

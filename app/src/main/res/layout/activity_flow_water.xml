@@ -5,7 +5,8 @@
     android:layout_height="match_parent">
 
     <tl.com.testmaterialdesign.navigation01.bsr.flowwater.PathFlowView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:id="@+id/pfv"
+        android:layout_width="200dp"
+        android:layout_height="200dp"/>
 
 </android.support.constraint.ConstraintLayout>

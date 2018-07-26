@@ -10,6 +10,7 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 
+import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -39,14 +40,14 @@ public class PathFlowView extends View {
     private void init() {
         mPaint = new Paint();
         mPaint.setAntiAlias(true);
-        mPaint.setStyle(Paint.Style.STROKE);
+        mPaint.setStyle(Paint.Style.FILL);
         mPaint.setColor(0xFF412129);
         mPath = new Path();
         mPointF1 = new PointF(100, 200);
         mPointF2 = new PointF(500, 200);
         mControl = new PointF(0, 0);
 
-        timer.schedule(timerTask, 0, 20);
+        timer.schedule(timerTask, 0, 50);
     }
 
     @Override
@@ -69,10 +70,13 @@ public class PathFlowView extends View {
 
     Timer timer = new Timer();
 
+    Random r = new Random();
+
     TimerTask timerTask = new TimerTask() {
         @Override
         public void run() {
             i++;
+            mControl.x += (r.nextBoolean() ? 1 : -1) * i;
             mControl.y = i * 20;
             if(i == 30) {
                 i = 0;
@@ -89,7 +93,7 @@ public class PathFlowView extends View {
         // 画曲线
         mPath.quadTo(mControl.x, mControl.y, mPointF2.x, mPointF2.y);
         // 画直线
-//        mPath.lineTo(mPointF2.x, mPointF2.y);
+        mPath.lineTo(mPointF2.x, mPointF2.y);
         canvas.drawPath(mPath, mPaint);
     }
 

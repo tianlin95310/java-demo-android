@@ -37,6 +37,7 @@ import tl.com.testmaterialdesign.R;
 import tl.com.testmaterialdesign.navigation21.jobservice.JobServiceActivity;
 import tl.com.testmaterialdesign.navigation21.photoshow.PhotoShowActivity;
 import tl.com.testmaterialdesign.navigation21.requestpremission.ContactsActivity;
+import tl.com.testmaterialdesign.navigation21.rvpage.RVPagingActivity;
 
 /**
  * Created by tianlin on 2017/3/8.
@@ -61,6 +62,8 @@ public class Fragment21 extends Fragment {
     Button bt4;
     @BindView(R.id.bt_5)
     Button bt5;
+    @BindView(R.id.bt_6)
+    Button bt6;
 
     @Nullable
     @Override
@@ -154,7 +157,7 @@ public class Fragment21 extends Fragment {
     }
 
     @OnClick(R.id.bt_notification)
-    public void onViewClicked() {
+    public void bt_notification() {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             createChannel();
@@ -180,7 +183,7 @@ public class Fragment21 extends Fragment {
         channel.setLightColor(Color.GREEN); //小红点颜色
         channel.setShowBadge(true); //是否在久按桌面图标时显示此渠道的通知
         notificationManager.createNotificationChannel(channel);
-}
+    }
 
     @OnClick(R.id.bt_4)
     public void onBt4Clicked() {
@@ -188,27 +191,33 @@ public class Fragment21 extends Fragment {
         NotificationManager notifyManager = (NotificationManager) getActivity().getSystemService(Context.NOTIFICATION_SERVICE);
 
         NotificationCompat.Builder notifyBuilder =
-                new NotificationCompat.Builder( getActivity(), "2" )
-                        .setContentTitle( "setContentTitle" )
-                        .setContentText( "setContentText")
-                        .setSmallIcon( R.drawable.toolbar_bg )
-                        .setAutoCancel( true )
+                new NotificationCompat.Builder(getActivity(), "2")
+                        .setContentTitle("setContentTitle")
+                        .setContentText("setContentText")
+                        .setSmallIcon(R.drawable.toolbar_bg)
+                        .setAutoCancel(true)
 // 设置该通知优先级
-                        .setPriority( Notification.PRIORITY_MAX )
-                        .setLargeIcon( BitmapFactory.decodeResource( getActivity().getResources(), R.drawable.toolbar_bg ) )
-                        .setTicker( "setTicker" )
+                        .setPriority(Notification.PRIORITY_MAX)
+                        .setLargeIcon(BitmapFactory.decodeResource(getActivity().getResources(), R.drawable.toolbar_bg))
+                        .setTicker("setTicker")
 // 通知首次出现在通知栏,带上升动画效果的
-                        .setWhen( System.currentTimeMillis() )
+                        .setWhen(System.currentTimeMillis())
 // 通知产生的时间,会在通知信息里显示
 // 向通知添加声音、闪灯和振动效果的最简单、最一致的方式是使用当前的用户默认设置,使用defaults属性,可以组合:
-                        .setDefaults( Notification.DEFAULT_VIBRATE | Notification.DEFAULT_ALL | Notification.DEFAULT_SOUND );
+                        .setDefaults(Notification.DEFAULT_VIBRATE | Notification.DEFAULT_ALL | Notification.DEFAULT_SOUND);
 //        PendingIntent resultPendingIntent =
 //                PendingIntent.getActivity( getActivity(), 0, mResultIntent, PendingIntent.FLAG_UPDATE_CURRENT );
 //        notifyBuilder.setContentIntent( resultPendingIntent );
-        notifyManager.notify( 0x1235, notifyBuilder.build() );
+        notifyManager.notify(0x1235, notifyBuilder.build());
     }
 
     @OnClick(R.id.bt_5)
     public void onBt5Clicked() {
+    }
+
+    @OnClick(R.id.bt_6)
+    public void bt_6() {
+        Intent intent = new Intent(getActivity(), RVPagingActivity.class);
+        startActivity(intent);
     }
 }

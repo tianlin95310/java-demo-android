@@ -48,6 +48,13 @@
             android:background="@drawable/ripple"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
+
+        <Button
+            android:id="@+id/bt_6"
+            android:text="Android官方架构paging"
+            android:background="@drawable/ripple"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
     </LinearLayout>
 
 </LinearLayout>

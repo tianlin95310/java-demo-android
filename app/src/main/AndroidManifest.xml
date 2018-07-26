@@ -175,6 +175,8 @@
         <activity android:name=".navigation71.shanxingpro.NewActivity" />
         <activity android:name=".navigation31.transition.ActivityViewTransition" />
         <activity android:name=".navigation01.bsr.bubble.BubbleActivity" />
+        <activity android:name=".navigation21.rvpage.RVPagingActivity" />
+        <activity android:name=".navigation01.bsr.zhanlianbubble.WaveViewActivity" />
     </application>
 
 </manifest>
