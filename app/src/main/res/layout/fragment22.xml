@@ -29,8 +29,20 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
     <Button
-        android:text="打开时间对话框"
-        android:id="@+id/f6_bt3"
+    android:text="打开时间对话框"
+    android:id="@+id/f6_bt3"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"/>
+
+    <Button
+        android:text="PopWindow对话框"
+        android:id="@+id/f22_bt4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <Button
+        android:text="可以移动的弹出框"
+        android:id="@+id/f22_bt5"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 

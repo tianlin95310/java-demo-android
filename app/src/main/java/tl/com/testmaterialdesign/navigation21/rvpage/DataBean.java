@@ -8,4 +8,6 @@ package tl.com.testmaterialdesign.navigation21.rvpage;
 public class DataBean {
     public int id;
     public String content;
+
+    public boolean isShow = true;
 }

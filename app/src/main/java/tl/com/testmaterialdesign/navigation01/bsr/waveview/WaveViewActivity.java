@@ -1,4 +1,4 @@
-package tl.com.testmaterialdesign.navigation01.bsr.zhanlianbubble;
+package tl.com.testmaterialdesign.navigation01.bsr.waveview;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;

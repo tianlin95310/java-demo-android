@@ -1,24 +1,16 @@
-package tl.com.testmaterialdesign.navigation01.bsr.zhanlianbubble;
+package tl.com.testmaterialdesign.navigation01.bsr.cyclebubblewave;
 
-import android.animation.ValueAnimator;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.PointF;
+import android.graphics.RectF;
 import android.os.Build;
-import android.os.Handler;
-import android.os.Message;
-import android.os.SystemClock;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.LinearInterpolator;
-
-import tl.com.testmaterialdesign.utils.thread.ThreadManager;
 
 /**
  * Created by tianlin on 2018/7/23.
@@ -27,26 +19,32 @@ import tl.com.testmaterialdesign.utils.thread.ThreadManager;
  */
 public class CycleBubbleWave extends View {
 
+    /**
+     * 整个视图的高宽
+     */
     private int mWidth;
     private int mHeight;
+
+    private int radius;
+
+    /**
+     * 周期长度，最大的长度是mWidth
+     */
+    private float periodWidth;
     /**
      * 振幅
      */
-    private float mWaveAmplitude = 35f;
+    private float mWaveAmplitude = 50f;
     /**
      * 水位
      */
-    private float mWaveHeight = 250f;
+    private float mWaveHeight = 0f;
 
     private Paint mPaint;
 
     private Path mPath;
 
     private int mWaterColor = 0xBB0000FF;
-
-    private boolean hasInit = false;
-
-    private boolean isRunning;
 
     private PointF mLeft1;
     private PointF mLeft2;
@@ -59,129 +57,67 @@ public class CycleBubbleWave extends View {
     private PointF mControlRight1;
     private PointF mControlRight2;
 
-    private PointF mLeftStart;
-
-    Handler handler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-
-            if (msg.what == 0x1001) {
-
-                Log.d("my", "handleMessage msg.what == 0x1001");
-                initPoint();
-
-                isRunning = true;
-
-                beginValueAnim();
-            }
-        }
-    };
+    private float degree;
+    private boolean isInit;
 
     @Override
     protected void onDraw(Canvas canvas) {
 
-        if (!isRunning || !hasInit) {
+
+        if(!isInit)
             return;
-        }
 
         mPath.reset();
-        mPath.moveTo(mLeft1.x, mLeft1.y);
-        mPath.quadTo(mControlLeft1.x, mControlLeft1.y, mLeft2.x, mLeft2.y);
-        mPath.quadTo(mControlLeft2.x, mControlLeft2.y, mCenter.x, mCenter.y);
+        RectF rect = new RectF();
+        rect.left = 0;
+        rect.top = 0;
+        rect.right = mWidth;
+        rect.bottom = mHeight;
+        mPath.addArc(rect, 90 - degree, degree * 2);
+
+        mPath.moveTo(mCenter.x, mCenter.y);
         mPath.quadTo(mControlRight1.x, mControlRight1.y, mRight1.x, mRight1.y);
         mPath.quadTo(mControlRight2.x, mControlRight2.y, mRight2.x, mRight2.y);
-
-        mPath.addCircle(mCenter.x, mCenter.y, mHeight / 2, Path.Direction.CW);
         canvas.drawPath(mPath, mPaint);
     }
 
 
-    private void beginValueAnim() {
-
-        ValueAnimator valueAnimator = ValueAnimator.ofFloat(mLeftStart.x, 0);
-        valueAnimator.setInterpolator(new LinearInterpolator());
-        valueAnimator.setDuration(2000);
-        valueAnimator.setRepeatCount(Animation.INFINITE);
-        valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-            @Override
-            public void onAnimationUpdate(ValueAnimator animation) {
-
-                mLeft1.x = (float) animation.getAnimatedValue();
-                mLeft1.y = mHeight - mWaveHeight;
-                mLeft2.x = mLeft1.x + mWidth / 2;
-                mLeft2.y = mHeight - mWaveHeight;
-                mCenter.x = mLeft2.x + mWidth / 2;
-                mCenter.y = mHeight - mWaveHeight;
-                mRight1.x = mCenter.x + mWidth / 2;
-                mRight1.y = mHeight - mWaveHeight;
-                mRight2.x = mRight1.x + mWidth / 2;
-                mRight2.y = mHeight - mWaveHeight;
-
-                mControlLeft1.x = mLeft1.x + mWidth / 4;
-                mControlLeft1.y = mLeft1.y + mWaveAmplitude;
-                mControlLeft2.x = mLeft2.x + mWidth / 4;
-                mControlLeft2.y = mLeft2.y - mWaveAmplitude;
-                mControlRight1.x = mCenter.x + mWidth / 4;
-                mControlRight1.y = mCenter.y + mWaveAmplitude;
-                mControlRight2.x = mRight1.x + mWidth / 4;
-                mControlRight2.y = mRight1.y - mWaveAmplitude;
-
-                invalidate();
-            }
-        });
-        valueAnimator.start();
-
-    }
-
     private void initPoint() {
-        // 控制点
-        mLeftStart = new PointF(-mWidth, mHeight - mWaveHeight);
+        mCenter = new PointF((float) (radius - radius * Math.sin(Math.toRadians(degree))), mHeight - mWaveHeight);
+
         // 5个X轴焦点
-        mLeft1 = new PointF(-mWidth, mHeight - mWaveHeight);
-        mLeft2 = new PointF(-mWidth / 2, mHeight - mWaveHeight);
-        mCenter = new PointF(0, mHeight - mWaveHeight);
-        mRight1 = new PointF(mWidth / 2, mHeight - mWaveHeight);
-        mRight2 = new PointF(mWidth, mHeight - mWaveHeight);
+        mLeft1 = new PointF(mCenter.x - periodWidth, mHeight - mWaveHeight);
+        mLeft2 = new PointF(mCenter.x - periodWidth / 2, mHeight - mWaveHeight);
+
+        mRight1 = new PointF(mCenter.x + periodWidth / 2, mHeight - mWaveHeight);
+        mRight2 = new PointF(mCenter.x + periodWidth, mHeight - mWaveHeight);
         // 4个控制点，分别在波峰波谷的位置
-        mControlLeft1 = new PointF(mLeft1.x + mWidth / 4, mLeft1.y + mWaveAmplitude);
-        mControlLeft2 = new PointF(mLeft2.x + mWidth / 4, mLeft2.y - mWaveAmplitude);
-        mControlRight1 = new PointF(mCenter.x + mWidth / 4, mCenter.y + mWaveAmplitude);
-        mControlRight2 = new PointF(mRight1.x + mWidth / 4, mCenter.y - mWaveAmplitude);
+        mControlLeft1 = new PointF(mLeft1.x + periodWidth / 4, mLeft1.y + mWaveAmplitude);
+        mControlLeft2 = new PointF(mLeft2.x + periodWidth / 4, mLeft2.y - mWaveAmplitude);
+        mControlRight1 = new PointF(mCenter.x + periodWidth / 4, mCenter.y + mWaveAmplitude);
+        mControlRight2 = new PointF(mRight1.x + periodWidth / 4, mCenter.y - mWaveAmplitude);
+
+        isInit = true;
     }
 
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
-
-        if (w != 0 && !hasInit) {
-            mWidth = w;
-            mHeight = h;
-            hasInit = true;
-        }
-    }
-
-    public void startAnim() {
-        ThreadManager.execute(() -> {
-            while (!hasInit) {
-                SystemClock.sleep(50);
-            }
-            handler.sendEmptyMessage(0x1001);
-        });
-    }
-
-    public float getmWaveAmplitude() {
-        return mWaveAmplitude;
+       invalidate();
     }
 
     public void setmWaveAmplitude(float mWaveAmplitude) {
         this.mWaveAmplitude = mWaveAmplitude;
     }
 
-    public float getmWaveHeight() {
-        return mWaveHeight;
-    }
+    public void setDegree(float degree) {
+        this.degree = degree;
 
-    public void setmWaveHeight(float mWaveHeight) {
-        this.mWaveHeight = mWaveHeight * mHeight * 0.9f / 100;
+        periodWidth = (float) (radius * Math.sin(Math.toRadians(degree))) * 2;
+        mWaveHeight = (float) (radius - radius * Math.cos(Math.toRadians(degree)));
+
+        initPoint();
+
+        invalidate();
     }
 
     public int getmWaterColor() {
@@ -254,6 +190,8 @@ public class CycleBubbleWave extends View {
             }
         }
 
+        radius = mWidth / 2;
+        mWaveHeight = mHeight / 2;
         setMeasuredDimension(mWidth, mHeight);
     }
 

@@ -14,7 +14,7 @@ import tl.com.testmaterialdesign.navigation01.bsr.bubble.BubbleActivity;
 import tl.com.testmaterialdesign.navigation01.bsr.cyclebubblewave.CycleBubbleWaveActivity;
 import tl.com.testmaterialdesign.navigation01.bsr.element.ElementAddShopActivity;
 import tl.com.testmaterialdesign.navigation01.bsr.flowwater.PathFlowWaterActivity;
-import tl.com.testmaterialdesign.navigation01.bsr.zhanlianbubble.WaveViewActivity;
+import tl.com.testmaterialdesign.navigation01.bsr.waveview.WaveViewActivity;
 
 /**
  * Created by tianlin on 2017/12/22.

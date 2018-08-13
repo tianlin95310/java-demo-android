@@ -43,6 +43,12 @@
                 android:layout_height="wrap_content"
                 android:text="ViewAnimationUtils.createCircularReveal动画" />
 
+            <Button
+                android:id="@+id/bt_view_start_and_finish"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="ViewAnimationUtils.createCircularReveal动画" />
+
         </LinearLayout>
     </ScrollView>
 

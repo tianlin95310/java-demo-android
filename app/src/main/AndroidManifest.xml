@@ -4,16 +4,18 @@
     package="tl.com.testmaterialdesign">
 
     <!-- 进入应用时需要请求是否具有相关出现，不给出响应权限应用应该不能出现奔溃的问题，只是本分功能不能正常使用 -->
-    <uses-permission android:name="android.permission.READ_CONTACTS"/>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission
+        android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"
         tools:ignore="ProtectedPermissions" />
 
-    <uses-permission android:name="android.permission.GET_TOP_ACTIVITY_INFO"
+    <uses-permission
+        android:name="android.permission.GET_TOP_ACTIVITY_INFO"
         tools:ignore="ProtectedPermissions" />
     <!-- 开机自启动权限 -->
-    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
     <!--
      android:persistent="true"  通过在AndroidManifest.xml中的application标签中加入android:persistent="true"属性
@@ -29,38 +31,39 @@
 
         <activity
             android:name=".MainActivity"
+            android:launchMode="singleTask"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
             android:name=".navigation01.liaotian.LiaotianActivity"
             android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="adjustPan"/>
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".navigation01.searchview.nestedview.NestedActivity"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".navigation41.imgdivide.ImageDivideActivity"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".navigation01.behavior.floataction.FloatActionActivity"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar" />
 
-        <activity android:name=".navigation71.check.OnKeyCheckActivity"/>
-        <activity android:name=".navigation11.longpressd.LongPressedMoveActivity"/>
-        <activity android:name=".navigation11.slidedelete.SlideDeleteActivity"/>
-        <activity android:name=".navigation81.simplelabel.SimpleLabelActivity"/>
-        <activity android:name=".navigation01.searchview.SearchViewActivity"/>
-        <activity android:name=".navigation21.photoshow.PhotoShowActivity"/>
-        <activity android:name=".navigation01.floatintop.FloatInTopActivity"/>
-        <activity android:name=".navigation21.requestpremission.ContactsActivity"/>
-        <activity android:name=".navigation21.jobservice.JobServiceActivity"/>
-        <activity android:name=".navigation31.inputlimit.InputLimitActivity"/>
-        <activity android:name=".navigation31.recyclereuse.RecyclerReuseActivity"/>
-        <activity android:name=".navigation81.vue.VusJsActivity"/>
+        <activity android:name=".navigation71.check.OnKeyCheckActivity" />
+        <activity android:name=".navigation11.longpressd.LongPressedMoveActivity" />
+        <activity android:name=".navigation11.slidedelete.SlideDeleteActivity" />
+        <activity android:name=".navigation81.simplelabel.SimpleLabelActivity" />
+        <activity android:name=".navigation01.searchview.SearchViewActivity" />
+        <activity android:name=".navigation21.photoshow.PhotoShowActivity" />
+        <activity android:name=".navigation01.floatintop.FloatInTopActivity" />
+        <activity android:name=".navigation21.requestpremission.ContactsActivity" />
+        <activity android:name=".navigation21.jobservice.JobServiceActivity" />
+        <activity android:name=".navigation31.inputlimit.InputLimitActivity" />
+        <activity android:name=".navigation31.recyclereuse.RecyclerReuseActivity" />
+        <activity android:name=".navigation81.vue.VusJsActivity" />
 
         <!--进行隐式传递URI时需要-->
         <provider
@@ -70,7 +73,7 @@
             android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/file_paths"/>
+                android:resource="@xml/file_paths" />
         </provider>
 
         <!--
@@ -80,103 +83,107 @@
         -->
         <service
             android:name=".service.StayAlwaysService"
-            android:process=":ServiceProcess">
-        </service>
+            android:process=":ServiceProcess"></service>
 
         <!-- 5.0以后才有，他也不能实现服务的永驻 -->
         <service
             android:name=".service.MyJobService"
             android:permission="android.permission.BIND_JOB_SERVICE"
-            android:process=":JobProcess"/>
+            android:process=":JobProcess" />
 
         <!-- 如果组件位于不同的进程，static变量是不能与主进程共享的 -->
-        <service android:name=".service.TimingService"/>
+        <service android:name=".service.TimingService" />
         <service
             android:name=".service.bindservice.BindStartService"
-            android:process=":BindService"/>
+            android:process=":BindService" />
 
         <!-- 以下广播在应用被强制关闭的情况下，应用会被添加一个新的标志位，导致应用强制退出后无法收到系统修改时间的广播 -->
         <receiver android:name=".broadcastreceiver.SystemTimeChangeReceiver">
             <intent-filter>
-                <action android:name="android.intent.action.TIME_SET"/>
+                <action android:name="android.intent.action.TIME_SET" />
             </intent-filter>
         </receiver>
         <receiver android:name=".broadcastreceiver.SystemDateChangeReceiver">
             <intent-filter>
-                <action android:name="android.intent.action.DATE_CHANGED"/>
+                <action android:name="android.intent.action.DATE_CHANGED" />
             </intent-filter>
         </receiver>
 
         <!-- 该广播也被系统修改成无效，需要系统授权才可以，并且不一定可以 -->
         <receiver android:name=".broadcastreceiver.AutoStartReceiver">
             <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
 
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </receiver>
 
         <activity
             android:name=".navigation31.parandchild.ParentAndChildActivity"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar"></activity>
 
-        <activity android:name=".navigation31.viewanim.ViewAnimActivity"/>
-        <activity android:name=".navigation01.selflayout.SelfLayoutActivity"/>
-        <activity android:name=".navigation01.useapi.UseApiActivity"/>
-        <activity android:name=".navigation01.behavior.BehaviorActivity"/>
-        <activity android:name=".navigation01.behavior.bottomsheet.BottomSheetActivity"/>
-        <activity android:name=".navigation01.behavior.doublemove.BehaviorMoveActivity"/>
+        <activity android:name=".navigation31.viewanim.ViewAnimActivity" />
+        <activity android:name=".navigation01.selflayout.SelfLayoutActivity" />
+        <activity android:name=".navigation01.useapi.UseApiActivity" />
+        <activity android:name=".navigation01.behavior.BehaviorActivity" />
+        <activity android:name=".navigation01.behavior.bottomsheet.BottomSheetActivity" />
+        <activity android:name=".navigation01.behavior.doublemove.BehaviorMoveActivity" />
 
-        <activity android:name=".navigation01.behavior.likeuc.LikeUCHomeActivity"
-            android:theme="@style/AppTheme.FullScreen"/>
+        <activity
+            android:name=".navigation01.behavior.likeuc.LikeUCHomeActivity"
+            android:theme="@style/AppTheme.FullScreen" />
 
-        <activity android:name=".navigation01.behavior.test.TestFunCallActivity"/>
-        <activity android:name=".navigation01.behavior.pullrefresh.PullRefreshActivity"
-            android:theme="@style/AppTheme.TranslucentStatus"
-            />
-        <activity android:name=".navigation71.pullrefresh.TLPullRefActivity"/>
-        <activity android:name=".navigation61.marktext.MarkTextActivity"/>
-        <activity android:name=".navigation81.realm.RealmTestActivity"/>
+        <activity android:name=".navigation01.behavior.test.TestFunCallActivity" />
+        <activity
+            android:name=".navigation01.behavior.pullrefresh.PullRefreshActivity"
+            android:theme="@style/AppTheme.TranslucentStatus" />
+        <activity android:name=".navigation71.pullrefresh.TLPullRefActivity" />
+        <activity android:name=".navigation61.marktext.MarkTextActivity" />
+        <activity android:name=".navigation81.realm.RealmTestActivity" />
 
         <activity android:name=".navigation61.hideintent.HideIntentActivity">
             <intent-filter>
-                <action android:name="android.intent.action.VIEW"/>
-                <action android:name="aaa.bbb.ccc"/>
+                <action android:name="android.intent.action.VIEW" />
+                <action android:name="aaa.bbb.ccc" />
 
-                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name=".navigation41.imagescale.ImageScaleActivity"/>
-        <activity android:name=".navigation41.mntimage.MntImageActivity"/>
-        <activity android:name=".navigation41.paintshade.PaintShadeActivity"/>
+        <activity android:name=".navigation41.imagescale.ImageScaleActivity" />
+        <activity android:name=".navigation41.mntimage.MntImageActivity" />
+        <activity android:name=".navigation41.paintshade.PaintShadeActivity" />
 
-        <activity android:name=".navigation61.fullanddialog.DialogThemeActivity"
-                  android:theme="@style/DialogActivity"
-            />
-        <activity android:name=".navigation01.behavior.dialog.DialogActivity"
-            android:theme="@style/AppTheme.TranslucentStatus"
-            />
-        <activity android:name=".navigation01.bsr.BeiSaiErActivity"/>
-        <activity android:name=".navigation11.gridrecycler.GridRecyclerActivity"/>
+        <activity
+            android:name=".navigation61.fullanddialog.DialogThemeActivity"
+            android:theme="@style/DialogActivity" />
+        <activity
+            android:name=".navigation01.behavior.dialog.DialogActivity"
+            android:theme="@style/AppTheme.TranslucentStatus" />
+        <activity android:name=".navigation01.bsr.BeiSaiErActivity" />
+        <activity android:name=".navigation11.gridrecycler.GridRecyclerActivity" />
 
         <!--android:exported="true"能让Activity直接运行，变成应用首页-->
-        <activity android:name=".navigation01.bsr.element.ElementAddShopActivity"
-            android:exported="true"/>
-        <activity android:name=".navigation01.bsr.flowwater.PathFlowWaterActivity"/>
-        <activity android:name=".navigation61.callfun.CallNotForeFunActivity"/>
-        <activity android:name=".navigation71.tiaoxingtu.TiaoXingTuActivity"/>
-        <activity android:name=".navigation71.shanxing.ShanXingRatioActivity"/>
-        <activity android:name=".navigation71.menu.ShanXingMenuActivity"/>
-        <activity android:name=".navigation01.gaussblur.GaussianBlurImageActivity"/>
-        <activity android:name=".navigation01.gaussblur.GaussianBlurNoImageActivity"/>
-        <activity android:name=".navigation01.gaussblur.GaussianBlurActivity"/>
+        <activity
+            android:name=".navigation01.bsr.element.ElementAddShopActivity"
+            android:exported="true" />
+        <activity android:name=".navigation01.bsr.flowwater.PathFlowWaterActivity" />
+        <activity android:name=".navigation61.callfun.CallNotForeFunActivity" />
+        <activity android:name=".navigation71.tiaoxingtu.TiaoXingTuActivity" />
+        <activity android:name=".navigation71.shanxing.ShanXingRatioActivity" />
+        <activity android:name=".navigation71.menu.ShanXingMenuActivity" />
+        <activity android:name=".navigation01.gaussblur.GaussianBlurImageActivity" />
+        <activity android:name=".navigation01.gaussblur.GaussianBlurNoImageActivity" />
+        <activity android:name=".navigation01.gaussblur.GaussianBlurActivity" />
         <activity android:name=".navigation71.shanxingpro.ShanXingProgressActivity" />
         <activity android:name=".navigation71.shanxingpro.NewActivity" />
         <activity android:name=".navigation31.transition.ActivityViewTransition" />
         <activity android:name=".navigation01.bsr.bubble.BubbleActivity" />
         <activity android:name=".navigation21.rvpage.RVPagingActivity" />
-        <activity android:name=".navigation01.bsr.zhanlianbubble.WaveViewActivity" />
+        <activity android:name=".navigation01.bsr.waveview.WaveViewActivity" />
+        <activity android:name=".navigation01.bsr.cyclebubblewave.CycleBubbleWaveActivity" />
+        <activity android:name=".navigation31.transition.ActivityTransition" />
+        <activity android:name=".navigation22.pop.PopWindowActivity" />
+        <activity android:name=".navigation22.move.PopMoveActivity" />
     </application>
 
 </manifest>

@@ -32,11 +32,9 @@ public class ShanXingProgressActivity extends BaseActivity {
         initView();
     }
 
-
     @Override
     protected void onResume() {
         super.onResume();
-
     }
 
     @Override

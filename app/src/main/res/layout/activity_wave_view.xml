@@ -5,12 +5,12 @@
     android:gravity="center_horizontal"
     android:layout_height="match_parent">
 
-    <tl.com.testmaterialdesign.navigation01.bsr.zhanlianbubble.WaveView
+    <tl.com.testmaterialdesign.navigation01.bsr.waveview.WaveView
         android:id="@+id/wv"
         android:layout_width="100dp"
         android:layout_height="100dp"
         >
-    </tl.com.testmaterialdesign.navigation01.bsr.zhanlianbubble.WaveView>
+    </tl.com.testmaterialdesign.navigation01.bsr.waveview.WaveView>
 
     <SeekBar
         android:layout_marginTop="32dp"

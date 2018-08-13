@@ -2,13 +2,15 @@ package tl.com.testmaterialdesign.navigation21.rvpage;
 
 import android.arch.paging.PagedListAdapter;
 import android.content.Context;
-import android.graphics.Color;
 import android.support.v7.util.DiffUtil;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import tl.com.testmaterialdesign.R;
+import tl.com.testmaterialdesign.utils.display.PixsUtils;
 
 /**
  * Created by tianlin on 2018/7/11.
@@ -26,9 +28,8 @@ public class RvPageAdapter extends PagedListAdapter<DataBean, RvPageAdapter.MyVi
 
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(android.R.layout.simple_list_item_1, null);
-        MyViewHolder holder = new MyViewHolder(view);
-        return holder;
+        View view = LayoutInflater.from(context).inflate(R.layout.simple_list_item_1, null);
+        return new MyViewHolder(view);
     }
 
     @Override
@@ -43,8 +44,46 @@ public class RvPageAdapter extends PagedListAdapter<DataBean, RvPageAdapter.MyVi
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
+
         DataBean data = getItem(position);
+
+        if(data.isShow) {
+            setVisible(holder, true);
+        }
+        else {
+            setVisible(holder, false);
+        }
+
         holder.text1.setText(String.valueOf(data.content));
+        holder.text1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                getItem(holder.getAdapterPosition()).isShow = false;
+                notifyItemChanged(holder.getAdapterPosition());
+
+                RVPagingActivity activity = (RVPagingActivity) context;
+                activity.refresh();
+            }
+        });
+    }
+
+    private void setVisible(RecyclerView.ViewHolder viewHolder, boolean visibility) {
+        ViewGroup.LayoutParams layoutParams = viewHolder.itemView.getLayoutParams();
+
+        if(layoutParams == null) {
+            layoutParams = new ViewGroup.LayoutParams(0, 0);
+        }
+        if (visibility) {
+            viewHolder.itemView.setVisibility(View.VISIBLE);
+            layoutParams.width = ViewGroup.LayoutParams.MATCH_PARENT;
+            layoutParams.height = PixsUtils.dp2px(context, 100);
+        } else {
+            viewHolder.itemView.setVisibility(View.GONE);
+            layoutParams.width = 0;
+            layoutParams.height = 0;
+        }
+        viewHolder.itemView.setLayoutParams(layoutParams);
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
@@ -53,8 +92,7 @@ public class RvPageAdapter extends PagedListAdapter<DataBean, RvPageAdapter.MyVi
         public MyViewHolder(View itemView) {
             super(itemView);
 
-            text1 = itemView.findViewById(android.R.id.text1);
-            text1.setTextColor(Color.RED);
+            text1 = itemView.findViewById(R.id.text);
         }
     }
 }

@@ -12,6 +12,7 @@ import android.arch.paging.PositionalDataSource;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.util.DiffUtil;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -27,10 +28,12 @@ import butterknife.ButterKnife;
 import tl.com.testmaterialdesign.R;
 import tl.com.testmaterialdesign.base.BaseActivity;
 
-public class RVPagingActivity extends BaseActivity {
+public class RVPagingActivity extends BaseActivity implements SwipeRefreshLayout.OnRefreshListener{
 
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
+    @BindView(R.id.swipe)
+    SwipeRefreshLayout swipe;
 
     private PagedListAdapter mAdapter;
 
@@ -44,13 +47,19 @@ public class RVPagingActivity extends BaseActivity {
 
         initView();
 
+        setDataSource();
+
+//        initData();
     }
 
-    @Override
-    public void initView() {
+    private void initData() {
 
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        List<DataBean> dataBeans = FakeDataUtils.loadInitData(60);
+        OrdinaryAdapter adapter = new OrdinaryAdapter(dataBeans, this);
+        recyclerView.setAdapter(adapter);
+    }
 
+    private void setDataSource() {
         mAdapter = new RvPageAdapter(mDiffCallback, this);
         recyclerView.setAdapter(mAdapter);
 
@@ -58,6 +67,7 @@ public class RVPagingActivity extends BaseActivity {
                 .setPageSize(15)                 // 分页数据的数量。在后面的DataSource之loadRange中，count即为每次加载的这个设定值。
                 .setEnablePlaceholders(true)
                 .setPrefetchDistance(5)
+                .setInitialLoadSizeHint(15)
                 .build();
 
         mPagedList = new LivePagedListBuilder(new MyFactory(), mPagedListConfig)
@@ -92,6 +102,25 @@ public class RVPagingActivity extends BaseActivity {
         });
     }
 
+    @Override
+    public void onRefresh() {
+
+    }
+
+    @Override
+    public void initView() {
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        swipe.setOnRefreshListener(this);
+    }
+
+    public void refresh() {
+
+        recyclerView.invalidate();
+
+        recyclerView.getLayoutManager().requestLayout();
+        recyclerView.requestLayout();
+    }
+
     public class MyFactory extends DataSource.Factory<Integer, DataBean> {
         @Override
         public DataSource<Integer, DataBean> create() {
@@ -115,17 +144,14 @@ public class RVPagingActivity extends BaseActivity {
     };
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu)
-    {
+    public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item)
-    {
-        switch (item.getItemId())
-        {
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
             case R.id.action_1:
 
                 break;
@@ -152,6 +178,7 @@ public class RVPagingActivity extends BaseActivity {
             callback.onResult(dataBeans);
         }
     }
+
     private class MyDataSource1 extends ItemKeyedDataSource<Integer, DataBean> {
         @Override
         public void loadInitial(@NonNull LoadInitialParams<Integer> params, @NonNull LoadInitialCallback<DataBean> callback) {
@@ -175,6 +202,7 @@ public class RVPagingActivity extends BaseActivity {
             return null;
         }
     }
+
     private class MyDataSource extends PageKeyedDataSource<Integer, DataBean> {
         @Override
         public void loadInitial(@NonNull LoadInitialParams<Integer> params, @NonNull LoadInitialCallback<Integer, DataBean> callback) {

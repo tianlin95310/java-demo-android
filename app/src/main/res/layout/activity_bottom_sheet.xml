@@ -14,7 +14,7 @@
             android:id="@+id/frame_content"
             android:layout_width="match_parent"
             app:layout_behavior="@string/bottom_sheet_behavior"
-            android:layout_height="match_parent">
+            android:layout_height="500dp">
             <TextView
                 android:background="@color/colorPrimary"
                 android:gravity="center"

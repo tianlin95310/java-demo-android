@@ -26,7 +26,8 @@ public class FakeDataUtils {
     public static List<DataBean> loadInitData(int initSize) {
 //        return new ArrayList<>();
         Log.d("my", "loadInitData initSize = " + initSize);
-        return list.subList(0, initSize / 2);
+        SystemClock.sleep(1000);
+        return list.subList(0, initSize);
     }
 
     public static List<DataBean> loadPageData(int page, int size) {

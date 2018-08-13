@@ -28,6 +28,7 @@ import tl.com.testmaterialdesign.R;
 import tl.com.testmaterialdesign.navigation31.inputlimit.InputLimitActivity;
 import tl.com.testmaterialdesign.navigation31.parandchild.ParentAndChildActivity;
 import tl.com.testmaterialdesign.navigation31.recyclereuse.RecyclerReuseActivity;
+import tl.com.testmaterialdesign.navigation31.transition.ActivityTransition;
 import tl.com.testmaterialdesign.navigation31.transition.ActivityViewTransition;
 import tl.com.testmaterialdesign.navigation31.viewanim.ViewAnimActivity;
 import tl.com.testmaterialdesign.utils.display.DensityUtils;
@@ -56,6 +57,8 @@ public class Fragment31 extends Fragment {
     Button btViewAnimCreateCircularReveal;
     @BindView(R.id.scrollView)
     ScrollView scrollView;
+    @BindView(R.id.bt_view_start_and_finish)
+    Button btViewStartAndFinish;
     private boolean show = true;
 
     @Nullable
@@ -106,11 +109,10 @@ public class Fragment31 extends Fragment {
     public void onResume() {
         super.onResume();
 
-        if(show) {
+        if (show) {
             btViewAnimTrans1.setVisibility(View.VISIBLE);
 
-        }
-        else {
+        } else {
             btViewAnimTrans1.setVisibility(View.GONE);
         }
     }
@@ -159,4 +161,18 @@ public class Fragment31 extends Fragment {
 
         anim.start();
     }
+
+    @OnClick(R.id.bt_view_start_and_finish)
+    public void bt_view_start_and_finish() {
+
+        ActivityOptionsCompat compat = ActivityOptionsCompat.makeCustomAnimation(getActivity(),
+                R.anim.activity_tran_in,
+                R.anim.activity_out);
+        Intent intent = new Intent(getActivity(), ActivityTransition.class);
+        startActivity(intent, compat.toBundle());
+
+    }
+
+
+
 }
