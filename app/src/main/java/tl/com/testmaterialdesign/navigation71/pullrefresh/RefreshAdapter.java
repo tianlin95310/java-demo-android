@@ -25,7 +25,6 @@ public class RefreshAdapter extends RecyclerView.Adapter
 {
 
     public static final int VIEW_TYPE_ITEM = 1;
-    public static final int VIEW_TYPE_LOADING = 2;
 
     Context context;
     List<RefreshVo> refreshVoList;
@@ -44,10 +43,6 @@ public class RefreshAdapter extends RecyclerView.Adapter
             View view = LayoutInflater.from(context).inflate(R.layout.item_just_one_text, parent, false);
             return new MyViewHolder(view);
         }
-        else if(viewType == VIEW_TYPE_LOADING){
-            View view = LayoutInflater.from(context).inflate(R.layout.item_load_more, parent, false);
-            return new LoadViewHolder(view);
-        }
 
         return null;
     }
@@ -58,13 +53,6 @@ public class RefreshAdapter extends RecyclerView.Adapter
         this.refreshVoList.addAll(preSize, refreshVos);
 
         notifyItemRangeInserted(preSize, refreshVos.size());
-    }
-
-    class LoadViewHolder extends RecyclerView.ViewHolder{
-        public LoadViewHolder(View itemView)
-        {
-            super(itemView);
-        }
     }
     public class MyViewHolder extends RecyclerView.ViewHolder
     {

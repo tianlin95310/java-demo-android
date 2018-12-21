@@ -25,6 +25,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 import tl.com.testmaterialdesign.R;
+import tl.com.testmaterialdesign.utils.device.NetWorkState;
 
 /**
  * Created by tianlin on 2017/7/20.
@@ -33,8 +34,7 @@ import tl.com.testmaterialdesign.R;
  * Function :
  */
 
-public class Fragment91 extends Fragment
-{
+public class Fragment91 extends Fragment {
     Unbinder unbinder;
     @BindView(R.id.bt_get_path)
     Button btGetPath;
@@ -42,34 +42,32 @@ public class Fragment91 extends Fragment
     Button btGetSysTime;
     @BindView(R.id.bt_get_home_app)
     Button btGetHomeApp;
+    @BindView(R.id.bt_4)
+    Button bt4;
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState)
-    {
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment91, container, false);
         unbinder = ButterKnife.bind(this, view);
         return view;
     }
 
     @Override
-    public void onDestroyView()
-    {
+    public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
     }
 
     @OnClick(R.id.bt_get_path)
-    public void bt_get_path()
-    {
+    public void bt_get_path() {
         getPathData(getActivity());
     }
 
     /**
      * 目录相关
      */
-    private void getPathData(Context context)
-    {
+    private void getPathData(Context context) {
 
         // /storage/emulated/0
         Log.d("my", "getAbsolutePath = " + Environment.getExternalStorageDirectory().getAbsolutePath());
@@ -89,39 +87,35 @@ public class Fragment91 extends Fragment
         // 会在外置卡的/Android/data里面生成一个cache文件夹
         Log.d("my", "getExternalCacheDir = " + context.getExternalCacheDir().getAbsolutePath());
         // 会在外置内存卡的/Android/data里面生成一个files文件，并在里面生成DCIM文件夹
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT)
-        {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             Log.d("my", "getExternalFilesDirs = " + context.getExternalFilesDirs(Environment.DIRECTORY_DCIM)[0].getAbsolutePath());
         }
     }
 
     @OnClick(R.id.bt_get_sys_time)
-    public void bt_get_sys_time()
-    {
+    public void bt_get_sys_time() {
         getSystemTime();
     }
 
     /**
      * 获取系统时间，若系统的时间被修改，这里获取的值也是被修改的
      */
-    public void getSystemTime()
-    {
+    public void getSystemTime() {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd HHmmss");
         Log.d("my", "time = " + sdf.format(new Date()));
     }
 
     @OnClick(R.id.bt_get_home_app)
-    public void onViewClicked()
-    {
+    public void bt_get_home_app() {
         List<String> names = new ArrayList<>();
         PackageManager packageManager = this.getActivity().getPackageManager();
-        //属性
+        // 属性
         Intent intent = new Intent(Intent.ACTION_MAIN);
         intent.addCategory(Intent.CATEGORY_HOME);
 //        intent.addCategory(Intent.CATEGORY_LAUNCHER);
         List<ResolveInfo> resolveInfo = packageManager.queryIntentActivities(intent,
                 PackageManager.MATCH_DEFAULT_ONLY);
-        for(ResolveInfo ri : resolveInfo){
+        for (ResolveInfo ri : resolveInfo) {
             Log.d("my", "packageName = " + ri.activityInfo.packageName);
             Log.d("my", "parentActivityName = " + ri.activityInfo.parentActivityName);
             Log.d("my", "targetActivity = " + ri.activityInfo.targetActivity);
@@ -130,5 +124,28 @@ public class Fragment91 extends Fragment
             Log.d("my", "----------------------------------------------------");
             names.add(ri.activityInfo.packageName);
         }
+    }
+
+    @OnClick(R.id.bt_4)
+    public void bt_4() {
+        NetWorkState.getCurrentNet(getContext());
+    }
+
+    @OnClick(R.id.bt_5)
+    public void bt_5() {
+        NetWorkState.getCurrentWifi(getContext());
+    }
+
+//    @RequiresApi(api = Build.VERSION_CODES.O)这样定义是没有用的，需要再事件里面进行判断
+    @OnClick(R.id.bt_6)
+    public void bt_6() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NetWorkState.getCurrentWifiAware(getContext());
+        }
+    }
+
+    @OnClick(R.id.bt_7)
+    public void bt_7() {
+        NetWorkState.getCurrentWifiP2p(getContext());
     }
 }

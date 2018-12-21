@@ -15,40 +15,27 @@ import android.util.Log;
 public class InputFilterUtils {
 
     // 获取输入框的理论值
-    public static InputFilter getLiLunValue()
-    {
-        return new InputFilter(){
+    public static InputFilter getLiLunValue() {
+        return new InputFilter() {
             @Override
-            public CharSequence filter(CharSequence source, int start, int end, Spanned dest, int dstart, int dend)
-            {
+            public CharSequence filter(CharSequence source, int start, int end, Spanned dest, int dstart, int dend) {
                 String before = dest.toString();
                 String lilun = null;
                 // 如果是空的说明是删除
-                if(TextUtils.isEmpty(source.toString()))
-                {
-                    if(before.length() >= 2)
-                    {
-                        if(dstart > 0 && dstart < before.length() - 1)
-                        {
+                if (TextUtils.isEmpty(source.toString())) {
+                    if (before.length() >= 2) {
+                        if (dstart > 0 && dstart < before.length() - 1) {
                             lilun = before.substring(0, dstart) + before.substring(dstart + 1, before.length());
-                        }
-                        else if(dstart == 0)
-                        {
+                        } else if (dstart == 0) {
                             lilun = before.substring(1, before.length());
-                        }
-                        else if(dstart == before.length() - 1)
-                        {
+                        } else if (dstart == before.length() - 1) {
                             lilun = before.substring(0, before.length() - 1);
                         }
-                    }
-                    else
-                    {
+                    } else {
                         lilun = "";
                     }
-                }
-                else
-                {
-                    lilun = before.substring(0, dstart)+
+                } else {
+                    lilun = before.substring(0, dstart) +
                             source.toString() +
                             before.substring(dstart, before.length());
                 }
@@ -59,8 +46,10 @@ public class InputFilterUtils {
             }
         };
     }
+
     /**
      * 禁止0开头，以及在顶端输入0
+     *
      * @return
      */
     public static InputFilter banZeroBegin() {
@@ -77,8 +66,7 @@ public class InputFilterUtils {
             @Override
             public CharSequence filter(CharSequence source, int start, int end, Spanned dest, int dstart, int dend) {
                 // 首位不能输入0
-                if(dstart == 0 && "0".equals(source.toString()))
-                {
+                if (dstart == 0 && "0".equals(source.toString())) {
                     Log.d("my", "首位不能输入0");
                     return "";
                 }

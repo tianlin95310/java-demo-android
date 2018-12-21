@@ -12,4 +12,6 @@ public class GridVo extends BaseVo
 {
     public int path;
 
+    public String no;
+
 }

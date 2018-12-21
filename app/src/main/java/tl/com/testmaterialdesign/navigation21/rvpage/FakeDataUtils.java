@@ -27,7 +27,7 @@ public class FakeDataUtils {
 //        return new ArrayList<>();
         Log.d("my", "loadInitData initSize = " + initSize);
         SystemClock.sleep(1000);
-        return list.subList(0, initSize);
+        return list.subList(0, 1);
     }
 
     public static List<DataBean> loadPageData(int page, int size) {
@@ -35,7 +35,17 @@ public class FakeDataUtils {
         SystemClock.sleep(2000);
         Log.d("my", "loadPageData加载 页数 = " + page);
 
+//        如果后来的某页出现返回0的情况，就不往下加载了
+//        size = 1;
         int totalPage = list.size() % size == 0 ? list.size() / size : list.size() / size + 1;
+
+         // 如果后来的某页出现返回0的情况，就不往下加载了
+//        if(page == 4 || page == 5) {
+//            List<DataBean> dataBeans = list.subList((page - 1) * size, page * size);
+//            for(DataBean dataBean : dataBeans) {
+//                dataBean.isShow = false;
+//            }
+//        }
 
         if(page < totalPage) {
             return list.subList((page - 1) * size, page * size);
@@ -46,5 +56,7 @@ public class FakeDataUtils {
         else {
             return new ArrayList<>();
         }
+
+
     }
 }

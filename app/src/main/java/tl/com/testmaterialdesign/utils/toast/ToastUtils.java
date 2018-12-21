@@ -10,25 +10,22 @@ import android.widget.Toast;
  * Function : Toast提示工具
  */
 
-public class ToastUtils
-{
+public class ToastUtils {
     /**
      * 提示工具
+     *
      * @param context
-     * @param msg 消息字符换
+     * @param msg     消息字符换
      */
-    public static void show(Context context,String msg)
-    {
+    public static void show(Context context, String msg) {
         Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
     }
 
     /**
-     *
      * @param context
-     * @param msgId 消息ID
+     * @param msgId   消息ID
      */
-    public static void show(Context context,int msgId)
-    {
+    public static void show(Context context, int msgId) {
         Toast.makeText(context, context.getString(msgId), Toast.LENGTH_SHORT).show();
     }
 }

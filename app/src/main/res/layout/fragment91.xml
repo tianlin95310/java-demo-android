@@ -21,4 +21,28 @@
         android:id="@+id/bt_get_home_app"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
+
+    <Button
+        android:text="获取网路状态"
+        android:id="@+id/bt_4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <Button
+        android:text="获取Wifi状态"
+        android:id="@+id/bt_5"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <Button
+        android:text="获取Wifi Aware状态"
+        android:id="@+id/bt_6"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <Button
+        android:text="获取Wifi状态 P2P"
+        android:id="@+id/bt_7"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
 </LinearLayout>

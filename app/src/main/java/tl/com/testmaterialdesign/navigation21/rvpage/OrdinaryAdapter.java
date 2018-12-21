@@ -66,6 +66,7 @@ public class OrdinaryAdapter extends RecyclerView.Adapter {
         }
         else {
             setVisible(holder, false);
+            return;
         }
 
         viewHolder.text1.setText(String.valueOf(data.content));

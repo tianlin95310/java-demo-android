@@ -18,7 +18,7 @@ public class DecodeBmp
      * 以指定的密度加载应用内部图片
      * @param context
      * @param imgID
-     * @param densityDPI
+     * @param densityDPI    目标的dpi
      * @return
      */
     public static Bitmap decodeBmpWithDPI(Context context, int imgID, int densityDPI)
@@ -31,9 +31,9 @@ public class DecodeBmp
     /**
      *
      * @param context
-     * @param x
+     * @param x     你想要的图片大小，是一个大致的，以其中一个为准
      * @param y
-     * @param resId
+     * @param resId apk资源文件
      * @return
      */
     public static Bitmap decodeInSample(Context context, int x, int y, int resId)
@@ -68,6 +68,13 @@ public class DecodeBmp
     }
 
 
+    /**
+     *
+     * @param x
+     * @param y
+     * @param path sdCard的图片路径
+     * @return
+     */
     public static Bitmap decodeInSample(int x, int y, String path)
     {
         BitmapFactory.Options ops = new BitmapFactory.Options();

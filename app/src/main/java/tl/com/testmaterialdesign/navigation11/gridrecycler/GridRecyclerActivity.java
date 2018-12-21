@@ -30,7 +30,7 @@ public class GridRecyclerActivity extends BaseActivity
     {
 
         // 这种布局导致Item（具体的宽度和高度，如200dp等）的宽度和高度没有意义，不能限死，会有bug，用match_parent或者wrap_content
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 4, LinearLayoutManager.HORIZONTAL, false);
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 2, LinearLayoutManager.HORIZONTAL, false);
 
         recyclerView.setLayoutManager(gridLayoutManager);
 
@@ -38,6 +38,7 @@ public class GridRecyclerActivity extends BaseActivity
         for(int i = 0; i <= 50; i++) {
             GridVo gridVo = new GridVo();
             gridVo.path = R.drawable.man_under;
+            gridVo.no = "no---" + i;
             gridVos.add(gridVo);
         }
 

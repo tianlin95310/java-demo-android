@@ -5,7 +5,7 @@ import android.support.v4.view.ViewPropertyAnimatorListener;
 import android.support.v4.view.ViewPropertyAnimatorUpdateListener;
 import android.view.View;
 import android.view.animation.AccelerateInterpolator;
-import android.view.animation.DecelerateInterpolator;
+import android.view.animation.LinearInterpolator;
 
 /**
  * Created by tianlin on 2017/6/30.
@@ -17,7 +17,11 @@ import android.view.animation.DecelerateInterpolator;
 public class AnimUtils
 {
 
-    // 放大到原本大小(顶部方向)
+    /**
+     * 放大到显示
+     * @param view
+     * @param viewPropertyAnimatorListener 动画监听器
+     */
     public static void scaleShow(View view, ViewPropertyAnimatorListener viewPropertyAnimatorListener) {
         view.setPivotX(view.getWidth() / 2);
         view.setPivotY(0);
@@ -30,7 +34,12 @@ public class AnimUtils
                 .setInterpolator(new AccelerateInterpolator())
                 .start();
     }
-    // 缩小到消失(顶部方向)
+
+    /**
+     * 缩小到消失
+     * @param view
+     * @param viewPropertyAnimatorListener
+     */
     public static void scaleHide(View view, ViewPropertyAnimatorListener viewPropertyAnimatorListener) {
         view.setPivotX(view.getWidth() / 2);
         view.setPivotY(0);
@@ -61,7 +70,7 @@ public class AnimUtils
     }
 
     /**
-     * 向上平移
+     * 垂直平移
      * @param dy
      * @param viewPropertyAnimatorListener
      * @param duration
@@ -94,6 +103,14 @@ public class AnimUtils
                 .start();
     }
 
+    /**
+     * 缩放动画
+     * @param view
+     * @param scaleX
+     * @param scaleY
+     * @param viewPropertyAnimatorListener
+     * @param duration
+     */
     public static void scale(View view, float scaleX, float scaleY, ViewPropertyAnimatorListener viewPropertyAnimatorListener, long duration)
     {
         view.setPivotX(view.getWidth() / 2);
@@ -104,6 +121,69 @@ public class AnimUtils
                 .scaleY(scaleY)
                 .setDuration(duration)
                 .setListener(viewPropertyAnimatorListener)
+                .start();
+    }
+
+    /**
+     * 缩放
+     * @param view
+     * @param scaleX
+     * @param scaleY
+     * @param viewPropertyAnimatorListener
+     * @param delay     全局延时时间，设置了之后会影响其他的动画
+     * @param duration
+     */
+    public static void scale(View view,
+                             float scaleX,
+                             float scaleY,
+                             ViewPropertyAnimatorListener viewPropertyAnimatorListener,
+                             long delay,
+                             long duration)
+    {
+        view.setPivotX(view.getWidth() / 2);
+        view.setPivotY(view.getHeight() / 2);
+
+        ViewCompat.animate(view)
+                .scaleX(scaleX)
+                .scaleY(scaleY)
+                .setDuration(duration)
+                .setStartDelay(delay)
+                .setListener(viewPropertyAnimatorListener)
+                .start();
+    }
+
+    /**
+     * 平移到某处
+     * @param view
+     * @param x     目标位置的坐标
+     * @param y
+     * @param delay
+     * @param duration
+     */
+    public static void go_to(View view, float x, float y, long delay, long duration) {
+        ViewCompat.animate(view).
+                x(x).
+                y(y).
+                setStartDelay(delay)
+                .setDuration(duration)
+                .setInterpolator(new LinearInterpolator())
+                .setListener(new ViewPropertyAnimatorListener() {
+                    @Override
+                    public void onAnimationStart(View view) {
+
+                    }
+
+                    @Override
+                    public void onAnimationEnd(View view) {
+                        view.setX(x);
+                        view.setY(y);
+                    }
+
+                    @Override
+                    public void onAnimationCancel(View view) {
+
+                    }
+                })
                 .start();
     }
 

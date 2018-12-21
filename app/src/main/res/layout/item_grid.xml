@@ -6,29 +6,15 @@
     android:layout_height="wrap_content">
 
     <LinearLayout
-        android:layout_weight="1"
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <ImageView
-            android:layout_weight="1"
-            android:scaleType="centerCrop"
-            android:id="@+id/img"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
-
         <TextView
+            android:id="@+id/tv_text"
+            android:minWidth="80dp"
             android:text="我是其他的东西我是其他的东西我是其他的东西"
-            android:layout_width="30dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
-        <View
-            android:background="@color/colorPrimary"
-            android:layout_width="1dp"
-            android:layout_height="match_parent"/>
     </LinearLayout>
 
-    <View
-        android:background="@color/colorPrimary"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"/>
 </LinearLayout>

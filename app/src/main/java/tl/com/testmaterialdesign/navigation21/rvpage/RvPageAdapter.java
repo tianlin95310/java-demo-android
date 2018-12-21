@@ -59,9 +59,18 @@ public class RvPageAdapter extends PagedListAdapter<DataBean, RvPageAdapter.MyVi
             @Override
             public void onClick(View v) {
 
+                DataBean thisOne = getItem(holder.getAdapterPosition());
+
+//                Iterator<DataBean> iterator = getCurrentList().iterator();
+//                while(iterator.hasNext()) {
+//                    DataBean dataBean = iterator.next();
+//                    if(dataBean.id == thisOne.id) {
+//                        iterator.remove();
+//                    }
+//                }
+
                 getItem(holder.getAdapterPosition()).isShow = false;
                 notifyItemChanged(holder.getAdapterPosition());
-
                 RVPagingActivity activity = (RVPagingActivity) context;
                 activity.refresh();
             }

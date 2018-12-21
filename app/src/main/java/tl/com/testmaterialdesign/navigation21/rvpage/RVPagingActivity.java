@@ -66,7 +66,7 @@ public class RVPagingActivity extends BaseActivity implements SwipeRefreshLayout
         PagedList.Config mPagedListConfig = new PagedList.Config.Builder()
                 .setPageSize(15)                 // 分页数据的数量。在后面的DataSource之loadRange中，count即为每次加载的这个设定值。
                 .setEnablePlaceholders(true)
-                .setPrefetchDistance(5)
+                .setPrefetchDistance(15)
                 .setInitialLoadSizeHint(15)
                 .build();
 

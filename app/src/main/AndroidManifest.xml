@@ -17,6 +17,8 @@
     <!-- 开机自启动权限 -->
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
+    <!--OpenGL版本在2.0以上-->
+    <uses-feature android:glEsVersion="0x00020000" android:required="true" />
     <!--
      android:persistent="true"  通过在AndroidManifest.xml中的application标签中加入android:persistent="true"属性
     后的确就能够达到保证该应用程序所在进程不会被LMK杀死。但有个前提就是应用程序必须是系统应用，
@@ -184,6 +186,16 @@
         <activity android:name=".navigation31.transition.ActivityTransition" />
         <activity android:name=".navigation22.pop.PopWindowActivity" />
         <activity android:name=".navigation22.move.PopMoveActivity" />
+
+        <activity android:name=".navigation72.procicle.FindProCicleActivity"
+            android:theme="@style/AppTheme.FullScreen"
+            />
+
+        <activity android:name=".navigationG.jinzita.JinZiTaPukeActivity"
+            android:screenOrientation="landscape"
+            android:theme="@style/AppTheme.FullScreen"/>
+        <activity android:name=".navigation42.draw.OpenGLDrawActivity" />
+        <activity android:name=".navigation71.autoR.AutoRefreshActivity" />
     </application>
 
 </manifest>

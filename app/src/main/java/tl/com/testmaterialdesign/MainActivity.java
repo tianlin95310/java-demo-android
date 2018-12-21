@@ -21,11 +21,14 @@ import tl.com.testmaterialdesign.navigation21.Fragment21;
 import tl.com.testmaterialdesign.navigation22.Fragment22;
 import tl.com.testmaterialdesign.navigation31.Fragment31;
 import tl.com.testmaterialdesign.navigation41.Fragment41;
+import tl.com.testmaterialdesign.navigation42.Fragment42;
 import tl.com.testmaterialdesign.navigation51.Fragment51;
 import tl.com.testmaterialdesign.navigation61.Fragment61;
 import tl.com.testmaterialdesign.navigation71.Fragment71;
+import tl.com.testmaterialdesign.navigation72.Fragment72;
 import tl.com.testmaterialdesign.navigation81.Fragment81;
 import tl.com.testmaterialdesign.navigation91.Fragment91;
+import tl.com.testmaterialdesign.navigationG.FragmentG;
 import tl.com.testmaterialdesign.utils.nullcheck.NullCheckUtils;
 import tl.com.testmaterialdesign.utils.toast.SnackbarUtils;
 
@@ -125,6 +128,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     getSupportFragmentManager().beginTransaction().replace(R.id.contentFragment, new Fragment41())
                             .commit();
                     break;
+                case R.id.menu_42:
+
+                    getSupportFragmentManager().beginTransaction().replace(R.id.contentFragment, new Fragment42())
+                            .commit();
+                    break;
                 case R.id.menu_51:
 
                     getSupportFragmentManager().beginTransaction().replace(R.id.contentFragment, new Fragment51())
@@ -141,6 +149,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                             .commit();
                     break;
 
+                case R.id.menu_72:
+                    getSupportFragmentManager().beginTransaction().replace(R.id.contentFragment, new Fragment72())
+                            .commit();
+                    break;
+
                 case R.id.menu_81:
                     getSupportFragmentManager().beginTransaction().replace(R.id.contentFragment, new Fragment81())
                             .commit();
@@ -148,6 +161,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
                 case R.id.menu_91:
                     getSupportFragmentManager().beginTransaction().replace(R.id.contentFragment, new Fragment91())
+                            .commit();
+                    break;
+
+                case R.id.menu_G:
+                    getSupportFragmentManager().beginTransaction().replace(R.id.contentFragment, new FragmentG())
                             .commit();
                     break;
             }
