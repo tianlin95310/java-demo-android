@@ -68,7 +68,6 @@ public class DialogActivity extends BaseActivity
     @Override
     public boolean onKeyUp(int keyCode, KeyEvent event)
     {
-
         if(keyCode == KeyEvent.KEYCODE_BACK)
         {
             finish();

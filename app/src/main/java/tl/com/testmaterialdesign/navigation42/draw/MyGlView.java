@@ -35,7 +35,7 @@ public class MyGlView extends GLSurfaceView implements GLSurfaceView.Renderer{
 
     private void initView(Context context) {
         this.context = context;
-        setRenderer(this);
+        setRenderer(new MyRender());
     }
 
     public MyGlView(Context context) {

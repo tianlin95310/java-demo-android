@@ -2,14 +2,15 @@ package tl.com.testmaterialdesign.navigation01.behavior.dialog;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.Rect;
 import android.support.annotation.NonNull;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.view.ViewPropertyAnimatorUpdateListener;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -27,6 +28,7 @@ public class MyAppBarLayoutBav extends AppBarLayout.Behavior implements AppBarLa
     // 下滑过程中的最大距离
     private static float MAX_SLIDE;
 
+    // APP bar的最小宽度
     private static float MIN_WIDTH = 0;
 
     // 横纵变化的比率
@@ -34,18 +36,13 @@ public class MyAppBarLayoutBav extends AppBarLayout.Behavior implements AppBarLa
 
     CoordinatorLayout parent;
     AppBarLayout appBarLayout;
-    Toolbar toolbar;
     RecyclerView recyclerView;
 
     // 平移量
     float offset_h;
+    int verticalOffset;
 
     Context context;
-
-    public MyAppBarLayoutBav()
-    {
-        super();
-    }
 
     public void setDragable(final boolean canDrag)
     {
@@ -62,21 +59,9 @@ public class MyAppBarLayoutBav extends AppBarLayout.Behavior implements AppBarLa
     public MyAppBarLayoutBav(Context context, AttributeSet attrs)
     {
         super(context, attrs);
-
         setDragable(true);
-
         this.context = context;
-
     }
-
-
-    @Override
-    public boolean onMeasureChild(CoordinatorLayout parent, AppBarLayout child, int parentWidthMeasureSpec, int widthUsed, int parentHeightMeasureSpec, int heightUsed)
-    {
-        return super.onMeasureChild(parent, child, parentWidthMeasureSpec, widthUsed, parentHeightMeasureSpec, heightUsed);
-    }
-
-    int verticalOffset;
 
     /**
      * 在偏移量发生变化时才会调用，verticalOffset，初始值为0
@@ -87,12 +72,9 @@ public class MyAppBarLayoutBav extends AppBarLayout.Behavior implements AppBarLa
     @Override
     public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset)
     {
-//        toolbar.setTranslationY(appBarLayout.getTotalScrollRange() + verticalOffset);
-        Log.d("my", "onOffsetChanged verticalOffset = " + verticalOffset);
-
+        Log.d("my", "onOffsetChanged verticalOffset = " + verticalOffset + ", offset_h = " + offset_h);
         if (verticalOffset < 0)
             appBarLayout.setBackgroundColor(Color.TRANSPARENT);
-
         this.verticalOffset = verticalOffset;
     }
 
@@ -117,6 +99,14 @@ public class MyAppBarLayoutBav extends AppBarLayout.Behavior implements AppBarLa
         {
             case MotionEvent.ACTION_DOWN:
                 startY = ev.getRawY();
+
+                boolean inApp = checkIn(ev);
+                if (!inApp) {
+                    DialogActivity activity = (DialogActivity) context;
+                    activity.onKeyUp(KeyEvent.KEYCODE_BACK, null);
+                    return true;
+                }
+
                 break;
 
             case MotionEvent.ACTION_MOVE:
@@ -131,6 +121,7 @@ public class MyAppBarLayoutBav extends AppBarLayout.Behavior implements AppBarLa
                     return super.onTouchEvent(parent, child, ev);
 
             case MotionEvent.ACTION_UP:
+
                 dy = ev.getRawY() - startY;
                 startY = ev.getRawY();
 
@@ -149,6 +140,20 @@ public class MyAppBarLayoutBav extends AppBarLayout.Behavior implements AppBarLa
         }
         return super.onTouchEvent(parent, child, ev);
 
+    }
+
+    private boolean checkIn(MotionEvent ev) {
+        Rect rect = new Rect();
+        rect.left = (int) appBarLayout.getX();
+        rect.top = (int) appBarLayout.getY();
+        rect.right = rect.left + appBarLayout.getMeasuredWidth();
+        rect.bottom = rect.top + appBarLayout.getMeasuredHeight();
+
+        int x = (int) ev.getX();
+        int y = (int) ev.getY();
+        boolean result = rect.contains(x, y);
+        Log.d("my", "---checkIn---" + rect.toString() + ", result = " + result + ", x = " + x + ", y = " + y);
+        return result;
     }
 
     public boolean setAppBarLayoutParam(float dy)
@@ -180,6 +185,12 @@ public class MyAppBarLayoutBav extends AppBarLayout.Behavior implements AppBarLa
         recyclerView.setTranslationY(offset_h);
 
         recyclerView.setAlpha(1 - offset_h / MAX_SLIDE);
+
+        if (recyclerView.getAlpha() < 0.1) {
+            recyclerView.setVisibility(View.GONE);
+        } else {
+            recyclerView.setVisibility(View.VISIBLE);
+        }
 
         return false;
     }
@@ -229,7 +240,6 @@ public class MyAppBarLayoutBav extends AppBarLayout.Behavior implements AppBarLa
         {
             appBarLayout = abl;
             this.parent = parent;
-            toolbar = (Toolbar) parent.findViewById(R.id.toolbar);
             recyclerView = (RecyclerView) parent.findViewById(R.id.recycler_view);
             appBarLayout.addOnOffsetChangedListener(this);
 
@@ -263,27 +273,6 @@ public class MyAppBarLayoutBav extends AppBarLayout.Behavior implements AppBarLa
     }
 
     @Override
-    public boolean onDependentViewChanged(CoordinatorLayout parent, AppBarLayout child, View dependency)
-    {
-        Log.d("my", "onDependentViewChanged");
-        return super.onDependentViewChanged(parent, child, dependency);
-    }
-
-    @Override
-    public boolean onStartNestedScroll(CoordinatorLayout parent, AppBarLayout child, View directTargetChild, View target, int nestedScrollAxes)
-    {
-        Log.d("my", "onStartNestedScroll directTargetChild = " + directTargetChild.getClass().getSimpleName() + ", target = " + target.getClass().getSimpleName());
-        return super.onStartNestedScroll(parent, child, directTargetChild, target, nestedScrollAxes);
-    }
-
-    @Override
-    public void onNestedScrollAccepted(CoordinatorLayout coordinatorLayout, AppBarLayout child, View directTargetChild, View target, int nestedScrollAxes)
-    {
-        Log.d("my", "onNestedScrollAccepted");
-        super.onNestedScrollAccepted(coordinatorLayout, child, directTargetChild, target, nestedScrollAxes);
-    }
-
-    @Override
     public void onNestedPreScroll(CoordinatorLayout coordinatorLayout, AppBarLayout child, View target, int dx, int dy, int[] consumed)
     {
         Log.d("my", "onNestedPreScroll dy = " + dy + ", consumed[1] = " + consumed[1]);
@@ -293,20 +282,6 @@ public class MyAppBarLayoutBav extends AppBarLayout.Behavior implements AppBarLa
             consumed[1] = dy;
         } else
             super.onNestedPreScroll(coordinatorLayout, child, target, dx, dy, consumed);
-    }
-
-    @Override
-    public void onNestedScroll(CoordinatorLayout coordinatorLayout, AppBarLayout child, View target, int dxConsumed, int dyConsumed, int dxUnconsumed, int dyUnconsumed)
-    {
-        Log.d("my", "onNestedScroll dyConsumed = " + dyConsumed);
-        super.onNestedScroll(coordinatorLayout, child, target, dxConsumed, dyConsumed, dxUnconsumed, dyUnconsumed);
-    }
-
-    @Override
-    public void onStopNestedScroll(CoordinatorLayout coordinatorLayout, AppBarLayout abl, View target)
-    {
-        Log.d("my", "onStopNestedScroll");
-        super.onStopNestedScroll(coordinatorLayout, abl, target);
     }
 
     @Override
@@ -321,10 +296,4 @@ public class MyAppBarLayoutBav extends AppBarLayout.Behavior implements AppBarLa
             return super.onNestedPreFling(coordinatorLayout, child, target, velocityX, velocityY);
     }
 
-    @Override
-    public boolean onNestedFling(CoordinatorLayout coordinatorLayout, AppBarLayout child, View target, float velocityX, float velocityY, boolean consumed)
-    {
-        Log.d("my", "onNestedFling");
-        return super.onNestedFling(coordinatorLayout, child, target, velocityX, velocityY, consumed);
-    }
 }

@@ -50,7 +50,6 @@ public class FloatActionActivity extends AppCompatActivity
         AnimUtils.translateX(fabToTop, fabToTop.getWidth(), null, 800);
     }
 
-
     private void initView()
     {
         rvFloataction.setLayoutManager(new LinearLayoutManager(this));
@@ -70,6 +69,6 @@ public class FloatActionActivity extends AppCompatActivity
     public void onViewClicked()
     {
         ToastUtils.show(this, "fab_to_top click");
-        rvFloataction.scrollToPosition(0);
+        rvFloataction.smoothScrollToPosition(1);
     }
 }
