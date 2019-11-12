@@ -76,6 +76,8 @@ public class Fragment61 extends Fragment
     Button btGetServiceData;
     @BindView(R.id.bt_fun4)
     Button btFun4;
+    @BindView(R.id.bt_mark_text)
+    Button bt_mark_text;
 
     @Nullable
     @Override
@@ -131,6 +133,8 @@ public class Fragment61 extends Fragment
     {
         Intent intent = new Intent(getActivity(), MarkTextActivity.class);
         startActivity(intent);
+        bt_mark_text.setTextSize(bt_mark_text.getTextSize() + 5);
+
     }
 
     @OnClick(R.id.bt_hide_intent)

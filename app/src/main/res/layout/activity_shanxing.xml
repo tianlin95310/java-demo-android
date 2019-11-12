@@ -4,7 +4,7 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent">
 
-    <tl.com.testmaterialdesign.utils.ui.TLShanXingRatioView
+    <tl.com.testmaterialdesign.navigation71.shanxingpro.TLShanXingRatioView
         android:id="@+id/tl_shanxing"
         android:layout_width="match_parent"
         android:layout_height="50dp"/>

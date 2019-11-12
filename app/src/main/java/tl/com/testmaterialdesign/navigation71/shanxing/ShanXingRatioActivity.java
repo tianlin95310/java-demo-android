@@ -7,7 +7,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import tl.com.testmaterialdesign.R;
 import tl.com.testmaterialdesign.base.BaseActivity;
-import tl.com.testmaterialdesign.utils.ui.TLShanXingRatioView;
+import tl.com.testmaterialdesign.navigation71.shanxingpro.TLShanXingRatioView;
 
 /**
  * Created by tianlin on 2018/4/13.

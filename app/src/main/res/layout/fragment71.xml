@@ -46,4 +46,10 @@
         android:text="自动加载的列表"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
+
+    <Button
+        android:id="@+id/bt1_f8"
+        android:text="index view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
 </LinearLayout>

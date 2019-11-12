@@ -45,4 +45,10 @@
         android:id="@+id/bt_7"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
+
+    <Button
+        android:text="获取手机公钥与私钥"
+        android:id="@+id/bt_8"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
 </LinearLayout>

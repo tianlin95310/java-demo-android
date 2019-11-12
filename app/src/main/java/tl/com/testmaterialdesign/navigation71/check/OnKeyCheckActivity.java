@@ -13,7 +13,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import tl.com.testmaterialdesign.R;
 import tl.com.testmaterialdesign.base.BaseActivity;
-import tl.com.testmaterialdesign.utils.ui.TLCycleRatioView;
+import tl.com.testmaterialdesign.navigation71.shanxing.TLCycleRatioView;
 
 /**
  * Created by tianlin on 2017/7/7.

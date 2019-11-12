@@ -18,6 +18,7 @@ import tl.com.testmaterialdesign.navigation01.behavior.floataction.FloatActionAc
 import tl.com.testmaterialdesign.navigation01.behavior.likeuc.LikeUCHomeActivity;
 import tl.com.testmaterialdesign.navigation01.behavior.pullrefresh.PullRefreshActivity;
 import tl.com.testmaterialdesign.navigation01.behavior.test.TestFunCallActivity;
+import tl.com.testmaterialdesign.navigation01.behavior.titlebar.TitleBarActivity;
 
 /**
  * Created by tianlin on 2017/10/13.
@@ -25,8 +26,7 @@ import tl.com.testmaterialdesign.navigation01.behavior.test.TestFunCallActivity;
  * QQ : 953108373
  */
 
-public class BehaviorActivity extends BaseActivity
-{
+public class BehaviorActivity extends BaseActivity {
     @BindView(R.id.f01_fab2)
     Button f01Fab2;
     @BindView(R.id.bt_3)
@@ -39,10 +39,13 @@ public class BehaviorActivity extends BaseActivity
     Button bt5;
     @BindView(R.id.bt)
     Button bt;
+    @BindView(R.id.bt_7)
+    Button bt7;
+    @BindView(R.id.bt_8)
+    Button bt8;
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState)
-    {
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_behavior);
         ButterKnife.bind(this);
@@ -51,17 +54,14 @@ public class BehaviorActivity extends BaseActivity
     }
 
     @Override
-    public void initView()
-    {
+    public void initView() {
 
     }
 
     @OnClick({R.id.f01_fab2, R.id.bt_3})
-    public void onViewClicked(View view)
-    {
+    public void onViewClicked(View view) {
         Intent intent = null;
-        switch (view.getId())
-        {
+        switch (view.getId()) {
             case R.id.f01_fab2:
                 intent = new Intent(this, FloatActionActivity.class);
                 startActivity(intent);
@@ -72,25 +72,21 @@ public class BehaviorActivity extends BaseActivity
     }
 
     @OnClick(R.id.bt_1)
-    public void bt_1()
-    {
+    public void bt_1() {
         Intent intent = new Intent(this, BottomSheetActivity.class);
         startActivity(intent);
     }
 
     @OnClick(R.id.bt_3)
-    public void bt_3()
-    {
+    public void bt_3() {
         Intent intent = new Intent(this, BehaviorMoveActivity.class);
         startActivity(intent);
     }
 
     @OnClick({R.id.bt_4, R.id.bt_5})
-    public void bt_group_3(View view)
-    {
+    public void bt_group_3(View view) {
         Intent intent = null;
-        switch (view.getId())
-        {
+        switch (view.getId()) {
             case R.id.bt_4:
                 intent = new Intent(this, LikeUCHomeActivity.class);
 
@@ -106,17 +102,21 @@ public class BehaviorActivity extends BaseActivity
     }
 
     @OnClick(R.id.bt)
-    public void bt()
-    {
+    public void bt() {
         Intent intent = new Intent(this, TestFunCallActivity.class);
         startActivity(intent);
     }
 
     @OnClick(R.id.bt_7)
-    public void bt_7()
-    {
+    public void bt_7() {
         Intent intent = new Intent(this, DialogActivity.class);
         startActivity(intent);
         overridePendingTransition(R.anim.activity_in, R.anim.activity_out);
+    }
+
+    @OnClick(R.id.bt_8)
+    public void bt_8(View view) {
+        Intent intent = new Intent(this, TitleBarActivity.class);
+        startActivity(intent);
     }
 }

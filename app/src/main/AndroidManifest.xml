@@ -122,7 +122,7 @@
 
         <activity
             android:name=".navigation31.parandchild.ParentAndChildActivity"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
 
         <activity android:name=".navigation31.viewanim.ViewAnimActivity" />
         <activity android:name=".navigation01.selflayout.SelfLayoutActivity" />
@@ -139,6 +139,7 @@
         <activity
             android:name=".navigation01.behavior.pullrefresh.PullRefreshActivity"
             android:theme="@style/AppTheme.TranslucentStatus" />
+
         <activity android:name=".navigation71.pullrefresh.TLPullRefActivity" />
         <activity android:name=".navigation61.marktext.MarkTextActivity" />
         <activity android:name=".navigation81.realm.RealmTestActivity" />
@@ -161,6 +162,7 @@
         <activity
             android:name=".navigation01.behavior.dialog.DialogActivity"
             android:theme="@style/AppTheme.TranslucentStatus" />
+
         <activity android:name=".navigation01.bsr.BeiSaiErActivity" />
         <activity android:name=".navigation11.gridrecycler.GridRecyclerActivity" />
 
@@ -194,8 +196,14 @@
         <activity android:name=".navigationG.jinzita.JinZiTaPukeActivity"
             android:screenOrientation="landscape"
             android:theme="@style/AppTheme.FullScreen"/>
+
         <activity android:name=".navigation42.draw.OpenGLDrawActivity" />
+
         <activity android:name=".navigation71.autoR.AutoRefreshActivity" />
+
+        <activity android:name=".navigation01.behavior.titlebar.TitleBarActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".navigation71.index.IndexViewActivity" />
     </application>
 
 </manifest>

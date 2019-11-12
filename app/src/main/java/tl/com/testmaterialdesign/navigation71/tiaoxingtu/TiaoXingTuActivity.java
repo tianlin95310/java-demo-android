@@ -15,7 +15,6 @@ import butterknife.OnClick;
 import tl.com.testmaterialdesign.R;
 import tl.com.testmaterialdesign.base.BaseActivity;
 import tl.com.testmaterialdesign.utils.ui.DataSet;
-import tl.com.testmaterialdesign.utils.ui.TLTiaoXingTuView;
 
 /**
  * Created by tianlin on 2018/4/8.

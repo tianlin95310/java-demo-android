@@ -63,9 +63,9 @@ public class LiaotianActivity extends AppCompatActivity
         n2_rv.setLayoutManager( new LinearLayoutManager(this));
         List<LiaoTianVo> list = new ArrayList<>();
 
-        for(int i = 0 ; i < 10; i++)
+        for(int i = 0 ; i < 30; i++)
         {
-            list.add(new LiaoTianVo("" + ((i % 2 ) + 1), "content" + i));
+            list.add(new LiaoTianVo("" + ((i % 2 ) + 1), "content" + (i + 1)));
         }
         final MyAdapter adapter = new MyAdapter(this, list);
 

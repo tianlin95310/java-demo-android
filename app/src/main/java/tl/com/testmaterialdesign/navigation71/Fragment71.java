@@ -16,6 +16,7 @@ import butterknife.Unbinder;
 import tl.com.testmaterialdesign.R;
 import tl.com.testmaterialdesign.navigation71.autoR.AutoRefreshActivity;
 import tl.com.testmaterialdesign.navigation71.check.OnKeyCheckActivity;
+import tl.com.testmaterialdesign.navigation71.index.IndexViewActivity;
 import tl.com.testmaterialdesign.navigation71.menu.ShanXingMenuActivity;
 import tl.com.testmaterialdesign.navigation71.pullrefresh.TLPullRefActivity;
 import tl.com.testmaterialdesign.navigation71.shanxing.ShanXingRatioActivity;
@@ -45,6 +46,8 @@ public class Fragment71 extends Fragment {
     Button bt1F75;
     @BindView(R.id.bt1_f76)
     Button bt1F76;
+    @BindView(R.id.bt1_f8)
+    Button bt1F8;
 
     @Nullable
     @Override
@@ -99,6 +102,12 @@ public class Fragment71 extends Fragment {
     @OnClick(R.id.bt1_f76)
     public void bt1_f76() {
         Intent intent = new Intent(getActivity(), AutoRefreshActivity.class);
+        startActivity(intent);
+    }
+
+    @OnClick(R.id.bt1_f8)
+    public void bt1_f8() {
+        Intent intent = new Intent(getActivity(), IndexViewActivity.class);
         startActivity(intent);
     }
 }
