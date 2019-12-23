@@ -164,11 +164,12 @@ public class Fragment21 extends Fragment {
         }
 
         int notificationId = 0x1234;
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(getActivity(), "1");
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(getActivity(), "111");
 
         builder.setSmallIcon(android.R.drawable.stat_notify_chat);
         builder.setContentText("aaa");
         builder.setContentTitle("bbb");
+        builder.setTicker("ticker");
         NotificationManagerCompat notificationManagerCompat = NotificationManagerCompat.from(getActivity());
         notificationManagerCompat.notify(notificationId, builder.build());
     }
@@ -177,9 +178,9 @@ public class Fragment21 extends Fragment {
     private void createChannel() {
         NotificationManager notificationManager = (NotificationManager) getActivity().getSystemService(Context.NOTIFICATION_SERVICE);
 
-        NotificationChannel channel = new NotificationChannel("1",
+        NotificationChannel channel = new NotificationChannel("111",
                 "Channel1", NotificationManager.IMPORTANCE_DEFAULT);
-        channel.enableLights(true); //是否在桌面icon右上角展示小红点
+        channel.enableLights(true); //+ 0000000000000000000000000是否在桌面icon右上角展示小红点
         channel.setLightColor(Color.GREEN); //小红点颜色
         channel.setShowBadge(true); //是否在久按桌面图标时显示此渠道的通知
         notificationManager.createNotificationChannel(channel);
@@ -191,7 +192,7 @@ public class Fragment21 extends Fragment {
         NotificationManager notifyManager = (NotificationManager) getActivity().getSystemService(Context.NOTIFICATION_SERVICE);
 
         NotificationCompat.Builder notifyBuilder =
-                new NotificationCompat.Builder(getActivity(), "2")
+                new NotificationCompat.Builder(getActivity(), "111")
                         .setContentTitle("setContentTitle")
                         .setContentText("setContentText")
                         .setSmallIcon(R.drawable.toolbar_bg)

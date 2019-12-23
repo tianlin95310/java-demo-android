@@ -44,6 +44,20 @@ public class Fragment91 extends Fragment {
     Button btGetHomeApp;
     @BindView(R.id.bt_4)
     Button bt4;
+    @BindView(R.id.bt_5)
+    Button bt5;
+    @BindView(R.id.bt_6)
+    Button bt6;
+    @BindView(R.id.bt_7)
+    Button bt7;
+    @BindView(R.id.bt_9)
+    Button bt9;
+    @BindView(R.id.bt_10)
+    Button bt10;
+    @BindView(R.id.bt_11)
+    Button bt11;
+    @BindView(R.id.bt_12)
+    Button bt12;
 
     @Nullable
     @Override
@@ -136,7 +150,7 @@ public class Fragment91 extends Fragment {
         NetWorkState.getCurrentWifi(getContext());
     }
 
-//    @RequiresApi(api = Build.VERSION_CODES.O)这样定义是没有用的，需要再事件里面进行判断
+    //    @RequiresApi(api = Build.VERSION_CODES.O)这样定义是没有用的，需要再事件里面进行判断
     @OnClick(R.id.bt_6)
     public void bt_6() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -147,5 +161,22 @@ public class Fragment91 extends Fragment {
     @OnClick(R.id.bt_7)
     public void bt_7() {
         NetWorkState.getCurrentWifiP2p(getContext());
+    }
+
+    @OnClick(R.id.bt_9)
+    public void onBt9Clicked() {
+
+    }
+
+    @OnClick(R.id.bt_10)
+    public void onBt10Clicked() {
+    }
+
+    @OnClick(R.id.bt_11)
+    public void onBt11Clicked() {
+    }
+
+    @OnClick(R.id.bt_12)
+    public void onBt12Clicked() {
     }
 }
