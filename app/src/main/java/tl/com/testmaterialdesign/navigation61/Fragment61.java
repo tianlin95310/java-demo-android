@@ -16,8 +16,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import com.pandabank.sdk.pay.PandaBankPayException;
+import com.pandabank.sdk.pay.PandaBankPayUtil;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -27,6 +31,7 @@ import tl.com.testmaterialdesign.R;
 import tl.com.testmaterialdesign.navigation61.fullanddialog.DialogThemeActivity;
 import tl.com.testmaterialdesign.navigation61.marktext.MarkTextActivity;
 import tl.com.testmaterialdesign.navigation61.callfun.CallNotForeFunActivity;
+import tl.com.testmaterialdesign.navigation61.menulistener.MenuListenerActivity;
 import tl.com.testmaterialdesign.service.TimingService;
 import tl.com.testmaterialdesign.service.bindservice.BindStartService;
 
@@ -140,10 +145,23 @@ public class Fragment61 extends Fragment
     @OnClick(R.id.bt_hide_intent)
     public void bt_hide_intent()
     {
-        Intent intent = new Intent();
-        intent.setAction("aaa.bbb.ccc");
+        try {
+            HashMap hashMap = new HashMap();
+            hashMap.put("appId", "appId");
+            hashMap.put("partnerId", "partnerId");
+            hashMap.put("prepayId", "prepayId");
+            hashMap.put("nonceStr", "nonceStr");
+            hashMap.put("timeStamp", "timeStamp");
+            hashMap.put("sign", "sign");
+            PandaBankPayUtil.beginPay(getActivity(), hashMap);
+        } catch (PandaBankPayException e) {
+            Log.d("my", e.getMessage());
+            e.printStackTrace();
+        }
+    }
 
-        startActivity(intent);
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
     @OnClick(R.id.bt_hide_intent2)
@@ -168,6 +186,13 @@ public class Fragment61 extends Fragment
         Intent intent = new Intent(getActivity(), CallNotForeFunActivity.class);
         startActivity(intent);
     }
+    @OnClick(R.id.bt_fun5)
+    public void bt_fun5()
+    {
+        Intent intent = new Intent(getActivity(), MenuListenerActivity.class);
+        startActivity(intent);
+    }
+
 
     class MyConnection implements ServiceConnection
     {

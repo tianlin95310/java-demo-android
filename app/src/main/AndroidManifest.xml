@@ -204,6 +204,7 @@
         <activity android:name=".navigation01.behavior.titlebar.TitleBarActivity"
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name=".navigation71.index.IndexViewActivity" />
+        <activity android:name=".navigation61.menulistener.MenuListenerActivity" />
     </application>
 
 </manifest>
