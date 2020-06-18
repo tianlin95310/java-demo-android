@@ -47,13 +47,10 @@ public class BottomSheetActivity extends BaseActivity
     {
 
         bottomSheetBehavior = BottomSheetBehavior.from(frameContent);
-
 //        设置折叠时的高度，如果为0，意味着折叠时隐藏
         bottomSheetBehavior.setPeekHeight((int) getResources().getDimension(R.dimen.collapsed_h));
-
 //        初始状态为折叠状态，源码可看到
         Log.d("my", "初始getState = " + bottomSheetBehavior.getState());
-
         bottomSheetBehavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback()
         {
             @Override
@@ -67,14 +64,12 @@ public class BottomSheetActivity extends BaseActivity
                     llBottom.setVisibility(View.GONE);
                 }
             }
-
             @Override
             public void onSlide(@NonNull View bottomSheet, float slideOffset)
             {
                 Log.d("my", "slideOffset = " + slideOffset);
             }
         });
-
         bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
 
 //        下滑时能影藏对话框
