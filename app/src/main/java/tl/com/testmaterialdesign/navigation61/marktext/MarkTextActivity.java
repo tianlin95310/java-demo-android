@@ -1,5 +1,6 @@
 package tl.com.testmaterialdesign.navigation61.marktext;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -8,7 +9,13 @@ import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 import android.text.style.BackgroundColorSpan;
 import android.text.style.CharacterStyle;
+import android.util.Log;
 import android.widget.TextView;
+
+import com.pandabank.sdk.pay.PandaBankPayException;
+import com.pandabank.sdk.pay.PandaBankPayUtil;
+
+import java.util.HashMap;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -46,12 +53,52 @@ public class MarkTextActivity extends BaseActivity
     public void initView()
     {
         textContent.setText(content);
+
+    }
+
+    @OnClick(R.id.text_content)
+    public void text_content()
+    {
+        try {
+            HashMap hashMap = new HashMap();
+            hashMap.put("app_id", "933fcbb01c454090b21b1f311b56c0d6");
+            hashMap.put("partner_id", "10000000001");
+            hashMap.put("prepay_id", "KHPP1000000020200417000018");
+            hashMap.put("nonce_str", "804cd9f6575b40c5b1da0e10933a707f");
+            hashMap.put("timeStamp", "1587116831707");
+            hashMap.put("sign", "07D6F9419433FFC95EC4833B6B58C96A");
+            PandaBankPayUtil.beginPay(this, hashMap);
+        } catch (PandaBankPayException e) {
+            Log.d("my", e.getCode());
+            Log.d("my", e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     *
+     * @param requestCode
+     * @param resultCode
+     * @param data
+     *
+     * data contains result
+     * result is a hashMap
+     * key  :   value
+     * status: 'cancel' 取消支付
+     */
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Log.d("my", "requestCode = " + requestCode + ", resultCode = " + resultCode);
+        if (requestCode == PandaBankPayUtil.REQUEST_CODE && resultCode == PandaBankPayUtil.RESULT_CODE) {
+            HashMap hashMap = (HashMap) data.getSerializableExtra(PandaBankPayUtil.RESULT_INTENT_KEY);
+            Log.d("my", "data = " + hashMap.toString());
+        }
     }
 
     @OnClick(R.id.bt_begin)
     public void onViewClicked()
     {
-
         String[] strs = content.split(key);
         SpannableStringBuilder spannableStringBuilder = new SpannableStringBuilder();
 

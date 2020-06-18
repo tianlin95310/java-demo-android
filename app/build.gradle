@@ -19,6 +19,13 @@ android {
          */
         renderscriptTargetApi 19
         renderscriptSupportModeEnabled  true
+
+        ndk {
+            //设置支持的SO库架构
+            abiFilters 'armeabi-v7a', 'arm64-v8a'
+//            abiFilters 'armeabi-v7a', 'arm64-v8a', 'x86'    // flutterX86只支持debug
+//            abiFilters 'armeabi-v7a', 'armeabi', 'x86', 'x86_64', 'arm64-v8a'
+        }
     }
 
     // 签名配置
@@ -34,6 +41,9 @@ android {
     buildTypes {
         release {
             minifyEnabled false
+            debuggable false
+            jniDebuggable false
+            signingConfig signingConfigs.tl
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
         debug {

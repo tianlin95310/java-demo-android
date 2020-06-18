@@ -155,6 +155,7 @@ public class Fragment61 extends Fragment
             hashMap.put("sign", "sign");
             PandaBankPayUtil.beginPay(getActivity(), hashMap);
         } catch (PandaBankPayException e) {
+            Log.d("my", e.getCode());
             Log.d("my", e.getMessage());
             e.printStackTrace();
         }
@@ -162,6 +163,8 @@ public class Fragment61 extends Fragment
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        Log.d("my", "requestCode = " + requestCode + ", resultCode = " + resultCode);
+        Log.d("my", "data = " + data.toString());
     }
 
     @OnClick(R.id.bt_hide_intent2)
